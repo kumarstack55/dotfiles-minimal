@@ -27,3 +27,6 @@ set nobackup
 
 " 同ファイルの複数編集に気づけるようスワップ・ファイルを作る。
 set swapfile
+
+" シンタックス・ハイライティングを有効にする。
+syntax enable
