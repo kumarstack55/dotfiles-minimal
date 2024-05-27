@@ -22,7 +22,7 @@ function Invoke-ModuleCopy {
     )
 
     if (-not (Test-Path -LiteralPath $Dest)) {
-        Copy-Item -LiteralPath $Src -Destination $Dest
+        Copy-Item -LiteralPath $Src -Destination $Dest -Verbose
     } else {
         Invoke-Skip "copy ${Src} ${Dest}"
     }
@@ -41,7 +41,7 @@ function Invoke-ModuleMkdirWin {
         [Parameter(Mandatory)][string]$Path
     )
     if (-not (Test-Path -LiteralPath $Path)) {
-        New-Item -Type Directory -Path $Path
+        New-Item -Type Directory -Path $Path -Verbose
     } else {
         Invoke-Skip "mkdir_win ${Path}"
     }
@@ -55,7 +55,12 @@ function Invoke-ParseLine {
 
     foreach ($Index in 0..($WordsList.Count-1)) {
         $Word = $WordsList[$Index]
-        $WordsList[$Index] = $Word -replace '\${HOME}', $env:USERPROFILE
+
+        $Word = $Word -replace '\${PROFILE}', $PROFILE
+
+        $Word = $Word -replace '\${HOME}', $env:USERPROFILE
+
+        $WordsList[$Index] = $Word
     }
 
     $Module = $WordsList[0]
