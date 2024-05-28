@@ -8,8 +8,10 @@
 ## Requirements
 
 - Debian
+    - bash 5.2+
     - Vim 9.0+
 - Microsoft Windows
+    - Windows PowerShell 5.1+
     - Vim 9.1+
 
 ## Installation
