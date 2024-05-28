@@ -41,6 +41,10 @@ Set-ExecutionPolicy -Scope Process -ExecutionPolicy RemoteSigned
 Set-ExecutionPolicy -Scope CurrentUser -ExecutionPolicy RemoteSigned
 ```
 
+## TODO
+
+- add tests
+
 ## LICENSE
 
 MIT
