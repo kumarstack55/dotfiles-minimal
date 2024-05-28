@@ -1,5 +1,10 @@
 # dotfiles-minimal
 
+## Principle
+
+- Only configuration is performed.
+    - Do not install additional modules from the Internet without user intervention.
+
 ## Requirements
 
 - Debian
