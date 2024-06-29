@@ -23,7 +23,8 @@ git clone https://github.com/kumarstack55/dotfiles-minimal.git
 
 cd dotfiles-minimal
 
-./install.sh
+./installer/bash/install.sh -c ./playbook.dsl
+./installer/bash/install.sh -f ./playbook.dsl
 ```
 
 ### Microsoft Windows
@@ -34,16 +35,12 @@ git clone https://github.com/kumarstack55/dotfiles-minimal.git
 Set-Location .\dotfiles-minimal
 
 Set-ExecutionPolicy -Scope Process -ExecutionPolicy RemoteSigned
-.\Invoke-Installer.ps1 -WhatIf
-.\Invoke-Installer.ps1
+.\installer\powershell\Invoke-Installer.ps1 -ScriptPath .\playbook.dsl -WhatIf
+.\installer\powershell\Invoke-Installer.ps1 -ScriptPath .\playbook.dsl
 
 # The following policy settings are required to load a profile.
 Set-ExecutionPolicy -Scope CurrentUser -ExecutionPolicy RemoteSigned
 ```
-
-## TODO
-
-- add tests
 
 ## LICENSE
 
