@@ -1,0 +1,28 @@
+---
+line: [# comment]
+---
+line: [ # comment]
+---
+line: []
+---
+line: [# commands]
+---
+line: [copy "a" "b"]
+run: copy a b
+should_process: copy a b
+---
+line: [copy_win "a" "b"]
+run: copy_win a b
+should_process: copy_win a b
+---
+line: [mkdir_win "a"]
+run: mkdir_win a
+should_process: mkdir_win a
+---
+line: []
+---
+line: [# variable]
+---
+line: [copy "./a" "${TEST_DUMMY_KEY}/a.txt"]
+run: copy ./a test_dummy_value/a.txt
+should_process: copy ./a test_dummy_value/a.txt
