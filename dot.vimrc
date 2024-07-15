@@ -41,8 +41,8 @@ set expandtab
 augroup fileTypeIndent
   autocmd!
   autocmd BufNewFile,BufRead *.c,*.cpp,*.h setlocal tabstop=4 softtabstop=4 shiftwidth=4
-  autocmd BufNewFile,BufRead *.md setlocal tabstop=4 softtabstop=4 shiftwidth=4
-  autocmd BufNewFile,BufRead *.ps1 setlocal tabstop=4 softtabstop=4 shiftwidth=4
+  autocmd BufNewFile,BufRead *.md call dotfiles#set_filetype_markdown()
+  autocmd BufNewFile,BufRead *.ps1 call dotfiles#set_filetype_ps1()
   autocmd BufNewFile,BufRead *.py setlocal tabstop=4 softtabstop=4 shiftwidth=4
   autocmd BufNewFile,BufRead *.rst setlocal tabstop=2 softtabstop=2 shiftwidth=2
   autocmd BufNewFile,BufRead *.sh,*.bash setlocal tabstop=2 softtabstop=2 shiftwidth=2
@@ -50,3 +50,7 @@ augroup fileTypeIndent
   autocmd BufNewFile,BufRead *.vimrc,_gvimrc setlocal tabstop=2 softtabstop=2 shiftwidth=2
   autocmd BufNewFile,BufRead *.yaml,*.yml setlocal tabstop=2 softtabstop=2 shiftwidth=2
 augroup END
+
+" 新しいバッファから編集したときに、ファイルタイプの設定を適用するコマンドを定義する。
+command! DotfilesFiletypeMarkdown call dotfiles#set_filetype_markdown()
+command! DotfilesFiletypePs1 call dotfiles#set_filetype_ps1()
