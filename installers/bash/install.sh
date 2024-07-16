@@ -121,11 +121,35 @@ command::command_copy() {
   fi
 }
 
+command::command_copy_linux() {
+  local command="$1" src="$2" dest="$3"
+
+  if helper::should_process "${command} ${src} ${dest}"; then
+    if [[ -e "${dest}" ]]; then
+      command::write_skip
+      return
+    fi
+    cp -v "${src}" "${dest}"
+  fi
+}
+
 command::command_copy_win() {
   local command="$1" src="$2" dest="$3"
 
   if helper::should_process "${command} ${src} ${dest}"; then
     command::write_skip
+  fi
+}
+
+command::command_mkdir_linux() {
+  local command="$1" path="$2"
+
+  if helper::should_process "${command} ${path}"; then
+    if [[ -e "${path}" ]]; then
+      command::write_skip
+      return
+    fi
+    mkdir -p -v "${path}"
   fi
 }
 
