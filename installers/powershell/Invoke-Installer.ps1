@@ -44,6 +44,15 @@ function Test-ShouldProcess {
     return -not $WhatIfPreference
 }
 
+class CommandNoOperation : Command {
+    Run([System.Collections.Generic.List[string]]$Stack) {
+        $CommandArgs = $Stack -join " "
+        if (Test-ShouldProcess($CommandArgs)) {
+            $this.WriteSkip()
+        }
+    }
+}
+
 class CommandCopy : Command {
     Run([System.Collections.Generic.List[string]]$Stack) {
         $Command, $Source, $Destination, $_ = $Stack
@@ -90,7 +99,9 @@ class CommandFactory {
         $f = [CommandFactory]::new()
         $f.Add("copy", [CommandCopy])
         $f.Add("copy_win", [CommandCopy])
+        $f.Add("copy_linux", [CommandNoOperation])
         $f.Add("mkdir_win", [CommandMkdir])
+        $f.Add("mkdir_linux", [CommandNoOperation])
         return $f
     }
 }
