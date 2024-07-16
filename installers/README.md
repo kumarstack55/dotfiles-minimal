@@ -1,4 +1,4 @@
-# installer
+# installers
 
 ## McKeeman Form
 
