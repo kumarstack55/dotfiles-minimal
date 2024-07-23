@@ -12,4 +12,7 @@ mkdir_win   "${HOME}\\vimfiles\\plugin"
 copy_linux "dot.vim/plugin/dotfiles.vim"   "${HOME}/.vim/plugin/dotfiles.vim"
 copy_win   "dot.vim\\plugin\\dotfiles.vim" "${HOME}\\vimfiles\\plugin\\dotfiles.vim"
 
+copy_linux "dot.editorconfig" "${HOME}/.editorconfig"
+copy_win   "dot.editorconfig" "${HOME}\\.editorconfig"
+
 copy_win "Documents\\WindowsPowerShell\\Microsoft.PowerShell_profile.ps1" "${PROFILE}"

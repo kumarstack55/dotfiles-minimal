@@ -1,0 +1,71 @@
+root = true
+
+[*]
+charset = utf-8
+indent_size = 2
+indent_style = space
+insert_final_newline = false
+max_line_length = unset
+tab_width = 2
+trim_trailing_whitespace = true
+
+[Makefile]
+indent_style = tab
+
+[Vagrantfile]
+
+[*.c]
+indent_size = 4
+tab_width = 4
+
+[*.diff]
+trim_trailing_whitespace = false
+
+[{.gitconfig,dot.gitconfig,.gitconfig_*.inc,dot.gitconfig_*.inc}]
+indent_size = 8
+tab_width = 8
+indent_style = tab
+
+[config]
+indent_size = 8
+tab_width = 8
+indent_style = tab
+
+[*.js]
+
+[*.json{,.j2}]
+
+[*.md]
+indent_size = 4
+tab_width = 4
+
+[*.py]
+indent_size = 4
+tab_width = 4
+
+[*.{ps1,psm1,psd1}]
+charset = utf-8-bom
+# PowerShell ISE のインデント幅に合わせた
+indent_size = 4
+tab_width = 4
+
+[*.rs]
+indent_size = 4
+tab_width = 4
+
+[*.rst]
+indent_size = 2
+tab_width = 2
+
+[{*.sh,*.sh.j2,*.bash,*.bats}]
+# https://google.github.io/styleguide/shell.xml#Formatting
+end_of_line = lf
+
+[*.stpl]
+indent_size = 8
+tab_width = 8
+indent_style = tab
+
+[{*.vim,_gvimrc}]
+
+[*.{yml{,.j2},yaml{,.j2}}]
