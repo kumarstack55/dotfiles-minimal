@@ -15,4 +15,7 @@ copy_win   "dot.vim\\plugin\\dotfiles.vim" "${HOME}\\vimfiles\\plugin\\dotfiles.
 copy_linux "dot.editorconfig" "${HOME}/.editorconfig"
 copy_win   "dot.editorconfig" "${HOME}\\.editorconfig"
 
+copy_linux "dot.gitconfig" "${HOME}/.gitconfig"
+copy_win   "dot.gitconfig" "${HOME}\\.gitconfig"
+
 copy_win "Documents\\WindowsPowerShell\\Microsoft.PowerShell_profile.ps1" "${PROFILE}"
