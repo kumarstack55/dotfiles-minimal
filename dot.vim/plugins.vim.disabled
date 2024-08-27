@@ -1,0 +1,5 @@
+call plug#begin()
+
+Plug 'preservim/tagbar'
+
+call plug#end()
