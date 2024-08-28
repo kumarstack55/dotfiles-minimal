@@ -58,6 +58,7 @@ augroup END
 command! MyFiletypeMarkdown call dotfiles#set_filetype_markdown()
 command! MyFiletypePs1 call dotfiles#set_filetype_ps1()
 
+" plugins.vim ファイルがあれば読む。
 let plugins_vim_path = $HOME . "\\vimfiles\\plugins.vim"
 if filereadable(plugins_vim_path)
   exec "source " . fnameescape(plugins_vim_path)
