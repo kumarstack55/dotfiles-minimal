@@ -55,8 +55,8 @@ augroup fileTypeIndent
 augroup END
 
 " 新しいバッファから編集したときに、ファイルタイプの設定を適用するコマンドを定義する。
-command! DotfilesFiletypeMarkdown call dotfiles#set_filetype_markdown()
-command! DotfilesFiletypePs1 call dotfiles#set_filetype_ps1()
+command! MyFiletypeMarkdown call dotfiles#set_filetype_markdown()
+command! MyFiletypePs1 call dotfiles#set_filetype_ps1()
 
 let plugins_vim_path = $HOME . "\\vimfiles\\plugins.vim"
 if filereadable(plugins_vim_path)
