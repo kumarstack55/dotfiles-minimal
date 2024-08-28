@@ -1,8 +1,13 @@
 " メニューバーを非表示にする。
 set guioptions-=T
 
-" フォントを設定する。
-set guifont=ＭＳ_ゴシック:h9
+" フォント、サイズを設定する。
+let g:gui_font_name="ＭＳ_ゴシック"
+command! MyFontSize09 call dotfiles#set_gui_font(9)
+command! MyFontSize14 call dotfiles#set_gui_font(14)
+command! MyFontSize18 call dotfiles#set_gui_font(18)
+command! MyFontSize22 call dotfiles#set_gui_font(22)
+MyFontSize18
 
 " 選択範囲をシステムのクリップボードにコピーする。
 if has('win32')
