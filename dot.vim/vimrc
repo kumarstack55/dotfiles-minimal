@@ -25,6 +25,9 @@ set noundofile
 " ファイル上書き前にバックアップを作らない。
 set nobackup
 
+" カラースキームを設定する。
+colorscheme habamax
+
 " 同ファイルの複数編集に気づけるようスワップ・ファイルを作る。
 set swapfile
 
