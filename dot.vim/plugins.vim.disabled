@@ -1,5 +1,48 @@
 call plug#begin()
 
-Plug 'preservim/tagbar'
+" vim-cheatsheet opens your cheat sheet file.
+Plug 'reireias/vim-cheatsheet', { 'on': 'Cheat' }
+
+" Delete/change/add parentheses/quotes/XML-tags/much more with ease
+Plug 'tpope/vim-surround'
+
+" EditorConfig plugin for Vim
+Plug 'editorconfig/editorconfig-vim'
+
+" Tagbar is a Vim plugin that provides an easy way to browse the tags of the current file and get an overview of its structure.
+Plug 'preservim/tagbar', {
+    \ 'for': [
+        \ 'bats',
+        \ 'c',
+        \ 'c++',
+        \ 'go',
+        \ 'markdown',
+        \ 'ps1',
+        \ 'python',
+        \ 'rst',
+        \ 'rust',
+        \ 'sh',
+        \ 'snippets',
+        \ 'vim',
+    \ ] }
+
+" Vim script for text filtering and alignment
+" このプラグインは vim-markdown の動作のために必要です。
+Plug 'godlygeek/tabular', { 'for': ['md', 'text'] }
+
+" Syntax highlighting, matching rules and mappings for the original Markdown and extensions.
+" Markdown の中の diff などをハイライトするために使う。
+Plug 'preservim/vim-markdown', { 'for': ['md', 'text'] }
 
 call plug#end()
+
+" vim-markdown の折り畳みは使わない。
+" ハイライトのために使うため。
+let g:vim_markdown_folding_disabled = 1
+
+" vim-markdown のキー・マッピングは使わない。
+" ハイライトのために使うため。
+let g:vim_markdown_no_default_key_mappings = 1
+
+" vim-cheatsheet のファイルを指定する。
+let g:cheatsheet#cheat_file = $HOME . '\vimfiles\cheatsheet.md'
