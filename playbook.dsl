@@ -1,6 +1,9 @@
 mkdir_linux "${HOME}/.vim"
 mkdir_win   "${HOME}\\vimfiles"
 
+copy_linux "dot.vim/cheatsheet.md"  "${HOME}/.vim/cheatsheet.md"
+copy_win   "dot.vim\\cheatsheet.md" "${HOME}\\vimfiles\\cheatsheet.md"
+
 copy_linux "dot.vim/vimrc"  "${HOME}/.vim/vimrc"
 copy_win   "dot.vim\\vimrc" "${HOME}\\vimfiles\\vimrc"
 
