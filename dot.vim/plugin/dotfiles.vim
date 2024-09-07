@@ -1,3 +1,16 @@
+let g:dotfiles#iskeyword_contains_hyphen = 0
+
+function! dotfiles#toggle_iskeyword()
+  if g:dotfiles#iskeyword_contains_hyphen
+    echo 'Hyphen is used as delimiter.'
+    set iskeyword-=-
+  else
+    echo 'Hyphens NOT used as delimiters.'
+    set iskeyword+=-
+  endif
+  let g:dotfiles#iskeyword_contains_hyphen = (g:dotfiles#iskeyword_contains_hyphen + 1) % 2
+endfunction
+
 function! dotfiles#set_tabstop(ts)
   let &l:tabstop = a:ts
   let &l:shiftwidth = a:ts
