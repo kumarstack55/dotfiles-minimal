@@ -3,6 +3,10 @@ set guioptions-=T
 
 " フォント、サイズを設定する。
 let g:gui_font_name="ＭＳ_ゴシック"
+if dotfiles#test_font_availability("Cica")
+  let g:gui_font_name="Cica"
+endif
+
 command! MyFontSize09 call dotfiles#set_gui_font(9)
 command! MyFontSize14 call dotfiles#set_gui_font(14)
 command! MyFontSize18 call dotfiles#set_gui_font(18)

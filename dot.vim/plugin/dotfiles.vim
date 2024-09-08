@@ -28,6 +28,26 @@ function! dotfiles#set_filetype_ps1()
   call dotfiles#set_tabstop(4)
 endfunction
 
+function! dotfiles#test_font_availability(fontname)
+  if !has('win32')
+    return
+  endif
+
+  let l:original_font = &guifont
+  try
+    execute 'set guifont=' . a:fontname
+    if &guifont == a:fontname
+      return 1
+    else
+      return 0
+    endif
+  catch
+    return 0
+  finally
+    let &guifont = l:original_font
+  endtry
+endfunction
+
 function! dotfiles#set_gui_font(font_height_pt)
   if !has('win32')
     return
