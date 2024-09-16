@@ -113,12 +113,18 @@ command::write_skip_reason_path_alread_exists() {
   echo "skip. (reason: path already exists)"
 }
 
+command::write_diff() {
+  local file1="$1" file2="$2"
+  diff -u --color=always "${file1}" "${file2}"
+}
+
 command::command_copy() {
   local command="$1" src="$2" dest="$3"
 
   if helper::should_process "${command} ${src} ${dest}"; then
     if [[ -e "${dest}" ]]; then
       command::write_skip_reason_path_alread_exists
+      command::write_diff "${src}" "${dest}"
       return
     fi
     cp -v "${src}" "${dest}"
@@ -131,6 +137,7 @@ command::command_copy_linux() {
   if helper::should_process "${command} ${src} ${dest}"; then
     if [[ -e "${dest}" ]]; then
       command::write_skip_reason_path_alread_exists
+      command::write_diff "${src}" "${dest}"
       return
     fi
     cp -v "${src}" "${dest}"
