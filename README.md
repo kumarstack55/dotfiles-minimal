@@ -10,6 +10,9 @@
 - Debian
     - bash 5.2+
     - Vim 9.0+
+- Ubuntu
+    - bash 5.1+
+    - Vim 8.2+
 - Microsoft Windows
     - Windows PowerShell 5.1+
     - Vim 9.1+
