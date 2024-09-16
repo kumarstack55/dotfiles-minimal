@@ -15,6 +15,15 @@ mkdir_win   "${HOME}\\vimfiles\\plugin"
 copy_linux "dot.vim/plugin/dotfiles.vim"   "${HOME}/.vim/plugin/dotfiles.vim"
 copy_win   "dot.vim\\plugin\\dotfiles.vim" "${HOME}\\vimfiles\\plugin\\dotfiles.vim"
 
+mkdir_linux "${HOME}/.vim/after"
+mkdir_win   "${HOME}\\vimfiles\\after"
+
+mkdir_linux "${HOME}/.vim/after/plugin"
+mkdir_win   "${HOME}\\vimfiles\\after\\plugin"
+
+copy_linux "dot.vim/after/plugin/main.vim"   "${HOME}/.vim/after/plugin/main.vim"
+copy_win   "dot.vim\\after\\plugin\\main.vim" "${HOME}\\vimfiles\\after\\plugin\\main.vim"
+
 copy_linux "dot.editorconfig" "${HOME}/.editorconfig"
 copy_win   "dot.editorconfig" "${HOME}\\.editorconfig"
 

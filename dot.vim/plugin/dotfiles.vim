@@ -28,6 +28,10 @@ function! dotfiles#set_filetype_ps1()
   call dotfiles#set_tabstop(4)
 endfunction
 
+function! dotfiles#test_colorscheme_exists(name)
+  return !empty(globpath(&rtp, 'colors/' . a:name . '.vim'))
+endfunction
+
 function! dotfiles#test_font_availability(fontname)
   if !has('win32')
     return
