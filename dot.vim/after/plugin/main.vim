@@ -29,8 +29,9 @@ set noundofile
 set nobackup
 
 " カラースキームを設定する。
-if dotfiles#test_colorscheme_exists("habamax")
-  colorscheme habamax
+let g:my_colorscheme = "habamax"
+if dotfiles#test_colorscheme_exists(g:my_colorscheme)
+  exec "colorscheme " . g:my_colorscheme
 endif
 
 " 同ファイルの複数編集に気づけるようスワップ・ファイルを作る。
