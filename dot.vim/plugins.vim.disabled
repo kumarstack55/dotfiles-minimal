@@ -1,3 +1,5 @@
+" vim:ft=vim:
+
 call plug#begin()
 
 " vim-cheatsheet opens your cheat sheet file.
