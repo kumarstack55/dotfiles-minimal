@@ -60,7 +60,7 @@ augroup fileTypeIndent
   autocmd BufNewFile,BufRead *.rst setlocal tabstop=2 softtabstop=2 shiftwidth=2
   autocmd BufNewFile,BufRead *.sh,*.bash setlocal tabstop=2 softtabstop=2 shiftwidth=2
   autocmd BufNewFile,BufRead *.txt setlocal tabstop=4 softtabstop=4 shiftwidth=4
-  autocmd BufNewFile,BufRead *.vimrc,_gvimrc setlocal tabstop=2 softtabstop=2 shiftwidth=2
+  autocmd BufNewFile,BufRead vimrc,_gvimrc,gvimrc,*.vim setlocal tabstop=2 softtabstop=2 shiftwidth=2
   autocmd BufNewFile,BufRead *.yaml,*.yml setlocal tabstop=2 softtabstop=2 shiftwidth=2
 augroup END
 
