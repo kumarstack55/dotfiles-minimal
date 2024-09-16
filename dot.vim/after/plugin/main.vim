@@ -37,6 +37,10 @@ if dotfiles#test_colorscheme_exists(g:my_colorscheme)
   exec "colorscheme " . g:my_colorscheme
 endif
 
+" 数行がチェックされて set コマンドを実行する。
+set modeline
+set modelines=2
+
 " 新しい行を編集するとき、現在の行のインデントをコピーする。
 set autoindent
 
