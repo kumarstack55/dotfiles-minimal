@@ -1,5 +1,3 @@
-" vim:ft=vim:
-
 call plug#begin()
 
 " vim-cheatsheet opens your cheat sheet file.
@@ -37,6 +35,26 @@ Plug 'godlygeek/tabular', { 'for': ['md', 'text'] }
 Plug 'preservim/vim-markdown', { 'for': ['md', 'text'] }
 
 call plug#end()
+
+function! MyGetRuntimePathPluggedNames()
+  let rtp_list = split(&rtp, ",")
+  let plugged_list_with_after = filter(rtp_list, "v:val =~ \"/plugged/\"")
+  let plugged_list = filter(plugged_list_with_after, "v:val !~ \"/after\"")
+  return plugged_list
+endfunction
+
+function! MyGetNameFromPluggedPath(val)
+  let parts = split(v:val, "/")
+  let target = "plugged"
+  let i = index(parts, target)
+  let part = parts[i + 1]
+  return part
+endfunction
+
+let g:my_rtp_plugged_list = MyGetRuntimePathPluggedNames()
+let g:my_plug_name_list = map(g:my_rtp_plugged_list, 'MyGetNameFromPluggedPath(v:val)')
+
+" TODO: 設定を別ファイルに分割する。
 
 " vim-markdown の折り畳みは使わない。
 " ハイライトのために使うため。
