@@ -105,12 +105,12 @@ env::get() {
   echo "${g_env[${key}]}"
 }
 
-command::write_skip() {
-  echo "skip."
-}
-
 command::write_skip_reason_path_alread_exists() {
   echo "skip. (reason: path already exists)"
+}
+
+command::write_skip_reason_platform_is_different() {
+  echo "skip. (reason: platform is different)"
 }
 
 command::write_diff() {
@@ -148,7 +148,7 @@ command::command_copy_win() {
   local command="$1" src="$2" dest="$3"
 
   if helper::should_process "${command} ${src} ${dest}"; then
-    command::write_skip
+    command::write_skip_reason_platform_is_different
   fi
 }
 
@@ -168,7 +168,7 @@ command::command_mkdir_win() {
   local command="$1" path="$2"
 
   if helper::should_process "${command} ${path}"; then
-    command::write_skip
+    command::write_skip_reason_platform_is_different
   fi
 }
 
