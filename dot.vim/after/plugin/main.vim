@@ -65,7 +65,9 @@ command! MyFiletypeMarkdown call dotfiles#set_filetype_markdown()
 command! MyFiletypePs1 call dotfiles#set_filetype_ps1()
 
 " plugins.vim ファイルがあれば読む。
-let plugins_vim_path = $HOME . "\\vimfiles\\plugins.vim"
-if filereadable(plugins_vim_path)
-  exec "source " . fnameescape(plugins_vim_path)
+let g:my_home_vimrc_dir_path_lists = [$HOME . "/.vim", $HOME . "\\vimfiles"]
+let g:my_home_vimrc_dir_path = join(g:my_home_vimrc_dir_path_lists, ",")
+let g:my_plugins_vim_path = globpath(g:my_home_vimrc_dir_path, "plugins.vim")
+if filereadable(g:my_plugins_vim_path)
+  exec "source " . fnameescape(my_plugins_vim_path)
 endif
