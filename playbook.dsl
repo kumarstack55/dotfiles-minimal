@@ -21,8 +21,14 @@ mkdir_win   "${HOME}\\vimfiles\\after"
 mkdir_linux "${HOME}/.vim/after/plugin"
 mkdir_win   "${HOME}\\vimfiles\\after\\plugin"
 
-copy_linux "dot.vim/after/plugin/main.vim"   "${HOME}/.vim/after/plugin/main.vim"
-copy_win   "dot.vim\\after\\plugin\\main.vim" "${HOME}\\vimfiles\\after\\plugin\\main.vim"
+copy_linux "dot.vim/after/plugin/dotfiles.vim"    "${HOME}/.vim/after/plugin/dotfiles.vim"
+copy_win   "dot.vim\\after\\plugin\\dotfiles.vim" "${HOME}\\vimfiles\\after\\plugin\\dotfiles.vim"
+
+mkdir_linux "${HOME}/.vim/after/plugin/subs"
+mkdir_win   "${HOME}\\vimfiles\\after\\plugin\\subs"
+
+copy_linux "dot.vim/after/plugin/subs/sub.vim.disabled"     "${HOME}/.vim/after/plugin/subs/sub.vim.disabled"
+copy_win   "dot.vim\\after\\plugin\\subs\\sub.vim.disabled" "${HOME}\\vimfiles\\after\\plugin\\subs\\sub.vim.disabled"
 
 copy_linux "dot.editorconfig" "${HOME}/.editorconfig"
 copy_win   "dot.editorconfig" "${HOME}\\.editorconfig"

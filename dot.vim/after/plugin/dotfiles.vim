@@ -31,12 +31,6 @@ set nobackup
 " 同ファイルの複数編集に気づけるようスワップ・ファイルを作る。
 set swapfile
 
-" カラースキームを設定する。
-let g:my_colorscheme = "habamax"
-if dotfiles#test_colorscheme_exists(g:my_colorscheme)
-  exec "colorscheme " . g:my_colorscheme
-endif
-
 " 数行がチェックされて set コマンドを実行する。
 set modeline
 set modelines=2
@@ -68,10 +62,23 @@ augroup END
 command! MyFiletypeMarkdown call dotfiles#set_filetype_markdown()
 command! MyFiletypePs1 call dotfiles#set_filetype_ps1()
 
-" plugins.vim ファイルがあれば読む。
-let g:my_home_vimrc_dir_path_lists = [$HOME . "/.vim", $HOME . "\\vimfiles"]
-let g:my_home_vimrc_dir_path = join(g:my_home_vimrc_dir_path_lists, ",")
-let g:my_plugins_vim_path = globpath(g:my_home_vimrc_dir_path, "plugins.vim")
-if filereadable(g:my_plugins_vim_path)
-  exec "source " . fnameescape(my_plugins_vim_path)
+" sub.vim ファイルがあれば読む。
+let script_path = expand('<sfile>')
+let script_dir = fnamemodify(script_path, ':p:h')
+let sub_dir = script_dir . '/subs'
+let sub_path = sub_dir . '/sub.vim'
+if filereadable(sub_path)
+  exec "source " . fnameescape(sub_path)
 endif
+
+" カラースキームを設定する。
+let g:my_colorscheme_list = ["iceberg", "habamax", "pablo"]
+for c in g:my_colorscheme_list
+  if dotfiles#test_colorscheme_exists(c)
+    if c == 'iceberg'
+      set background=dark
+    endif
+    exec "colorscheme " . c
+    break
+  endif
+endfor

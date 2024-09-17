@@ -8,7 +8,7 @@
 iwr -useb https://raw.githubusercontent.com/junegunn/vim-plug/master/plug.vim |`
     ni $HOME/vimfiles/autoload/plug.vim -Force
 
-Copy-Item $HOME\repos\gh\dotfiles-minimal\dot.vim\plugins.vim.disabled $HOME/vimfiles/plugins.vim
+Move-Item $HOME/vimfiles/plugin/after/sub/sub.vim.disabled $HOME/vimfiles/plugin/after/sub/sub.vim
 ```
 
 ## Linux
@@ -17,6 +17,5 @@ Copy-Item $HOME\repos\gh\dotfiles-minimal\dot.vim\plugins.vim.disabled $HOME/vim
 curl -fLo ~/.vim/autoload/plug.vim --create-dirs \
     https://raw.githubusercontent.com/junegunn/vim-plug/master/plug.vim
 
-cd dotfiles-minimal
-cp dot.vim/plugins.vim.disabled $HOME/.vim/plugins.vim
+mv -i $HOME/.vim/after/plugin/subs/sub.vim.disabled $HOME/.vim/after/plugin/subs/sub.vim
 ```
