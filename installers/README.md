@@ -3,6 +3,7 @@
 ## TODO
 
 - add diff for windows
+- add set_var
 
 ## McKeeman Form
 
