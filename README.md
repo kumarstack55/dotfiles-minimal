@@ -45,6 +45,10 @@ Set-ExecutionPolicy -Scope Process -ExecutionPolicy RemoteSigned
 Set-ExecutionPolicy -Scope CurrentUser -ExecutionPolicy RemoteSigned
 ```
 
+## TODO
+
+- TODO: add github copilot support
+
 ## LICENSE
 
 MIT
