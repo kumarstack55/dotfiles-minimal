@@ -1,75 +1,69 @@
-" vim:set ft=vim:
+" vim:set ft=vim sw=2 ts=2 et:
 
 call plug#begin()
 
-" vim-cheatsheet opens your cheat sheet file.
-Plug 'reireias/vim-cheatsheet', { 'on': 'Cheat' }
+  " vim-cheatsheet opens your cheat sheet file.
+  Plug 'reireias/vim-cheatsheet', { 'on': 'Cheat' }
 
-" Delete/change/add parentheses/quotes/XML-tags/much more with ease
-Plug 'tpope/vim-surround'
+  " Delete/change/add parentheses/quotes/XML-tags/much more with ease
+  Plug 'tpope/vim-surround'
 
-" EditorConfig plugin for Vim
-if v:version < 900 || (v:version == 900 && has('patch1799') == 0)
-  Plug 'editorconfig/editorconfig-vim'
-endif
+  " EditorConfig plugin for Vim
+  " 新しい Vim の場合、EditorConfig は標準で入っているため読まない。
+  if v:version < 900 || (v:version == 900 && has('patch1799') == 0)
+    Plug 'editorconfig/editorconfig-vim'
+  endif
 
-" Tagbar is a Vim plugin that provides an easy way to browse the tags of the current file and get an overview of its structure.
-Plug 'preservim/tagbar', {
+  " Tagbar is a Vim plugin that provides an easy way to browse the tags of the
+  " current file and get an overview of its structure.
+  Plug 'preservim/tagbar', {
     \ 'for': [
-        \ 'bats',
-        \ 'c',
-        \ 'c++',
-        \ 'go',
-        \ 'markdown',
-        \ 'ps1',
-        \ 'python',
-        \ 'rst',
-        \ 'rust',
-        \ 'sh',
-        \ 'snippets',
-        \ 'vim',
+      \ 'bats',
+      \ 'c',
+      \ 'c++',
+      \ 'go',
+      \ 'markdown',
+      \ 'ps1',
+      \ 'python',
+      \ 'rst',
+      \ 'rust',
+      \ 'sh',
+      \ 'snippets',
+      \ 'vim',
     \ ] }
 
-" Vim script for text filtering and alignment
-" このプラグインは vim-markdown の動作のために必要です。
-Plug 'godlygeek/tabular', { 'for': ['md', 'text'] }
+  " Vim script for text filtering and alignment
+  " このプラグインは vim-markdown の動作のために必要です。
+  Plug 'godlygeek/tabular', { 'for': ['md', 'text'] }
 
-" Syntax highlighting, matching rules and mappings for the original Markdown and extensions.
-" Markdown の中の diff などをハイライトするために使う。
-Plug 'preservim/vim-markdown', { 'for': ['md', 'text'] }
+  " Syntax highlighting, matching rules and mappings for the original Markdown
+  " and extensions.
+  " Markdown の中の diff などをハイライトするために使う。
+  Plug 'preservim/vim-markdown', { 'for': ['md', 'text'] }
 
-" Iceberg is well-designed, bluish color scheme for Vim and Neovim.
-Plug 'cocopon/iceberg.vim'
+  " Iceberg is well-designed, bluish color scheme for Vim and Neovim.
+  Plug 'cocopon/iceberg.vim'
 
 call plug#end()
 
-function! MyGetRuntimePathPluggedNames()
-  let rtp_list = split(&rtp, ",")
-  let plugged_list_with_after = filter(rtp_list, "v:val =~ \"/plugged/\"")
-  let plugged_list = filter(plugged_list_with_after, "v:val !~ \"/after\"")
-  return plugged_list
-endfunction
+let script_path = expand('<sfile>')
+let script_dir = fnamemodify(script_path, ':p:h')
 
-function! MyGetNameFromPluggedPath(val)
-  let parts = split(v:val, "/")
-  let target = "plugged"
-  let i = index(parts, target)
-  let part = parts[i + 1]
-  return part
-endfunction
-
-let g:my_rtp_plugged_list = MyGetRuntimePathPluggedNames()
-let g:my_plug_name_list = map(g:my_rtp_plugged_list, 'MyGetNameFromPluggedPath(v:val)')
-
-" TODO: 設定を別ファイルに分割する。
-
-" vim-markdown の折り畳みは使わない。
-" ハイライトのために使うため。
-let g:vim_markdown_folding_disabled = 1
-
-" vim-markdown のキー・マッピングは使わない。
-" ハイライトのために使うため。
-let g:vim_markdown_no_default_key_mappings = 1
-
-" vim-cheatsheet のファイルを指定する。
-let g:cheatsheet#cheat_file = $HOME . '\vimfiles\cheatsheet.md'
+" runtimepath に対応するファイルがあれば読む。
+" 例: reireias/vim-cheatsheet の場合、 vim-cheatsheet.vim を読む。
+" 例: cocopon/iceberg.vim の場合、 iceberg-vim.vim を読む。
+let rtp_unix_or_windows = &rtp
+let rtp_unix = substitute(rtp_unix_or_windows, '\', '/', 'g')
+let rtp_list = split(&rtp_unix, ",")
+let plugged_path_list_with_after = filter(rtp_list, "v:val =~ \"/plugged/\"")
+let plugged_path_list = filter(plugged_path_list_with_after, "v:val !~ \"/after\"")
+for plugged_path in plugged_path_list
+  let parts = split(plugged_path, "/")
+  let i = index(parts, "plugged")
+  let name_with_dot = parts[i + 1]
+  let name = substitute(name_with_dot, '\.', '-', 'g')
+  let name_vim_path = script_dir . '/' . name . '.vim'
+  if filereadable(name_vim_path)
+    exec "source " . fnameescape(name_vim_path)
+  endif
+endfor
