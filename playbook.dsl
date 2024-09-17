@@ -30,6 +30,12 @@ mkdir_win   "${HOME}\\vimfiles\\after\\plugin\\subs"
 copy_linux "dot.vim/after/plugin/subs/sub.vim.disabled"     "${HOME}/.vim/after/plugin/subs/sub.vim.disabled"
 copy_win   "dot.vim\\after\\plugin\\subs\\sub.vim.disabled" "${HOME}\\vimfiles\\after\\plugin\\subs\\sub.vim.disabled"
 
+copy_linux "dot.vim/after/plugin/subs/vim-cheatsheet.vim"     "${HOME}/.vim/after/plugin/subs/vim-cheatsheet.vim"
+copy_win   "dot.vim\\after\\plugin\\subs\\vim-cheatsheet.vim" "${HOME}\\vimfiles\\after\\plugin\\subs\\vim-cheatsheet.vim"
+
+copy_linux "dot.vim/after/plugin/subs/vim-markdown.vim"     "${HOME}/.vim/after/plugin/subs/vim-markdown.vim"
+copy_win   "dot.vim\\after\\plugin\\subs\\vim-markdown.vim" "${HOME}\\vimfiles\\after\\plugin\\subs\\vim-markdown.vim"
+
 copy_linux "dot.editorconfig" "${HOME}/.editorconfig"
 copy_win   "dot.editorconfig" "${HOME}\\.editorconfig"
 
