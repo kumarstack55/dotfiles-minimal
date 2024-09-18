@@ -27,8 +27,17 @@ class InternalErrorException: AppException {
 }
 
 class Command {
-    WriteSkip() {
-        Write-Host "skip."
+    WriteSkipReasonPathAlreadyExists() {
+        Write-Host "skip. (reason: path already exists)"
+    }
+    WriteSkipReasonPlatformIsDifferent() {
+        Write-Host "skip. (reason: platform is different)"
+    }
+    WriteDiff([string]$FilePath1, [string]$FilePath2) {
+        $Content1 = Get-Content $FilePath1
+        $Content2 = Get-Content $FilePath2
+        Compare-Object -ReferenceObject $Content1 -DifferenceObject $Content2 |
+        Write-Host
     }
     Run([System.Collections.Generic.List[string]]$Stack) {
         throw
@@ -44,11 +53,11 @@ function Test-ShouldProcess {
     return -not $WhatIfPreference
 }
 
-class CommandNoOperation : Command {
+class CommandNoOperationReasonPlatformIsDifferent : Command {
     Run([System.Collections.Generic.List[string]]$Stack) {
         $CommandArgs = $Stack -join " "
         if (Test-ShouldProcess($CommandArgs)) {
-            $this.WriteSkip()
+            $this.WriteSkipReasonPlatformIsDifferent()
         }
     }
 }
@@ -58,7 +67,8 @@ class CommandCopy : Command {
         $Command, $Source, $Destination, $_ = $Stack
         if (Test-ShouldProcess("${Command} ${Source} ${Destination}")) {
             if (Test-Path -LiteralPath $Destination) {
-                $this.WriteSkip()
+                $this.WriteSkipReasonPathAlreadyExists()
+                $this.WriteDiff($Source, $Destination)
                 return
             }
             Copy-Item -LiteralPath $Source -Destination $Destination -Verbose
@@ -71,7 +81,7 @@ class CommandMkdir : Command {
         $Command, $Path, $_ = $Stack
         if (Test-ShouldProcess("${Command} ${Path}")) {
             if (Test-Path -LiteralPath $Path) {
-                $this.WriteSkip()
+                $this.WriteSkipReasonPathAlreadyExists()
                 return
             }
             New-Item -Type Directory -Path $Path -Verbose
@@ -99,9 +109,9 @@ class CommandFactory {
         $f = [CommandFactory]::new()
         $f.Add("copy", [CommandCopy])
         $f.Add("copy_win", [CommandCopy])
-        $f.Add("copy_linux", [CommandNoOperation])
+        $f.Add("copy_linux", [CommandNoOperationReasonPlatformIsDifferent])
         $f.Add("mkdir_win", [CommandMkdir])
-        $f.Add("mkdir_linux", [CommandNoOperation])
+        $f.Add("mkdir_linux", [CommandNoOperationReasonPlatformIsDifferent])
         return $f
     }
 }
