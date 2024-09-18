@@ -54,7 +54,7 @@ let script_dir = fnamemodify(script_path, ':p:h')
 " 例: cocopon/iceberg.vim の場合、 iceberg-vim.vim を読む。
 let rtp_unix_or_windows = &rtp
 let rtp_unix = substitute(rtp_unix_or_windows, '\', '/', 'g')
-let rtp_list = split(&rtp_unix, ",")
+let rtp_list = split(rtp_unix, ",")
 let plugged_path_list_with_after = filter(rtp_list, "v:val =~ \"/plugged/\"")
 let plugged_path_list = filter(plugged_path_list_with_after, "v:val !~ \"/after\"")
 for plugged_path in plugged_path_list
