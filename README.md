@@ -28,6 +28,7 @@ cd dotfiles-minimal
 
 ./installers/bash/install.sh -c ./playbook.dsl
 ./installers/bash/install.sh -f ./playbook.dsl
+./ensure_that_hook_line_exists_in_bashrc.sh
 ```
 
 ### Microsoft Windows

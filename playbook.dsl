@@ -1,3 +1,9 @@
+mkdir_linux "${HOME}/.config"
+
+mkdir_linux "${HOME}/.config/bash"
+
+copy_linux "src/dot.config/bash/main.sh" "${HOME}/.config/bash/main.sh"
+
 mkdir_linux "${HOME}/.vim"
 mkdir_win   "${HOME}\\vimfiles"
 
