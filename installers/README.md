@@ -3,6 +3,8 @@
 ## TODO
 
 - add set_var
+- add join_path
+- add run_bash
 
 ## McKeeman Form
 
