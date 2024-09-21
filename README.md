@@ -7,19 +7,20 @@
 
 ## Requirements
 
-- Debian
-    - bash 5.2+
-    - Vim 9.0+
-- Ubuntu
-    - bash 5.1+
-    - Vim 8.2+
+- Linux
+    - Debian
+        - bash 5.2+
+        - Vim 9.0+
+    - Ubuntu
+        - bash 5.1+
+        - Vim 8.2+
 - Microsoft Windows
     - Windows PowerShell 5.1+
     - Vim 9.1+
 
 ## Installation
 
-### Debian
+### Linux
 
 ```bash
 git clone https://github.com/kumarstack55/dotfiles-minimal.git
@@ -28,6 +29,7 @@ cd dotfiles-minimal
 
 ./installers/bash/install.sh -c ./playbook.dsl
 ./installers/bash/install.sh -f ./playbook.dsl
+
 ./ensure_that_hook_line_exists_in_bashrc.sh
 ```
 
