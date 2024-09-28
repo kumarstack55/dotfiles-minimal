@@ -18,4 +18,31 @@ dotfiles::configure_editor() {
   done
 }
 
-dotfiles::configure_editor
+dotfiles::configure_path() {
+  local -a path_array
+  local home_bin_dir="$HOME/bin"
+  local found= p
+
+  if [[ ! -d "${home_bin_dir}" ]]; then
+    return
+  fi
+
+  IFS=":" read -r -a path_array <<<"$PATH"
+  for p in "${path_array[@]}"; do
+    if [[ "${p}" == "${home_bin_dir}" ]]; then
+      found=y
+      break
+    fi
+  done
+
+  if [[ "${found}" ]]; then
+    PATH="${home_bin_dir}:${PATH}"
+  fi
+}
+
+dotfiles::main() {
+  dotfiles::configure_editor
+  dotfiles::configure_path
+}
+
+dotfiles::main "$@"
