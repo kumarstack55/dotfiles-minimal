@@ -47,6 +47,7 @@ dotfiles::configure_vim_features() {
 dotfiles::main() {
   dotfiles::configure_editor
   dotfiles::configure_path
+  dotfiles::configure_vim_features
 }
 
 dotfiles::main "$@"
