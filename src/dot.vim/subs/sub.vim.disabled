@@ -50,6 +50,14 @@ call plug#begin()
     endif
   endif
 
+  if getenv('DOTFILES_VIM_LSP') == 'y'
+    " Async Language Server Protocol plugin for vim8 and neovim.
+    Plug 'prabirshrestha/vim-lsp'
+
+    " Auto configurations for Language Servers for vim-lsp.
+    Plug 'mattn/vim-lsp-settings'
+  endif
+
 call plug#end()
 
 " Plug と対応するファイルがあれば読む。
