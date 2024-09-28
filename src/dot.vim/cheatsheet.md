@@ -8,7 +8,7 @@
 `-` を区切りとしない、区切りとする、を切り替える。
 
 ```vim
-:call dotfiles#toggle_iskeyword()
+:call VimrcToggleIsKeyword()
 ```
 
 ## vim-cheatsheet
@@ -58,4 +58,3 @@ Markdown 内のテキストの文法をハイライトする。
 ```vim
 colorscheme iceberg
 ```
-

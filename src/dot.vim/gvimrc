@@ -1,16 +1,49 @@
+function! GvimrcTestFontAvailability(fontname)
+  if !has('win32')
+    return
+  endif
+
+  let l:original_font = &guifont
+  try
+    execute 'set guifont=' . a:fontname
+    if &guifont == a:fontname
+      return 1
+    else
+      return 0
+    endif
+  catch
+    return 0
+  finally
+    let &guifont = l:original_font
+  endtry
+endfunction
+
+function! GvimrcSetGuiFont(font_height_pt)
+  if !has('win32')
+    return
+  endif
+  let font_name = g:gui_font_name
+  let height = 'h' . a:font_height_pt
+  let charset = 'cSHIFTJIS'
+  let quality = 'qDEFAULT'
+  let options = [g:gui_font_name, height, charset, quality]
+  let guifont_string = join(options, ':')
+  let &guifont = guifont_string
+endfunction
+
 " メニューバーを非表示にする。
 set guioptions-=T
 
 " フォント、サイズを設定する。
 let g:gui_font_name="ＭＳ_ゴシック"
-if dotfiles#test_font_availability("Cica")
+if GvimrcTestFontAvailability("Cica")
   let g:gui_font_name="Cica"
 endif
 
-command! MyFontSize09 call dotfiles#set_gui_font(9)
-command! MyFontSize14 call dotfiles#set_gui_font(14)
-command! MyFontSize18 call dotfiles#set_gui_font(18)
-command! MyFontSize22 call dotfiles#set_gui_font(22)
+command! MyFontSize09 call GvimrcSetGuiFont(9)
+command! MyFontSize14 call GvimrcSetGuiFont(14)
+command! MyFontSize18 call GvimrcSetGuiFont(18)
+command! MyFontSize22 call GvimrcSetGuiFont(22)
 MyFontSize18
 
 " 選択範囲をシステムのクリップボードにコピーする。

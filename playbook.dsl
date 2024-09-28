@@ -15,32 +15,17 @@ copy_win   "src\\dot.vim\\vimrc" "${HOME}\\vimfiles\\vimrc"
 
 copy_win "src/dot.vim\\gvimrc" "${HOME}\\vimfiles\\gvimrc"
 
-mkdir_linux "${HOME}/.vim/plugin"
-mkdir_win   "${HOME}\\vimfiles\\plugin"
+mkdir_linux "${HOME}/.vim/subs"
+mkdir_win   "${HOME}\\vimfiles\\subs"
 
-copy_linux "src/dot.vim/plugin/dotfiles.vim"    "${HOME}/.vim/plugin/dotfiles.vim"
-copy_win   "src\\dot.vim\\plugin\\dotfiles.vim" "${HOME}\\vimfiles\\plugin\\dotfiles.vim"
+copy_linux "src/dot.vim/subs/sub.vim.disabled"     "${HOME}/.vim/subs/sub.vim.disabled"
+copy_win   "src\\dot.vim\\subs\\sub.vim.disabled" "${HOME}\\vimfiles\\subs\\sub.vim.disabled"
 
-mkdir_linux "${HOME}/.vim/after"
-mkdir_win   "${HOME}\\vimfiles\\after"
+copy_linux "src/dot.vim/subs/vim-cheatsheet.vim"     "${HOME}/.vim/subs/vim-cheatsheet.vim"
+copy_win   "src\\dot.vim\\subs\\vim-cheatsheet.vim" "${HOME}\\vimfiles\\subs\\vim-cheatsheet.vim"
 
-mkdir_linux "${HOME}/.vim/after/plugin"
-mkdir_win   "${HOME}\\vimfiles\\after\\plugin"
-
-copy_linux "src/dot.vim/after/plugin/dotfiles.vim"     "${HOME}/.vim/after/plugin/dotfiles.vim"
-copy_win   "src\\dot.vim\\after\\plugin\\dotfiles.vim" "${HOME}\\vimfiles\\after\\plugin\\dotfiles.vim"
-
-mkdir_linux "${HOME}/.vim/after/plugin/subs"
-mkdir_win   "${HOME}\\vimfiles\\after\\plugin\\subs"
-
-copy_linux "src/dot.vim/after/plugin/subs/sub.vim.disabled"      "${HOME}/.vim/after/plugin/subs/sub.vim.disabled"
-copy_win   "src\\dot.vim\\after\\plugin\\subs\\sub.vim.disabled" "${HOME}\\vimfiles\\after\\plugin\\subs\\sub.vim.disabled"
-
-copy_linux "src/dot.vim/after/plugin/subs/vim-cheatsheet.vim"      "${HOME}/.vim/after/plugin/subs/vim-cheatsheet.vim"
-copy_win   "src\\dot.vim\\after\\plugin\\subs\\vim-cheatsheet.vim" "${HOME}\\vimfiles\\after\\plugin\\subs\\vim-cheatsheet.vim"
-
-copy_linux "src/dot.vim/after/plugin/subs/vim-markdown.vim"      "${HOME}/.vim/after/plugin/subs/vim-markdown.vim"
-copy_win   "src\\dot.vim\\after\\plugin\\subs\\vim-markdown.vim" "${HOME}\\vimfiles\\after\\plugin\\subs\\vim-markdown.vim"
+copy_linux "src/dot.vim/subs/vim-markdown.vim"     "${HOME}/.vim/subs/vim-markdown.vim"
+copy_win   "src\\dot.vim\\subs\\vim-markdown.vim" "${HOME}\\vimfiles\\subs\\vim-markdown.vim"
 
 copy_linux "src/dot.editorconfig" "${HOME}/.editorconfig"
 copy_win   "src\\dot.editorconfig" "${HOME}\\.editorconfig"
