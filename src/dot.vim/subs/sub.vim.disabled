@@ -46,21 +46,15 @@ call plug#begin()
 
 call plug#end()
 
+" Plug と対応するファイルがあれば読む。
+" 例: reireias/vim-cheatsheet の場合、 vim-cheatsheet.vim があれば読む。
+" 例: cocopon/iceberg.vim の場合、 iceberg-vim.vim があれば読む。
+" Plug は on や for など遅延で読み込まれることがあるが、条件は問わず読む。
+" そうしないと、モジュールの読み込み時に期待した設定が反映されないため。
 let script_path = expand('<sfile>')
 let script_dir = fnamemodify(script_path, ':p:h')
-
-" runtimepath に対応するファイルがあれば読む。
-" 例: reireias/vim-cheatsheet の場合、 vim-cheatsheet.vim を読む。
-" 例: cocopon/iceberg.vim の場合、 iceberg-vim.vim を読む。
-let rtp_unix_or_windows = &rtp
-let rtp_unix = substitute(rtp_unix_or_windows, '\', '/', 'g')
-let rtp_list = split(rtp_unix, ",")
-let plugged_path_list_with_after = filter(rtp_list, "v:val =~ \"/plugged/\"")
-let plugged_path_list = filter(plugged_path_list_with_after, "v:val !~ \"/after\"")
-for plugged_path in plugged_path_list
-  let parts = split(plugged_path, "/")
-  let i = index(parts, "plugged")
-  let name_with_dot = parts[i + 1]
+let plugs_keys = keys(g:plugs)
+for name_with_dot in plugs_keys
   let name = substitute(name_with_dot, '\.', '-', 'g')
   let name_vim_path = script_dir . '/' . name . '.vim'
   if filereadable(name_vim_path)
