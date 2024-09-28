@@ -40,6 +40,10 @@ dotfiles::configure_path() {
   fi
 }
 
+dotfiles::configure_vim_features() {
+  export DOTFILES_VIM_GITHUB_COPILOT=n
+}
+
 dotfiles::main() {
   dotfiles::configure_editor
   dotfiles::configure_path

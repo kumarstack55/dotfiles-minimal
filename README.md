@@ -14,6 +14,9 @@
     - Ubuntu
         - bash 5.1+
         - Vim 8.2+
+            - If you use github copilot, you need Vim 9.0+.
+        - NeoVim 0.6+
+            - If you use github copilot, you need NeoVim 0.7+.
 - Microsoft Windows
     - Windows PowerShell 5.1+
     - Vim 9.1+
@@ -49,8 +52,6 @@ Set-ExecutionPolicy -Scope CurrentUser -ExecutionPolicy RemoteSigned
 ```
 
 ## TODO
-
-- TODO: add github copilot support
 
 ## LICENSE
 
