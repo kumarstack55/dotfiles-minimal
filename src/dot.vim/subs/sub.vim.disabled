@@ -10,7 +10,7 @@ call plug#begin()
 
   " EditorConfig plugin for Vim
   " 新しい Vim の場合、EditorConfig は標準で入っているため読まない。
-  if v:version < 900 || (v:version == 900 && has('patch1799') == 0)
+  if !has('nvim') && (v:version < 900 || (v:version == 900 && has('patch1799') == 0))
     Plug 'editorconfig/editorconfig-vim'
   endif
 
