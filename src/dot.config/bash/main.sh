@@ -1,6 +1,6 @@
 #!/bin/bash
 
-_dotfiles__editor_list=("nvim", "vim" "vi")
+_dotfiles__editor_list=("nvim" "vim" "vi")
 
 dotfiles::test_command_exists() {
   local command="$1"
@@ -42,6 +42,7 @@ dotfiles::configure_path() {
 
 dotfiles::configure_vim_features() {
   export DOTFILES_VIM_GITHUB_COPILOT=n
+  export DOTFILES_VIM_LSP=n
 }
 
 dotfiles::main() {
