@@ -1,6 +1,7 @@
 let g:my_vimrc_iskeyword_contains_hyphen = 0
 
-function! VimrcToggleIskeyword()
+" ハイフンをキーワードに含めるかどうかを切り替える。
+function! VimrcToggleIsKeyword()
   if g:my_vimrc_iskeyword_contains_hyphen
     echo 'Hyphen is used as delimiter.'
     set iskeyword-=-
@@ -11,6 +12,7 @@ function! VimrcToggleIskeyword()
   let g:my_vimrc_iskeyword_contains_hyphen = (g:my_vimrc_iskeyword_contains_hyphen + 1) % 2
 endfunction
 
+" タブ幅を設定する。
 function! VimrcTabstopSet(ts)
   let &l:tabstop = a:ts
   let &l:shiftwidth = a:ts
@@ -18,18 +20,34 @@ function! VimrcTabstopSet(ts)
   setlocal expandtab
 endfunction
 
+" ファイルタイプが Markdown の設定をする。
 function! VimrcFiletypeMarkdown()
   setlocal filetype=markdown
   call VimrcTabstopSet(4)
 endfunction
 
+" ファイルタイプが PowerShell の設定をする。
 function! VimrcFiletypePowerShell()
   setlocal filetype=ps1
   call VimrcTabstopSet(4)
 endfunction
 
+" カラースキームが存在するかどうかを返す。
 function! VimrcTestColorschemeExists(name)
   return !empty(globpath(&rtp, 'colors/' . a:name . '.vim'))
+endfunction
+
+" カラースキームを設定する。
+function VimrcConfigureColorscheme(colorscheme_list)
+  for c in a:colorscheme_list
+    if VimrcTestColorschemeExists(c)
+      if c == 'iceberg'
+        set background=dark
+      endif
+      exec "colorscheme " . c
+      break
+    endif
+  endfor
 endfunction
 
 " 記号などをASCII文字の2倍幅として扱う。
@@ -94,6 +112,9 @@ augroup END
 command! MyFiletypeMarkdown call VimrcFiletypeMarkdown
 command! MyFiletypePs1 call VimrcFiletypePowerShell
 
+" キーワードにハイフンを含めるかどうかを切り替えるコマンドを定義する。
+command! MyIsKeywordToggle call VimrcToggleIsKeyword
+
 " sub.vim ファイルがあれば読む。
 let script_path = expand('<sfile>')
 let script_dir = fnamemodify(script_path, ':p:h')
@@ -104,13 +125,6 @@ if filereadable(sub_path)
 endif
 
 " カラースキームを設定する。
+" カラースキームのいくつかはプラグインに依存するため、 sub.vim のあとに実行する。
 let g:my_colorscheme_list = ["iceberg", "habamax", "pablo"]
-for c in g:my_colorscheme_list
-  if VimrcTestColorschemeExists(c)
-    if c == 'iceberg'
-      set background=dark
-    endif
-    exec "colorscheme " . c
-    break
-  endif
-endfor
+call VimrcConfigureColorscheme(g:my_colorscheme_list)
