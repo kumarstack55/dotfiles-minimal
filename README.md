@@ -59,8 +59,6 @@ Set-ExecutionPolicy -Scope CurrentUser -ExecutionPolicy RemoteSigned
 ## TODO
 
 - [ ] test lsp on windows
-- [ ] add nerdtree
-- [ ] add bufexplorer
 - [ ] simplify installer playbook
 
 ## LICENSE
