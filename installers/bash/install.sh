@@ -178,13 +178,18 @@ command::command_set() {
   env::set "${name}" "${value}"
 }
 
-command::command_join_path() {
+command::command_debug_var() {
   local command="$1" name="$2"
   local value
 
   value=$(env::get "${name}")
+  echo "debug_var: ${name}=${value}"
+}
 
-  shift 2
+command::command_join_path() {
+  local command="$1" name="$2" value="$3"
+
+  shift 3
   for path_part in "$@"; do
     value="${value}/${path_part}"
   done

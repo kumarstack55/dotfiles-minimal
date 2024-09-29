@@ -12,7 +12,11 @@ tests_dir="./tests"
 for dsl_path in "${tests_dir}"/*.dsl; do
   echo "## test: ${dsl_path}"
   basename=$(basename "${dsl_path}" .dsl)
-  expect_path="${tests_dir}/${basename}.txt"
+
+  expect_path="${tests_dir}/${basename}_linux.txt"
+  if [[ ! -f "${expect_path}" ]]; then
+    expect_path="${tests_dir}/${basename}.txt"
+  fi
 
   if ! actual=$(set -x; ./bash/install.sh -c -e TEST_DUMMY_KEY=test_dummy_value "${dsl_path}"); then
     echo "fail - It failed to run ${dsl_path}"

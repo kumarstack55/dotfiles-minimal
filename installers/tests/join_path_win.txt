@@ -1,0 +1,7 @@
+---
+line: [join_path "PATH1" "dir1" "dir2" "file.txt"]
+run: join_path PATH1 dir1 dir2 file.txt
+---
+line: [debug_var "PATH1"]
+run: debug_var PATH1
+debug_var: PATH1=dir1\dir2\file.txt

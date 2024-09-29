@@ -26,10 +26,12 @@ command
     function ws1 arguments
 
 function
-    "set"
     "copy"
     "copy_win"
+    "debug_var"
+    "join_path"
     "mkdir_win"
+    "set"
 
 arguments
     argument

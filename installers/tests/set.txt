@@ -2,6 +2,6 @@
 line: [set "VAR1" "value"]
 run: set VAR1 value
 ---
-line: [copy "./a" "${VAR1}/a.txt"]
-run: copy ./a value/a.txt
-should_process: copy ./a value/a.txt
+line: [debug_var "VAR1"]
+run: debug_var VAR1
+debug_var: VAR1=value
