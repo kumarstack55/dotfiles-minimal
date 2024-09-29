@@ -152,6 +152,25 @@ command::command_copy_win() {
   fi
 }
 
+command::command_debug_var() {
+  local command="$1" name="$2"
+  local value
+
+  value=$(env::get "${name}")
+  echo "debug_var: ${name}=${value}"
+}
+
+command::command_join_path() {
+  local command="$1" name="$2" value="$3"
+
+  shift 3
+  for path_part in "$@"; do
+    value="${value}/${path_part}"
+  done
+
+  env::set "${name}" "${value}"
+}
+
 command::command_mkdir_linux() {
   local command="$1" path="$2"
 
@@ -174,25 +193,6 @@ command::command_mkdir_win() {
 
 command::command_set() {
   local command="$1" name="$2" value="$3"
-
-  env::set "${name}" "${value}"
-}
-
-command::command_debug_var() {
-  local command="$1" name="$2"
-  local value
-
-  value=$(env::get "${name}")
-  echo "debug_var: ${name}=${value}"
-}
-
-command::command_join_path() {
-  local command="$1" name="$2" value="$3"
-
-  shift 3
-  for path_part in "$@"; do
-    value="${value}/${path_part}"
-  done
 
   env::set "${name}" "${value}"
 }
