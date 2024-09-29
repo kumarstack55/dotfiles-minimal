@@ -136,13 +136,16 @@ class CommandFactory {
     static [CommandFactory]Create() {
         $f = [CommandFactory]::new()
         $f.Add("copy", [CommandCopy])
-        $f.Add("copy_win", [CommandCopy])
         $f.Add("copy_linux", [CommandNoOperationReasonPlatformIsDifferent])
+        $f.Add("copy_win", [CommandCopy])
         $f.Add("debug_var", [CommandDebugVar])
+        $f.Add("mkdir", [CommandMkdir])
         $f.Add("mkdir_win", [CommandMkdir])
         $f.Add("mkdir_linux", [CommandNoOperationReasonPlatformIsDifferent])
         $f.Add("join_path", [CommandJoinPath])
         $f.Add("set", [CommandSet])
+        $f.Add("set_linux", [CommandNoOperationReasonPlatformIsDifferent])
+        $f.Add("set_win", [CommandSet])
         return $f
     }
 }
