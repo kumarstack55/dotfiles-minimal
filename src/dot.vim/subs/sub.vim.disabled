@@ -8,9 +8,9 @@ call plug#begin()
   " Delete/change/add parentheses/quotes/XML-tags/much more with ease
   Plug 'tpope/vim-surround'
 
-  " EditorConfig plugin for Vim
   " 新しい Vim の場合、EditorConfig は標準で入っているため読まない。
   if !has('nvim') && (v:version < 900 || (v:version == 900 && has('patch1799') == 0))
+    " EditorConfig plugin for Vim
     Plug 'editorconfig/editorconfig-vim'
   endif
 
@@ -46,6 +46,7 @@ call plug#begin()
 
   if (v:version >= 900 && has('patch0185')) || has('nvim-0.7')
     if getenv('DOTFILES_VIM_GITHUB_COPILOT') == 'y'
+      " Copilot.vim is a Vim/Neovim plugin for GitHub Copilot.
       Plug 'github/copilot.vim'
     endif
   endif
@@ -56,6 +57,16 @@ call plug#begin()
 
     " Auto configurations for Language Servers for vim-lsp.
     Plug 'mattn/vim-lsp-settings'
+  endif
+
+  if getenv('DOTFILES_VIM_NERDTREE') == 'y'
+    " The NERDTree is a file system explorer for the Vim editor.
+    Plug 'preservim/nerdtree'
+  endif
+
+  if getenv('DOTFILES_VIM_BUFEXPLORER') == 'y'
+    " BufExplorer Plugin for Vim
+    Plug 'jlanzarotta/bufexplorer'
   endif
 
 call plug#end()
