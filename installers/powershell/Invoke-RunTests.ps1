@@ -10,7 +10,7 @@ $DslItems = Get-ChildItem -LiteralPath $TestsDirectoryItem.FullName -File -Filte
 foreach ($DslItem in $DslItems) {
     Write-Host ("## test: {0}/{1}" -f $TestsDirectoryItem.Name, $DslItem)
 
-    $ExpectPath = Join-Path $TestsDirectoryItem.FullName ($DslItem.BaseName + "_win.txt")
+    $ExpectPath = Join-Path $TestsDirectoryItem.FullName ($DslItem.BaseName + ".windows.txt")
     if (-not (Test-Path -LiteralPath $ExpectPath)) {
         $ExpectPath = Join-Path $TestsDirectoryItem.FullName ($DslItem.BaseName + ".txt")
     }

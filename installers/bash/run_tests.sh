@@ -13,7 +13,7 @@ for dsl_path in "${tests_dir}"/*.dsl; do
   echo "## test: ${dsl_path}"
   basename=$(basename "${dsl_path}" .dsl)
 
-  expect_path="${tests_dir}/${basename}_linux.txt"
+  expect_path="${tests_dir}/${basename}.linux.txt"
   if [[ ! -f "${expect_path}" ]]; then
     expect_path="${tests_dir}/${basename}.txt"
   fi
