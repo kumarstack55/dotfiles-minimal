@@ -1,6 +1,8 @@
 #!/bin/bash
 
 bashrc_path="${HOME}/.bashrc"
+
+# shellcheck disable=SC2016
 hook_line='if [ -f "${HOME}/.config/bash/main.sh" ]; then . "${HOME}/.config/bash/main.sh"; fi'
 
 err() {
@@ -18,9 +20,10 @@ test_hook_line_exists() {
 
 copy_item_with_date() {
   local path="$1"
-  local postfix=$(date "+%F.%s")
+  local postfix
 
-  cp -iv "${path}" "${path}.${postfix}"
+  postfix=$(date "+%F.%s") || die
+  cp -iv "${path}" "${path}.${postfix}" || die
 }
 
 ensure_that_hook_line_exists() {

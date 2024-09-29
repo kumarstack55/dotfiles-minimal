@@ -10,7 +10,7 @@ dotfiles::test_command_exists() {
 dotfiles::configure_editor() {
   local editor
 
-  for editor in ${_dotfiles__editor_list[@]}; do
+  for editor in "${_dotfiles__editor_list[@]}"; do
     if dotfiles::test_command_exists "${editor}"; then
       export EDITOR="${editor}"
       break
@@ -21,7 +21,8 @@ dotfiles::configure_editor() {
 dotfiles::configure_path() {
   local -a path_array
   local home_bin_dir="$HOME/bin"
-  local found= p
+  local found=
+  local p
 
   if [[ ! -d "${home_bin_dir}" ]]; then
     return
@@ -41,9 +42,12 @@ dotfiles::configure_path() {
 }
 
 dotfiles::configure_vim_features() {
-  local script_dir=$(cd -- "$(dirname -- "${BASH_SOURCE[0]}")" &> /dev/null && pwd)
-  local env_sh_path="${script_dir}/env.sh"
+  local script_dir env_sh_path
 
+  script_dir=$(cd -- "$(dirname -- "${BASH_SOURCE[0]}")" &> /dev/null && pwd)
+  env_sh_path="${script_dir}/env.sh"
+
+  # shellcheck source=./env.sh
   . "${env_sh_path}"
 }
 
