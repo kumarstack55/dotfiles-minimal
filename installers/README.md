@@ -28,6 +28,8 @@ function
     "copy_win"
     "debug_var"
     "join_path"
+    "mkdir"
+    "mkdir_linux"
     "mkdir_win"
     "set"
     "set_linux"
@@ -61,7 +63,7 @@ variable
     '${' variable_name '}'
 
 variable_name
-    upper_case_characters_and_underscores
+    uppercase_characters_or_lowercase_characters_or_underscores
 
 space
     '0020'

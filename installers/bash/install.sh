@@ -171,7 +171,7 @@ command::command_join_path() {
   env::set "${name}" "${value}"
 }
 
-command::command_mkdir_linux() {
+command::command_mkdir() {
   local command="$1" path="$2"
 
   if helper::should_process "${command} ${path}"; then
@@ -181,6 +181,10 @@ command::command_mkdir_linux() {
     fi
     mkdir -p -v "${path}"
   fi
+}
+
+command::command_mkdir_linux() {
+  command::command_mkdir "$@"
 }
 
 command::command_mkdir_win() {
