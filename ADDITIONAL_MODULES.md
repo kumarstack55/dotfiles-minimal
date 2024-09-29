@@ -36,3 +36,14 @@ mv -i $HOME/.vim/subs/sub.vim.disabled $HOME/.vim/subs/sub.vim
 ```bash
 export DOTFILES_VIM_GITHUB_COPILOT=y
 ```
+
+For more information:
+
+- NeoVim
+    - https://neovim.io/
+- GitHub Copilot
+    - https://github.com/features/copilot
+    - https://docs.github.com/en/copilot/using-github-copilot/getting-code-suggestions-in-your-ide-with-github-copilot?tool=vimneovim
+- Node.js
+    - https://nodejs.org/en
+    - https://nodejs.org/en/download/package-manager
