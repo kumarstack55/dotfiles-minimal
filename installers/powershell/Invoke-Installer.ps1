@@ -76,6 +76,27 @@ class CommandCopy : Command {
     }
 }
 
+class CommandDebugVar : Command {
+    Run([System.Collections.Generic.List[string]]$Stack) {
+        $Command, $Name, $_ = $Stack
+
+        $Value = $script:Env[$Name]
+        Write-Host "debug_var: ${Name}=${Value}"
+    }
+}
+
+class CommandJoinPath : Command {
+    Run([System.Collections.Generic.List[string]]$Stack) {
+        $Command, $Name, $Value, $Stack2 = $Stack
+
+        foreach ($PathPart in $Stack2) {
+            $Value = Join-Path $Value $PathPart
+        }
+
+        $script:Env[$Name] = $Value
+    }
+}
+
 class CommandMkdir : Command {
     Run([System.Collections.Generic.List[string]]$Stack) {
         $Command, $Path, $_ = $Stack
@@ -86,6 +107,13 @@ class CommandMkdir : Command {
             }
             New-Item -Type Directory -Path $Path -Verbose
         }
+    }
+}
+
+class CommandSet : Command {
+    Run([System.Collections.Generic.List[string]]$Stack) {
+        $Command, $Name, $Value, $_ = $Stack
+        $script:Env[$Name] = $Value
     }
 }
 
@@ -110,8 +138,11 @@ class CommandFactory {
         $f.Add("copy", [CommandCopy])
         $f.Add("copy_win", [CommandCopy])
         $f.Add("copy_linux", [CommandNoOperationReasonPlatformIsDifferent])
+        $f.Add("debug_var", [CommandDebugVar])
         $f.Add("mkdir_win", [CommandMkdir])
         $f.Add("mkdir_linux", [CommandNoOperationReasonPlatformIsDifferent])
+        $f.Add("join_path", [CommandJoinPath])
+        $f.Add("set", [CommandSet])
         return $f
     }
 }

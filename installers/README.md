@@ -2,9 +2,6 @@
 
 ## TODO
 
-- windows
-    - add set
-    - add join_path
 - add run_bash
 
 ## McKeeman Form
