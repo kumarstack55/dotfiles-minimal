@@ -41,8 +41,10 @@ dotfiles::configure_path() {
 }
 
 dotfiles::configure_vim_features() {
-  export DOTFILES_VIM_GITHUB_COPILOT=n
-  export DOTFILES_VIM_LSP=n
+  local script_dir=$(cd -- "$(dirname -- "${BASH_SOURCE[0]}")" &> /dev/null && pwd)
+  local env_sh_path="${script_dir}/env.sh"
+
+  . "${env_sh_path}"
 }
 
 dotfiles::main() {

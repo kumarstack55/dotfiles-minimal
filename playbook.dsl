@@ -4,6 +4,8 @@ mkdir_linux "${HOME}/.config/bash"
 
 copy_linux "src/dot.config/bash/main.sh" "${HOME}/.config/bash/main.sh"
 
+copy_linux "src/dot.config/bash/env.sh" "${HOME}/.config/bash/env.sh"
+
 mkdir_linux "${HOME}/.config/nvim"
 
 copy_linux "src/dot.config/nvim/init.vim" "${HOME}/.config/nvim/init.vim"
