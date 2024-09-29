@@ -1,5 +1,7 @@
 # ADDITIONAL MODULES
 
+To install additional modules, you need to install vim-plug, and enable a Vim script file by renaming it.
+
 ## Platforms
 
 ### Windows
