@@ -172,6 +172,26 @@ command::command_mkdir_win() {
   fi
 }
 
+command::command_set() {
+  local command="$1" name="$2" value="$3"
+
+  env::set "${name}" "${value}"
+}
+
+command::command_join_path() {
+  local command="$1" name="$2"
+  local value
+
+  value=$(env::get "${name}")
+
+  shift 2
+  for path_part in "$@"; do
+    value="${value}/${path_part}"
+  done
+
+  env::set "${name}" "${value}"
+}
+
 command::test_exists() {
   local function_name="$1" command_func
 

@@ -2,8 +2,9 @@
 
 ## TODO
 
-- add set_var
-- add join_path
+- windows
+    - add set
+    - add join_path
 - add run_bash
 
 ## McKeeman Form
@@ -25,6 +26,7 @@ command
     function ws1 arguments
 
 function
+    "set"
     "copy"
     "copy_win"
     "mkdir_win"
@@ -57,8 +59,7 @@ variable
     '${' variable_name '}'
 
 variable_name
-    "HOME"
-    "PROFILE"
+    upper_case_characters_and_underscores
 
 space
     '0020'

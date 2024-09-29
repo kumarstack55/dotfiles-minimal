@@ -1,0 +1,10 @@
+---
+line: [set "DIR1" "dir1"]
+run: set DIR1 dir1
+---
+line: [join_path "DIR1" "dir2" "dir3"]
+run: join_path DIR1 dir2 dir3
+---
+line: [copy "./a.txt" "${DIR1}/a.txt"]
+run: copy ./a.txt dir1/dir2/dir3/a.txt
+should_process: copy ./a.txt dir1/dir2/dir3/a.txt
