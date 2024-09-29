@@ -16,10 +16,10 @@
         - bash 5.1+
         - Vim 8.2+
             - If you use github copilot, you need Vim 9.0+.
-            - If you use wsl, LSP will not work.
+            - If you use wsl, install npm before you install lsp server.
         - NeoVim 0.6+
             - If you use github copilot, you need NeoVim 0.7+.
-            - If you use wsl, LSP will not work.
+            - If you use wsl, install npm before you install lsp server.
 - Microsoft Windows
     - Windows PowerShell 5.1+
     - Vim 9.1+
@@ -61,7 +61,6 @@ Set-ExecutionPolicy -Scope CurrentUser -ExecutionPolicy RemoteSigned
 - [ ] test lsp on windows
 - [ ] add nerdtree
 - [ ] add bufexplorer
-- [ ] use lsp in wsl
 - [ ] simplify installer playbook
 
 ## LICENSE
