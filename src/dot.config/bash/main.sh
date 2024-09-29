@@ -4,7 +4,7 @@ _dotfiles__editor_list=("nvim" "vim" "vi")
 
 dotfiles::test_command_exists() {
   local command="$1"
-  type "${command}" 2>&1 >/dev/null
+  type "${command}" >/dev/null 2>&1
 }
 
 dotfiles::configure_editor() {
