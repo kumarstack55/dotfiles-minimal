@@ -11,12 +11,15 @@
     - Debian
         - bash 5.2+
         - Vim 9.0+
+        - NeoVim 0.7+
     - Ubuntu
         - bash 5.1+
         - Vim 8.2+
             - If you use github copilot, you need Vim 9.0+.
+            - If you use wsl, LSP will not work.
         - NeoVim 0.6+
             - If you use github copilot, you need NeoVim 0.7+.
+            - If you use wsl, LSP will not work.
 - Microsoft Windows
     - Windows PowerShell 5.1+
     - Vim 9.1+
@@ -35,6 +38,8 @@ cd dotfiles-minimal
 
 ./ensure_that_hook_line_exists_in_bashrc.sh
 ```
+
+If you want to install additional modules, you need to continue reading the additional_modules.md file.
 
 ### Microsoft Windows
 
