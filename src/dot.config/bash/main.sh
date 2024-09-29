@@ -35,7 +35,7 @@ dotfiles::configure_path() {
     fi
   done
 
-  if [[ "${found}" ]]; then
+  if [[ ! "${found}" ]]; then
     PATH="${home_bin_dir}:${PATH}"
   fi
 }
