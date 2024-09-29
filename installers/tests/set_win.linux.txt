@@ -1,0 +1,8 @@
+---
+line: [set_win "VAR1" "value"]
+run: set_win VAR1 value
+skip. (reason: platform is different)
+---
+line: [debug_var "VAR1"]
+run: debug_var VAR1
+debug_var: VAR1=

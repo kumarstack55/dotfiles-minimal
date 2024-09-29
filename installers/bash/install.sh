@@ -197,6 +197,18 @@ command::command_set() {
   env::set "${name}" "${value}"
 }
 
+command::command_set_linux() {
+  local command="$1" name="$2" value="$3"
+
+  env::set "${name}" "${value}"
+}
+
+command::command_set_win() {
+  local command="$1" name="$2" value="$3"
+
+  command::write_skip_reason_platform_is_different
+}
+
 command::test_exists() {
   local function_name="$1" command_func
 

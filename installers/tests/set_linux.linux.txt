@@ -1,0 +1,7 @@
+---
+line: [set_linux "VAR1" "value"]
+run: set_linux VAR1 value
+---
+line: [debug_var "VAR1"]
+run: debug_var VAR1
+debug_var: VAR1=value

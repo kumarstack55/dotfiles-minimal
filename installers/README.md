@@ -24,11 +24,14 @@ command
 
 function
     "copy"
+    "copy_linux"
     "copy_win"
     "debug_var"
     "join_path"
     "mkdir_win"
     "set"
+    "set_linux"
+    "set_win"
 
 arguments
     argument
