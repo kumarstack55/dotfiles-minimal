@@ -84,6 +84,13 @@ set swapfile
 set modeline
 set modelines=2
 
+" 最後の編集位置にカーソルを移動する。
+" より詳細は :help last-position-jump を参照してください。
+autocmd BufReadPost *
+  \ if line("'\"") >= 1 && line("'\"") <= line("$") && &ft !~# 'commit'
+  \ |   exe "normal! g`\""
+  \ | endif
+
 " 新しい行を編集するとき、現在の行のインデントをコピーする。
 set autoindent
 
