@@ -9,12 +9,14 @@ join_path "dst_path_bash_dir" "${dst_path_config_dir}" "bash"
 join_path "dst_path_bash_main_sh" "${dst_path_bash_dir}" "main.sh"
 join_path "dst_path_bash_env_sh" "${dst_path_bash_dir}" "env.sh"
 join_path "dst_path_nvim_dir" "${dst_path_config_dir}" "nvim"
+join_path "dst_path_powershell_dir" "${dst_path_config_dir}\\powershell"
 
 set_win "dst_path_nvim_dir_win" "${HOME}\\AppData\\Local\\nvim"
 
 join_path "src_path_bash_main_sh" "src" "dot.config" "bash" "main.sh"
 join_path "src_path_bash_env_sh" "src" "dot.config" "bash" "env.sh"
 join_path "src_path_nvim_init_vim" "src" "dot.config" "nvim" "${src_init_vim_filename}"
+join_path "src_path_env_ps1" "src" "dot.config" "powershell" "env.ps1"
 
 join_path "src_path_cheatsheet_md" "src" "dot.vim" "cheatsheet.md"
 join_path "src_path_vimrc" "src" "dot.vim" "vimrc"
@@ -51,6 +53,10 @@ copy "${src_path_bash_env_sh}" "${dst_path_bash_env_sh}"
 # dir: $HOME/.config/nvim
 mkdir_linux "${dst_path_nvim_dir}"
 copy_linux "${src_path_nvim_init_vim}" "${dst_path_nvim_dir}/init.vim"
+
+# dir: $HOME/.config/powershell
+mkdir_win "${dst_path_powershell_dir}"
+copy_win "${src_path_env_ps1}" "${dst_path_powershell_dir}\\env.ps1"
 
 # dir: $HOME/AppData/Local/nvim
 mkdir_win "${dst_path_nvim_dir_win}"

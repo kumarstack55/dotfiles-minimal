@@ -27,6 +27,10 @@ function Set-MyPromptSwitch {
     Invoke-DotfilesSwitchPrompt
 }
 
+if (Test-Path "${HOME}\.config\powershell\env.ps1") {
+    . "${HOME}\.config\powershell\env.ps1"
+}
+
 # 既定では、タブキーでの補完は完全なコマンドを出力する。
 # bash のように、タブキーでの補完をコマンド候補内の共通文字列の最大長の文字列にする。
 Set-PSReadlineKeyHandler -Key Tab -Function Complete
