@@ -42,6 +42,10 @@ mv -i $HOME/.vim/subs/sub.vim.disabled $HOME/.vim/subs/sub.vim
 export DOTFILES_VIM_GITHUB_COPILOT=y
 ```
 
+```powershell
+$env:DOTFILES_VIM_GITHUB_COPILOT = "y"
+```
+
 For more information:
 
 - NeoVim
@@ -52,3 +56,33 @@ For more information:
 - Node.js
     - https://nodejs.org/en
     - https://nodejs.org/en/download/package-manager
+
+### vim-lsp
+
+```bash
+export DOTFILES_VIM_LSP=y
+```
+
+```powershell
+$env:DOTFILES_VIM_LSP = "y"
+```
+
+### NERDTree
+
+```bash
+export DOTFILES_VIM_NERDTREE=y
+```
+
+```powershell
+$env:DOTFILES_VIM_NERDTREE = "y"
+```
+
+### BufExplorer
+
+```bash
+export DOTFILES_VIM_BUFEXPLORER=y
+```
+
+```powershell
+$env:DOTFILES_VIM_BUFEXPLORER = "y"
+```
