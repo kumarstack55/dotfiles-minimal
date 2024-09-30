@@ -52,4 +52,4 @@ copy "${src_path_vim_markdown}" "${dst_path_vim_markdown}"
 copy "${src_path_vim_lsp_vim}" "${dst_path_vim_lsp_vim}"
 
 # dir: $PROFILE
-copy_win "src\\Documents\\WindowsPowerShell\\Microsoft.PowerShell_profile.ps1" "${PROFILE}\\Microsoft.PowerShell_profile.ps1"
+copy_win "src\\Documents\\WindowsPowerShell\\Microsoft.PowerShell_profile.ps1" "${PROFILE}"
