@@ -33,11 +33,20 @@ class Command {
     WriteSkipReasonPlatformIsDifferent() {
         Write-Host "skip. (reason: platform is different)"
     }
+    WriteDiffContent([string]$FilePath1, [string[]]$Content1, [string]$FilePath2, [string[]]$Content2) {
+        $Difference = Compare-Object -ReferenceObject $Content1 -DifferenceObject $Content2
+        foreach ($Diff in $Difference) {
+            if ($Diff.SideIndicator -eq "<=") {
+                Write-Host "$($Diff.InputObject) is only in ${FilePath1}" -ForegroundColor Green
+            } elseif ($Diff.SideIndicator -eq "=>") {
+                Write-Host "$($Diff.InputObject) is only in ${FilePath2}" -ForegroundColor Red
+            }
+        }
+    }
     WriteDiff([string]$FilePath1, [string]$FilePath2) {
         $Content1 = Get-Content $FilePath1
         $Content2 = Get-Content $FilePath2
-        Compare-Object -ReferenceObject $Content1 -DifferenceObject $Content2 |
-        Write-Host
+        $this.WriteDiffContent($FilePath1, $Content1, $FilePath2, $Content2)
     }
     Run([System.Collections.Generic.List[string]]$Stack) {
         throw
