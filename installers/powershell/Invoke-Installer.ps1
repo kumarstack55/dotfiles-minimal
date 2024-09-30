@@ -89,14 +89,15 @@ class CommandCopyCrlf : Command {
     Run([System.Collections.Generic.List[string]]$Stack) {
         $Command, $Source, $Destination, $_ = $Stack
         if (Test-ShouldProcess("${Command} ${Source} ${Destination}")) {
+            $SourceContent = Get-Content -Raw -Encoding UTF8 -Path $Source
+            $SourceContentCrlf = $SourceContent -replace "`n", "`r`n"
             if (Test-Path -LiteralPath $Destination) {
                 $this.WriteSkipReasonPathAlreadyExists()
-                $this.WriteDiff($Source, $Destination)
+                $DestinationContent = Get-Content -Raw -Encoding UTF8 -Path $Destination
+                $this.WriteDiffContent($Source, $SourceContentCrlf, $Destination, $DestinationContent)
                 return
             }
-            $Content = Get-Content -Raw -Encoding UTF8 -Path $Source
-            $UpdatedContent = $Content -replace "`n", "`r`n"
-            Set-Content -Path $Destination -Value $UpdatedContent -Encoding UTF8 -NoNewline
+            Set-Content -Path $Destination -Value $SourceContentCrlf -Encoding UTF8 -NoNewline
         }
     }
 }
