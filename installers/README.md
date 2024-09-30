@@ -24,6 +24,7 @@ command
 
 function
     "copy"
+    "copy_crlf_win"
     "copy_linux"
     "copy_win"
     "debug_var"

@@ -131,6 +131,14 @@ command::command_copy() {
   fi
 }
 
+command::command_copy_crlf_win() {
+  local command="$1" src="$2" dest="$3"
+
+  if helper::should_process "${command} ${src} ${dest}"; then
+    command::write_skip_reason_platform_is_different
+  fi
+}
+
 command::command_copy_linux() {
   local command="$1" src="$2" dest="$3"
 

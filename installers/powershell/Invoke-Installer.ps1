@@ -76,6 +76,22 @@ class CommandCopy : Command {
     }
 }
 
+class CommandCopyCrlf : Command {
+    Run([System.Collections.Generic.List[string]]$Stack) {
+        $Command, $Source, $Destination, $_ = $Stack
+        if (Test-ShouldProcess("${Command} ${Source} ${Destination}")) {
+            if (Test-Path -LiteralPath $Destination) {
+                $this.WriteSkipReasonPathAlreadyExists()
+                $this.WriteDiff($Source, $Destination)
+                return
+            }
+            $Content = Get-Content -Raw -Encoding UTF8 -Path $Source
+            $UpdatedContent = $Content -replace "`n", "`r`n"
+            Set-Content -Path $Destination -Value $UpdatedContent -Encoding UTF8 -NoNewline
+        }
+    }
+}
+
 class CommandDebugVar : Command {
     Run([System.Collections.Generic.List[string]]$Stack) {
         $Command, $Name, $_ = $Stack
@@ -136,6 +152,7 @@ class CommandFactory {
     static [CommandFactory]Create() {
         $f = [CommandFactory]::new()
         $f.Add("copy", [CommandCopy])
+        $f.Add("copy_crlf_win", [CommandCopyCrlf])
         $f.Add("copy_linux", [CommandNoOperationReasonPlatformIsDifferent])
         $f.Add("copy_win", [CommandCopy])
         $f.Add("debug_var", [CommandDebugVar])
