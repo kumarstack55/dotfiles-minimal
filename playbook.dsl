@@ -1,6 +1,21 @@
 set_linux "vimrc_dir" ".vim"
 set_win "vimrc_dir" "vimfiles"
 
+set_linux "src_init_vim_filename" "init.vim"
+set_win "src_init_vim_filename" "init_windows.vim"
+
+join_path "dst_path_config_dir" "${HOME}" ".config"
+join_path "dst_path_bash_dir" "${dst_path_config_dir}" "bash"
+join_path "dst_path_bash_main_sh" "${dst_path_bash_dir}" "main.sh"
+join_path "dst_path_bash_env_sh" "${dst_path_bash_dir}" "env.sh"
+join_path "dst_path_nvim_dir" "${dst_path_config_dir}" "nvim"
+
+set_win "dst_path_nvim_dir_win" "${HOME}\\AppData\\Local\\nvim"
+
+join_path "src_path_bash_main_sh" "src" "dot.config" "bash" "main.sh"
+join_path "src_path_bash_env_sh" "src" "dot.config" "bash" "env.sh"
+join_path "src_path_nvim_init_vim" "src" "dot.config" "nvim" "${src_init_vim_filename}"
+
 join_path "src_path_cheatsheet_md" "src" "dot.vim" "cheatsheet.md"
 join_path "src_path_vimrc" "src" "dot.vim" "vimrc"
 join_path "src_path_sub_vim" "src" "dot.vim" "subs" "sub.vim.disabled"
@@ -26,16 +41,20 @@ copy "${src_path_dot_editorconfig}" "${dst_path_dot_editorconfig}"
 copy "${src_path_dot_gitconfig}" "${dst_path_dot_gitconfig}"
 
 # dir: $HOME/.config
-mkdir_linux "${HOME}/.config"
+mkdir "${dst_path_config_dir}"
 
 # dir: $HOME/.config/bash
-mkdir_linux "${HOME}/.config/bash"
-copy_linux "src/dot.config/bash/main.sh" "${HOME}/.config/bash/main.sh"
-copy_linux "src/dot.config/bash/env.sh" "${HOME}/.config/bash/env.sh"
+mkdir "${dst_path_bash_dir}"
+copy "${src_path_bash_main_sh}" "${dst_path_bash_main_sh}"
+copy "${src_path_bash_env_sh}" "${dst_path_bash_env_sh}"
 
 # dir: $HOME/.config/nvim
-mkdir_linux "${HOME}/.config/nvim"
-copy_linux "src/dot.config/nvim/init.vim" "${HOME}/.config/nvim/init.vim"
+mkdir_linux "${dst_path_nvim_dir}"
+copy_linux "${src_path_nvim_init_vim}" "${dst_path_nvim_dir}/init.vim"
+
+# dir: $HOME/AppData/Local/nvim
+mkdir_win "${dst_path_nvim_dir_win}"
+copy_win "${src_path_nvim_init_vim}" "${dst_path_nvim_dir_win}\\init.vim"
 
 # dir: $HOME/.vim
 mkdir "${dst_path_vim_dir}"
