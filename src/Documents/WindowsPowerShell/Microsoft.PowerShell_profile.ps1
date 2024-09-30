@@ -1,15 +1,15 @@
-$script:DotfilePrompt = 0
+$script:DotfilesPrompt = 0
 
 function Invoke-DotfilesSwitchPrompt {
     <#
         .SYNOPSIS
         プロンプトを切り替えます。
     #>
-    $script:DotfilePrompt = ($script:DotfilePrompt + 1) % 2
+    $script:DotfilesPrompt = ($script:DotfilesPrompt + 1) % 2
 }
 
 function Prompt {
-    switch ($script:DotfilePrompt) {
+    switch ($script:DotfilesPrompt) {
         1 {
             # パスに関する情報を出力しないプロンプト定義です。
             "PS $('>' * ($nestedPromptLevel + 1)) "
