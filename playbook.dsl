@@ -10,7 +10,6 @@ join_path "src_path_vim_lsp_vim" "src" "dot.vim" "subs" "vim-lsp.vim"
 join_path "src_path_dot_editorconfig" "src" "dot.editorconfig"
 join_path "src_path_dot_gitconfig" "src" "dot.gitconfig"
 
-
 join_path "dst_path_vim_dir" "${HOME}" "${vimrc_dir}"
 join_path "dst_path_cheatsheet_md" "${dst_path_vim_dir}" "cheatsheet.md"
 join_path "dst_path_vimrc" "${dst_path_vim_dir}" "vimrc"
