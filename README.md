@@ -23,6 +23,7 @@
 - Microsoft Windows
     - Windows PowerShell 5.1+
     - Vim 9.1+
+    - NeoVim 0.8+
 
 ## Installation
 

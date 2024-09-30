@@ -9,8 +9,13 @@ To install additional modules, you need to install vim-plug, and enable a Vim sc
 ```powershell
 # powershell
 
+# for Vim
 iwr -useb https://raw.githubusercontent.com/junegunn/vim-plug/master/plug.vim |`
     ni $HOME/vimfiles/autoload/plug.vim -Force
+
+# for NeoVim
+iwr -useb https://raw.githubusercontent.com/junegunn/vim-plug/master/plug.vim |`
+    ni "$(@($env:XDG_DATA_HOME, $env:LOCALAPPDATA)[$null -eq $env:XDG_DATA_HOME])/nvim-data/site/autoload/plug.vim" -Force
 
 Move-Item $HOME/vimfiles/subs/sub.vim.disabled $HOME/vimfiles/subs/sub.vim
 ```
