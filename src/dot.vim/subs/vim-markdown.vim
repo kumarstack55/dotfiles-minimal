@@ -14,3 +14,6 @@ let g:vim_markdown_fenced_languages = [
   \ 'viml=vim',
   \ 'powershell=ps1',
 \ ]
+
+" 自動で箇条書きのポイントを挿入することをやめる。
+let g:vim_markdown_auto_insert_bullets = 0
