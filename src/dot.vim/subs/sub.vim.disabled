@@ -9,9 +9,15 @@ call plug#begin()
   Plug 'tpope/vim-surround'
 
   " 新しい Vim の場合、EditorConfig は標準で入っているため読まない。
-  if !has('nvim') && (v:version < 900 || (v:version == 900 && has('patch1799') == 0))
-    " EditorConfig plugin for Vim
-    Plug 'editorconfig/editorconfig-vim'
+  if (has('nvim') && !has('nvim-0.9')) || (!has('nvim') && (v:version < 900 || (v:version == 900 && has('patch1799') == 0)))
+      " EditorConfig plugin for Vim
+      Plug 'editorconfig/editorconfig-vim'
+    else
+      if !has('nvim')
+        " 標準で入っているプラグインを加える。
+        packadd! editorconfig
+      endif
+    endif
   endif
 
   " Tagbar is a Vim plugin that provides an easy way to browse the tags of the
