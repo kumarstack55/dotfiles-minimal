@@ -39,11 +39,7 @@ mv -i $HOME/.vim/subs/sub.vim.disabled $HOME/.vim/subs/sub.vim
 ### GitHub Copilot
 
 ```bash
-export DOTFILES_VIM_GITHUB_COPILOT=y
-```
-
-```powershell
-$env:DOTFILES_VIM_GITHUB_COPILOT = "y"
+DOTFILES_VIM_GITHUB_COPILOT="y"
 ```
 
 For more information:
@@ -60,29 +56,23 @@ For more information:
 ### vim-lsp
 
 ```bash
-export DOTFILES_VIM_LSP=y
-```
-
-```powershell
-$env:DOTFILES_VIM_LSP = "y"
+DOTFILES_VIM_LSP="y"
 ```
 
 ### NERDTree
 
 ```bash
-export DOTFILES_VIM_NERDTREE=y
-```
-
-```powershell
-$env:DOTFILES_VIM_NERDTREE = "y"
+DOTFILES_VIM_NERDTREE="y"
 ```
 
 ### BufExplorer
 
 ```bash
-export DOTFILES_VIM_BUFEXPLORER=y
+DOTFILES_VIM_BUFEXPLORER="y"
 ```
 
-```powershell
-$env:DOTFILES_VIM_BUFEXPLORER = "y"
+### vim-gitgutter
+
+```bash
+DOTFILES_VIM_GITGUTTER="y"
 ```
