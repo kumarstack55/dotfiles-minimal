@@ -47,6 +47,12 @@ abc "def" ghi
 
 ## editorconfig.vim
 
+設定を再び読み込む。
+
+```vim
+:EditorConfigReload
+```
+
 https://editorconfig.org/
 
 ## vim-markdown
