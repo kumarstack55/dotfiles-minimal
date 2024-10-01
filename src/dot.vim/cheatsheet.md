@@ -57,7 +57,11 @@ https://editorconfig.org/
 
 ## vim-markdown
 
-Markdown 内のテキストの文法をハイライトする。
+Markdown 内のテキストの文法をハイライトする他に、目次を作ることができる。
+
+```vim
+:Toc
+```
 
 ## iceberg.vim
 
