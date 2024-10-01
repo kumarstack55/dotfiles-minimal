@@ -116,8 +116,8 @@ augroup fileTypeIndent
 augroup END
 
 " 新しいバッファから編集したときに、ファイルタイプの設定を適用するコマンドを定義する。
-command! MyFiletypeMarkdown call VimrcFiletypeMarkdown
-command! MyFiletypePs1 call VimrcFiletypePowerShell
+command! MyFiletypeMarkdown call VimrcFiletypeMarkdown()
+command! MyFiletypePs1 call VimrcFiletypePowerShell()
 
 " キーワードにハイフンを含めるかどうかを切り替えるコマンドを定義する。
 command! MyIsKeywordToggle call VimrcToggleIsKeyword
