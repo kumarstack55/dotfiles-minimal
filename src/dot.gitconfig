@@ -1,8 +1,8 @@
 [core]
-        # コミット時に crlf を lf にする。
-        # https://git-scm.com/docs/gitattributes#_end_of_line_conversion
+	# コミット時に crlf を lf にする。
+	# https://git-scm.com/docs/gitattributes#_end_of_line_conversion
 	autocrlf = input
 [init]
-        # リポジトリが作られたとき、ブランチ名を main にする。
-        # https://git-scm.com/docs/git-init/en
+	# リポジトリが作られたとき、ブランチ名を main にする。
+	# https://git-scm.com/docs/git-init/en
 	defaultBranch = main
