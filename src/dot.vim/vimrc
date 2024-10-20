@@ -1,3 +1,6 @@
+" スクリプトのエンコードが UTF-8 であることを示す。
+scriptencoding utf-8
+
 let g:my_addons_editorconfig_loaded = 0
 let g:my_vimrc_iskeyword_contains_hyphen = 0
 
