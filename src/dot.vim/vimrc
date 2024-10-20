@@ -103,6 +103,9 @@ autocmd BufReadPost *
 " 新しい行を編集するとき、現在の行のインデントをコピーする。
 set autoindent
 
+" インデントするとき shiftwidth の整数倍にする。
+set shiftround
+
 " シンタックス・ハイライティングを有効にする。
 syntax enable
 
