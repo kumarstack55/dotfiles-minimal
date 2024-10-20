@@ -26,6 +26,12 @@ class InternalErrorException: AppException {
     InternalErrorException([string]$Message) : base($Message) {}
 }
 
+class Path {
+    static [string]NormalizePath([string]$Path) {
+        return $Path -replace "/", "\"
+    }
+}
+
 class Command {
     WriteSkipReasonPathAlreadyExists() {
         Write-Host "skip. (reason: path already exists)"
@@ -44,8 +50,8 @@ class Command {
         }
     }
     WriteDiff([string]$FilePath1, [string]$FilePath2) {
-        $Content1 = Get-Content $FilePath1
-        $Content2 = Get-Content $FilePath2
+        $Content1 = @(Get-Content $FilePath1)
+        $Content2 = @(Get-Content $FilePath2)
         $this.WriteDiffContent($FilePath1, $Content1, $FilePath2, $Content2)
     }
     Run([System.Collections.Generic.List[string]]$Stack) {
@@ -75,12 +81,14 @@ class CommandCopy : Command {
     Run([System.Collections.Generic.List[string]]$Stack) {
         $Command, $Source, $Destination, $_ = $Stack
         if (Test-ShouldProcess("${Command} ${Source} ${Destination}")) {
+            $NormalizedSource = [Path]::NormalizePath($Source)
             if (Test-Path -LiteralPath $Destination) {
                 $this.WriteSkipReasonPathAlreadyExists()
-                $this.WriteDiff($Source, $Destination)
+                $this.WriteDiff($NormalizedSource, $Destination)
                 return
             }
-            Copy-Item -LiteralPath $Source -Destination $Destination -Verbose
+            $NormalizedDestination = [Path]::NormalizePath($Destination)
+            Copy-Item -LiteralPath $NormalizedSource -Destination $NormalizedDestination -Verbose
         }
     }
 }
@@ -89,7 +97,8 @@ class CommandCopyCrlf : Command {
     Run([System.Collections.Generic.List[string]]$Stack) {
         $Command, $Source, $Destination, $_ = $Stack
         if (Test-ShouldProcess("${Command} ${Source} ${Destination}")) {
-            $SourceContent = Get-Content -Raw -Encoding UTF8 -Path $Source
+            $NormalizedSource = [Path]::NormalizePath($Source)
+            $SourceContent = Get-Content -Raw -Encoding UTF8 -Path $NormalizedSource
             $SourceContentCrlf = $SourceContent -replace "`n", "`r`n"
             if (Test-Path -LiteralPath $Destination) {
                 $this.WriteSkipReasonPathAlreadyExists()
@@ -97,7 +106,8 @@ class CommandCopyCrlf : Command {
                 $this.WriteDiffContent($Source, $SourceContentCrlf, $Destination, $DestinationContent)
                 return
             }
-            Set-Content -Path $Destination -Value $SourceContentCrlf -Encoding UTF8 -NoNewline
+            $NormalizedDestination = [Path]::NormalizePath($Destination)
+            Set-Content -Path $NormalizedDestination -Value $SourceContentCrlf -Encoding UTF8 -NoNewline
         }
     }
 }
@@ -131,7 +141,8 @@ class CommandMkdir : Command {
                 $this.WriteSkipReasonPathAlreadyExists()
                 return
             }
-            New-Item -Type Directory -Path $Path -Verbose
+            $NormalizedPath = [Path]::NormalizePath($Path)
+            New-Item -Type Directory -Path $NormalizedPath -Verbose
         }
     }
 }
