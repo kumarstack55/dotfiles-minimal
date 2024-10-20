@@ -1,3 +1,4 @@
+let g:my_addons_editorconfig_loaded = 0
 let g:my_vimrc_iskeyword_contains_hyphen = 0
 
 " ハイフンをキーワードに含めるかどうかを切り替える。
@@ -100,21 +101,6 @@ syntax enable
 " タブ文字の代わりに、スペースを挿入する。
 set expandtab
 
-" ファイル タイプごとにインデントを設定する。
-" TODO: editorconfig あれば設定しない。
-augroup fileTypeIndent
-  autocmd!
-  autocmd BufNewFile,BufRead *.c,*.cpp,*.h setlocal tabstop=4 softtabstop=4 shiftwidth=4
-  autocmd BufNewFile,BufRead *.md call VimrcFiletypeMarkdown()
-  autocmd BufNewFile,BufRead *.ps1 call VimrcFiletypePowerShell()
-  autocmd BufNewFile,BufRead *.py setlocal tabstop=4 softtabstop=4 shiftwidth=4
-  autocmd BufNewFile,BufRead *.rst setlocal tabstop=2 softtabstop=2 shiftwidth=2
-  autocmd BufNewFile,BufRead *.sh,*.bash setlocal tabstop=2 softtabstop=2 shiftwidth=2
-  autocmd BufNewFile,BufRead *.txt setlocal tabstop=4 softtabstop=4 shiftwidth=4
-  autocmd BufNewFile,BufRead vimrc,_gvimrc,gvimrc,*.vim setlocal tabstop=2 softtabstop=2 shiftwidth=2
-  autocmd BufNewFile,BufRead *.yaml,*.yml setlocal tabstop=2 softtabstop=2 shiftwidth=2
-augroup END
-
 " 新しいバッファから編集したときに、ファイルタイプの設定を適用するコマンドを定義する。
 command! MyFiletypeMarkdown call VimrcFiletypeMarkdown()
 command! MyFiletypePs1 call VimrcFiletypePowerShell()
@@ -135,3 +121,20 @@ endif
 " カラースキームのいくつかはプラグインに依存するため、 sub.vim のあとに実行する。
 let g:my_colorscheme_list = ["iceberg", "habamax", "pablo"]
 call VimrcConfigureColorscheme(g:my_colorscheme_list)
+
+" ファイル タイプごとにインデントを設定する。
+" EditrConfig プラグインが読まれていない場合のみ実施するため、 sub.vim のあとに実行する。
+if ! g:my_addons_editorconfig_loaded
+  augroup fileTypeIndent
+    autocmd!
+    autocmd BufNewFile,BufRead *.c,*.cpp,*.h call VimrcTabstopSet(4)
+    autocmd BufNewFile,BufRead *.md call VimrcFiletypeMarkdown()
+    autocmd BufNewFile,BufRead *.ps1 call VimrcFiletypePowerShell()
+    autocmd BufNewFile,BufRead *.py call VimrcTabstopSet(4)
+    autocmd BufNewFile,BufRead *.rst call VimrcTabstopSet(2)
+    autocmd BufNewFile,BufRead *.sh,*.bash call VimrcTabstopSet(2)
+    autocmd BufNewFile,BufRead *.txt call VimrcTabstopSet(4)
+    autocmd BufNewFile,BufRead vimrc,_gvimrc,gvimrc,*.vim call VimrcTabstopSet(2)
+    autocmd BufNewFile,BufRead *.yaml,*.yml call VimrcTabstopSet(2)
+  augroup END
+endif

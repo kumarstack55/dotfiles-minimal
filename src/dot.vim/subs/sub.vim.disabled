@@ -12,10 +12,12 @@ call plug#begin()
   if (has('nvim') && !has('nvim-0.9')) || (!has('nvim') && (v:version < 900 || (v:version == 900 && has('patch1799') == 0)))
     " EditorConfig plugin for Vim
     Plug 'editorconfig/editorconfig-vim'
+    let g:my_addons_editorconfig_loaded = 1
   else
     if !has('nvim')
       " 標準で入っているプラグインを加える。
       packadd! editorconfig
+      let g:my_addons_editorconfig_loaded = 1
     endif
   endif
 
