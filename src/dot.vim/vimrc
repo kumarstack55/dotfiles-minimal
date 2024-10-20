@@ -131,6 +131,11 @@ endif
 " カラースキームを設定する。
 " カラースキームのいくつかはプラグインに依存するため、 sub.vim のあとに実行する。
 let g:my_colorscheme_list = ["iceberg", "habamax", "pablo"]
+if has('win32') && !has('gui_running')
+  " Windows の PowerShell で vim 実行時、 iceberg を選択後に default になった。
+  " そのため、 iceberg を除外する。
+  let g:my_colorscheme_list = ["habamax", "pablo"]
+endif
 call VimrcConfigureColorscheme(g:my_colorscheme_list)
 
 " ファイル タイプごとにインデントを設定する。
