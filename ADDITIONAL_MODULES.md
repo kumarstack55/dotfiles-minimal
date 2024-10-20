@@ -39,7 +39,13 @@ mv -i $HOME/.vim/subs/sub.vim.disabled $HOME/.vim/subs/sub.vim
 ### GitHub Copilot
 
 ```bash
-DOTFILES_VIM_GITHUB_COPILOT="y"
+# bash
+export DOTFILES_VIM_GITHUB_COPILOT="y"
+```
+
+```powershell
+# powershell
+[System.Environment]::SetEnvironmentVariable("DOTFILES_VIM_GITHUB_COPILOT", "y", "User")
 ```
 
 For more information:
@@ -56,23 +62,47 @@ For more information:
 ### vim-lsp
 
 ```bash
-DOTFILES_VIM_LSP="y"
+# bash
+export DOTFILES_VIM_LSP="y"
+```
+
+```powershell
+# powershell
+[System.Environment]::SetEnvironmentVariable("DOTFILES_VIM_LSP", "y", "User")
 ```
 
 ### NERDTree
 
 ```bash
-DOTFILES_VIM_NERDTREE="y"
+# bash
+export DOTFILES_VIM_NERDTREE="y"
+```
+
+```powershell
+# powershell
+[System.Environment]::SetEnvironmentVariable("DOTFILES_VIM_NERDTREE", "y", "User")
 ```
 
 ### BufExplorer
 
 ```bash
-DOTFILES_VIM_BUFEXPLORER="y"
+# bash
+export DOTFILES_VIM_BUFEXPLORER="y"
+```
+
+```powershell
+# powershell
+[System.Environment]::SetEnvironmentVariable("DOTFILES_VIM_BUFEXPLORER", "y", "User")
 ```
 
 ### vim-gitgutter
 
 ```bash
-DOTFILES_VIM_GITGUTTER="y"
+# bash
+export DOTFILES_VIM_GITGUTTER="y"
+```
+
+```powershell
+# powershell
+[System.Environment]::SetEnvironmentVariable("DOTFILES_VIM_GITGUTTER", "y", "User")
 ```
