@@ -136,9 +136,16 @@ command! MyFiletypePs1 call VimrcFiletypePowerShell()
 " キーワードにハイフンを含めるかどうかを切り替えるコマンドを定義する。
 command! MyIsKeywordToggle call VimrcToggleIsKeyword
 
-" addons/main.vim ファイルがあれば読む。
+" local.vim ファイルがあれば読む。
+" このファイルは環境固有の設定が必要な場合のみ、存在させる。
 let script_path = expand('<sfile>')
 let script_dir = fnamemodify(script_path, ':p:h')
+let local_vim_path = script_dir . '/local.vim'
+if filereadable(local_vim_path)
+  exec "source " . fnameescape(local_vim_path)
+endif
+
+" addons/main.vim ファイルがあれば読む。
 let addons_dir = script_dir . '/addons'
 let addons_main_vim_path = addons_dir . '/main.vim'
 if filereadable(addons_main_vim_path)
