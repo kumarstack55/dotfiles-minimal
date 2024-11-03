@@ -94,6 +94,9 @@ set nobackup
 " 同ファイルの複数編集に気づけるようスワップ・ファイルを作る。
 set swapfile
 
+" シンタックス・ハイライティングを有効にする。
+syntax enable
+
 " 指定カラムを強調表示する。
 if exists('+colorcolumn')
   set colorcolumn=80
@@ -118,9 +121,6 @@ set shiftround
 
 " 折り返された行を同じインデントで表示する。
 set breakindent
-
-" シンタックス・ハイライティングを有効にする。
-syntax enable
 
 " タブ文字の代わりに、スペースを挿入する。
 set expandtab
