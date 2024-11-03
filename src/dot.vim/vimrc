@@ -24,10 +24,20 @@ function! VimrcTabstopSet(ts)
   setlocal expandtab
 endfunction
 
+" 構文ハイライトを、ファイルの先頭から解析する。
+"
+" 構文ハイライトで行数が多い Markdown などを編集すると解析に失敗する。
+" 例えば、コードブロック内の # で始まる行を見出しとして解析してしまう。
+" これを回避するため、ファイルの先頭から解析するようにする。
+function! VimrcSyntaxSyncFromstart()
+  syntax sync fromstart
+endfunction
+
 " ファイルタイプが Markdown の設定をする。
 function! VimrcFiletypeMarkdown()
   setlocal filetype=markdown
   call VimrcTabstopSet(4)
+  call VimrcSyntaxSyncFromstart()
 endfunction
 
 " ファイルタイプが PowerShell の設定をする。
