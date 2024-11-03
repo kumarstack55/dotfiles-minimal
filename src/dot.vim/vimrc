@@ -140,9 +140,9 @@ command! MyIsKeywordToggle call VimrcToggleIsKeyword
 let script_path = expand('<sfile>')
 let script_dir = fnamemodify(script_path, ':p:h')
 let addons_dir = script_dir . '/addons'
-let addons_main_path = addons_dir . '/main.vim'
-if filereadable(addons_main_path)
-  exec "source " . fnameescape(addons_main_path)
+let addons_main_vim_path = addons_dir . '/main.vim'
+if filereadable(addons_main_vim_path)
+  exec "source " . fnameescape(addons_main_vim_path)
 endif
 
 " カラースキームを設定する。
