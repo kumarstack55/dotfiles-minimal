@@ -35,12 +35,12 @@ copy "src/dot.vim/cheatsheet.md" "${HOME}/${vimrc_dir}/cheatsheet.md"
 copy "src/dot.vim/vimrc" "${HOME}/${vimrc_dir}/vimrc"
 copy_win "src\\dot.vim\\gvimrc" "${HOME}\\${vimrc_dir}\\gvimrc"
 
-# dir: $HOME/.vim/subs
-mkdir "${HOME}/${vimrc_dir}/subs"
-copy "src/dot.vim/subs/sub.vim.disabled" "${HOME}/${vimrc_dir}/subs/sub.vim.disabled"
-copy "src/dot.vim/subs/vim-cheatsheet.vim" "${HOME}/${vimrc_dir}/subs/vim-cheatsheet.vim"
-copy "src/dot.vim/subs/vim-markdown.vim" "${HOME}/${vimrc_dir}/subs/vim-markdown.vim"
-copy "src/dot.vim/subs/vim-lsp.vim" "${HOME}/${vimrc_dir}/subs/vim-lsp.vim"
+# dir: $HOME/.vim/addons
+mkdir "${HOME}/${vimrc_dir}/addons"
+copy "src/dot.vim/addons/main.vim.disabled" "${HOME}/${vimrc_dir}/addons/main.vim.disabled"
+copy "src/dot.vim/addons/vim-cheatsheet.vim" "${HOME}/${vimrc_dir}/addons/vim-cheatsheet.vim"
+copy "src/dot.vim/addons/vim-markdown.vim" "${HOME}/${vimrc_dir}/addons/vim-markdown.vim"
+copy "src/dot.vim/addons/vim-lsp.vim" "${HOME}/${vimrc_dir}/addons/vim-lsp.vim"
 
 # file: $PROFILE
 copy_crlf_win "src\\Documents\\WindowsPowerShell\\Microsoft.PowerShell_profile.ps1" "${PROFILE}"

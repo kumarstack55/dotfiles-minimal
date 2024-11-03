@@ -119,17 +119,17 @@ command! MyFiletypePs1 call VimrcFiletypePowerShell()
 " キーワードにハイフンを含めるかどうかを切り替えるコマンドを定義する。
 command! MyIsKeywordToggle call VimrcToggleIsKeyword
 
-" sub.vim ファイルがあれば読む。
+" addons/main.vim ファイルがあれば読む。
 let script_path = expand('<sfile>')
 let script_dir = fnamemodify(script_path, ':p:h')
-let sub_dir = script_dir . '/subs'
-let sub_path = sub_dir . '/sub.vim'
-if filereadable(sub_path)
-  exec "source " . fnameescape(sub_path)
+let addons_dir = script_dir . '/addons'
+let addons_main_path = addons_dir . '/main.vim'
+if filereadable(addons_main_path)
+  exec "source " . fnameescape(addons_main_path)
 endif
 
 " カラースキームを設定する。
-" カラースキームのいくつかはプラグインに依存するため、 sub.vim のあとに実行する。
+" カラースキームのいくつかはプラグインに依存するため main.vim のあとに実行する。
 let g:my_colorscheme_list = ["iceberg", "habamax", "pablo"]
 if has('win32') && !has('gui_running')
   " Windows の PowerShell で vim 実行時、 iceberg を選択後に default になった。
@@ -139,7 +139,8 @@ endif
 call VimrcConfigureColorscheme(g:my_colorscheme_list)
 
 " ファイル タイプごとにインデントを設定する。
-" EditrConfig プラグインが読まれていない場合のみ実施するため、 sub.vim のあとに実行する。
+" EditrConfig プラグインが読まれていない場合のみ実施するため、
+" main.vim のあとに実行する。
 if ! g:my_addons_editorconfig_loaded
   augroup fileTypeIndent
     autocmd!

@@ -1,6 +1,6 @@
-# ADDITIONAL MODULES
+# ADD-ONS
 
-To install additional modules, you need to install vim-plug, and enable a Vim script file by renaming it.
+To install add-ons, you need to install vim-plug, and enable a Vim script file by renaming it.
 
 ## Platforms
 
@@ -17,7 +17,7 @@ iwr -useb https://raw.githubusercontent.com/junegunn/vim-plug/master/plug.vim |`
 iwr -useb https://raw.githubusercontent.com/junegunn/vim-plug/master/plug.vim |`
     ni "$(@($env:XDG_DATA_HOME, $env:LOCALAPPDATA)[$null -eq $env:XDG_DATA_HOME])/nvim-data/site/autoload/plug.vim" -Force
 
-Move-Item $HOME/vimfiles/subs/sub.vim.disabled $HOME/vimfiles/subs/sub.vim
+Move-Item $HOME/vimfiles/addons/main.vim.disabled $HOME/vimfiles/addons/main.vim
 ```
 
 ### Linux
@@ -31,9 +31,9 @@ curl -fLo ~/.vim/autoload/plug.vim --create-dirs \
 sh -c 'curl -fLo "${XDG_DATA_HOME:-$HOME/.local/share}"/nvim/site/autoload/plug.vim --create-dirs \
     https://raw.githubusercontent.com/junegunn/vim-plug/master/plug.vim'
 
-diff -u $HOME/.vim/subs/sub.vim.disabled $HOME/.vim/subs/sub.vim
+diff -u $HOME/.vim/addons/main.vim.disabled $HOME/.vim/addons/main.vim
 
-mv -i $HOME/.vim/subs/sub.vim.disabled $HOME/.vim/subs/sub.vim
+mv -i $HOME/.vim/addons/main.vim.disabled $HOME/.vim/addons/main.vim
 ```
 
 ## Enable features
