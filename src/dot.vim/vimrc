@@ -106,6 +106,9 @@ set autoindent
 " インデントするとき shiftwidth の整数倍にする。
 set shiftround
 
+" 折り返された行を同じインデントで表示する。
+set breakindent
+
 " シンタックス・ハイライティングを有効にする。
 syntax enable
 
