@@ -1,7 +1,7 @@
 " スクリプトのエンコードが UTF-8 であることを示す。
 scriptencoding utf-8
 
-let g:my_addons_editorconfig_loaded = 0
+let g:my_addons_editorconfig_type = 0
 let g:my_vimrc_iskeyword_contains_hyphen = 0
 
 " ハイフンをキーワードに含めるかどうかを切り替える。
@@ -165,7 +165,7 @@ call VimrcConfigureColorscheme(g:my_colorscheme_list)
 " ファイル タイプごとにインデントを設定する。
 " EditrConfig プラグインが読まれていない場合のみ実施するため、
 " main.vim のあとに実行する。
-if ! g:my_addons_editorconfig_loaded
+if ! g:my_addons_editorconfig_type
   augroup fileTypeIndent
     autocmd!
     autocmd BufNewFile,BufRead *.c,*.cpp,*.h call VimrcTabstopSet(4)
