@@ -71,7 +71,7 @@ call plug#begin()
 
   if getenv('DOTFILES_VIM_NERDTREE') == 'y'
     " The NERDTree is a file system explorer for the Vim editor.
-    Plug 'preservim/nerdtree'
+    Plug 'preservim/nerdtree', {'on': 'NERDTreeToggle'}
   endif
 
   if getenv('DOTFILES_VIM_BUFEXPLORER') == 'y'
