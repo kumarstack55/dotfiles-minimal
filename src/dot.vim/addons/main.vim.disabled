@@ -8,16 +8,19 @@ call plug#begin()
   " Delete/change/add parentheses/quotes/XML-tags/much more with ease
   Plug 'tpope/vim-surround'
 
-  " 新しい Vim の場合、EditorConfig は標準で入っているため読まない。
   if (has('nvim') && !has('nvim-0.9')) || (!has('nvim') && (v:version < 900 || (v:version == 900 && has('patch1799') == 0)))
     " EditorConfig plugin for Vim
     Plug 'editorconfig/editorconfig-vim'
-    let g:my_addons_editorconfig_loaded = 1
+    let g:my_addons_editorconfig_loaded = "vim-plug"
   else
-    if !has('nvim')
+    if has('nvim')
+      " https://neovim.io/doc/user/editorconfig.html
+      " > EditorConfig is enabled by default.
+      let g:my_addons_editorconfig_loaded = "nvim-default"
+    else
       " 標準で入っているプラグインを加える。
       packadd! editorconfig
-      let g:my_addons_editorconfig_loaded = 1
+      let g:my_addons_editorconfig_loaded = "packadd"
     endif
   endif
 
