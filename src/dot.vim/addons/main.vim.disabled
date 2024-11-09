@@ -5,23 +5,17 @@ call plug#begin()
   " vim-cheatsheet opens your cheat sheet file.
   Plug 'reireias/vim-cheatsheet', { 'on': 'Cheat' }
 
-  " Delete/change/add parentheses/quotes/XML-tags/much more with ease
-  Plug 'tpope/vim-surround'
+  " Iceberg is well-designed, bluish color scheme for Vim and Neovim.
+  Plug 'cocopon/iceberg.vim'
 
-  if (has('nvim') && !has('nvim-0.9')) || (!has('nvim') && (v:version < 900 || (v:version == 900 && has('patch1799') == 0)))
-    " EditorConfig plugin for Vim
-    Plug 'editorconfig/editorconfig-vim'
-    let g:my_addons_editorconfig_loaded = "vim-plug"
-  else
-    if has('nvim')
-      " https://neovim.io/doc/user/editorconfig.html
-      " > EditorConfig is enabled by default.
-      let g:my_addons_editorconfig_loaded = "nvim-default"
-    else
-      " 標準で入っているプラグインを加える。
-      packadd! editorconfig
-      let g:my_addons_editorconfig_loaded = "packadd"
-    endif
+  if getenv('DOTFILES_VIM_NERDTREE') == 'y'
+    " The NERDTree is a file system explorer for the Vim editor.
+    Plug 'preservim/nerdtree', {'on': 'NERDTreeToggle'}
+  endif
+
+  if getenv('DOTFILES_VIM_BUFEXPLORER') == 'y'
+    " BufExplorer Plugin for Vim
+    Plug 'jlanzarotta/bufexplorer'
   endif
 
   " Tagbar is a Vim plugin that provides an easy way to browse the tags of the
@@ -40,25 +34,43 @@ call plug#begin()
       \ 'sh',
       \ 'snippets',
       \ 'vim',
-    \ ] }
+    \ ]
+  \ }
 
-  " Vim script for text filtering and alignment
-  " このプラグインは vim-markdown の動作のために必要です。
-  Plug 'godlygeek/tabular', { 'for': ['md', 'text'] }
-
-  " Syntax highlighting, matching rules and mappings for the original Markdown
-  " and extensions.
-  " Markdown の中の diff などをハイライトするために使う。
-  Plug 'preservim/vim-markdown', { 'for': ['md', 'text'] }
-
-  " Iceberg is well-designed, bluish color scheme for Vim and Neovim.
-  Plug 'cocopon/iceberg.vim'
+  if getenv('DOTFILES_VIM_GITGUTTER') == 'y'
+    " A Vim plugin which shows a git diff in the sign column.
+    Plug 'airblade/vim-gitgutter'
+  endif
 
   if (v:version >= 900 && has('patch0185')) || has('nvim-0.7')
     if getenv('DOTFILES_VIM_GITHUB_COPILOT') == 'y'
       " Copilot.vim is a Vim/Neovim plugin for GitHub Copilot.
       Plug 'github/copilot.vim'
     endif
+  endif
+
+  if has('nvim')
+    if has('nvim-0.9')
+      " https://neovim.io/doc/user/editorconfig.html
+      " > EditorConfig is enabled by default.
+      let g:my_addons_editorconfig_type = "nvim-default"
+    else
+      let g:my_addons_editorconfig_type = "vim-plug"
+    endif
+  else
+    if v:version < 900 || (v:version == 900 && has('patch1799') == 0)
+      let g:my_addons_editorconfig_type = "vim-plug"
+    else
+      let g:my_addons_editorconfig_type = "packadd"
+    endif
+  endif
+
+  if g:my_addons_editorconfig_type == "packadd"
+    " 標準で入っている EditorConfig を有効にする。
+    packadd! editorconfig
+  elseif g:my_addons_editorconfig_type == "vim-plug"
+    " EditorConfig plugin for Vim
+    Plug 'editorconfig/editorconfig-vim'
   endif
 
   if getenv('DOTFILES_VIM_LSP') == 'y'
@@ -69,25 +81,22 @@ call plug#begin()
     Plug 'mattn/vim-lsp-settings'
   endif
 
-  if getenv('DOTFILES_VIM_NERDTREE') == 'y'
-    " The NERDTree is a file system explorer for the Vim editor.
-    Plug 'preservim/nerdtree', {'on': 'NERDTreeToggle'}
-  endif
+  " Vim script for text filtering and alignment
+  " このプラグインは vim-markdown の動作のために必要です。
+  Plug 'godlygeek/tabular', { 'for': ['md', 'text'] }
 
-  if getenv('DOTFILES_VIM_BUFEXPLORER') == 'y'
-    " BufExplorer Plugin for Vim
-    Plug 'jlanzarotta/bufexplorer'
-  endif
-
-  if getenv('DOTFILES_VIM_GITGUTTER') == 'y'
-    " A Vim plugin which shows a git diff in the sign column.
-    Plug 'airblade/vim-gitgutter'
-  endif
+  " Syntax highlighting, matching rules and mappings for the original Markdown
+  " and extensions.
+  " Markdown の中の diff などをハイライトするために使う。
+  Plug 'preservim/vim-markdown', { 'for': ['md', 'text'] }
 
   if getenv('DOTFILES_VIM_SONICTEMPLATE') == 'y'
     " Easy and high speed coding method
     Plug 'mattn/vim-sonictemplate'
   endif
+
+  " Delete/change/add parentheses/quotes/XML-tags/much more with ease
+  Plug 'tpope/vim-surround'
 
 call plug#end()
 
