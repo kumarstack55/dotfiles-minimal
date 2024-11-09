@@ -4,22 +4,6 @@ To install add-ons, you need to install vim-plug, and enable a Vim script file b
 
 ## Platforms
 
-### Windows
-
-```powershell
-# powershell
-
-# for Vim
-iwr -useb https://raw.githubusercontent.com/junegunn/vim-plug/master/plug.vim |`
-    ni $HOME/vimfiles/autoload/plug.vim -Force
-
-# for NeoVim
-iwr -useb https://raw.githubusercontent.com/junegunn/vim-plug/master/plug.vim |`
-    ni "$(@($env:XDG_DATA_HOME, $env:LOCALAPPDATA)[$null -eq $env:XDG_DATA_HOME])/nvim-data/site/autoload/plug.vim" -Force
-
-Move-Item $HOME/vimfiles/addons/main.vim.disabled $HOME/vimfiles/addons/main.vim
-```
-
 ### Linux
 
 ```bash
@@ -34,6 +18,22 @@ sh -c 'curl -fLo "${XDG_DATA_HOME:-$HOME/.local/share}"/nvim/site/autoload/plug.
 diff -u $HOME/.vim/addons/main.vim.disabled $HOME/.vim/addons/main.vim
 
 mv -i $HOME/.vim/addons/main.vim.disabled $HOME/.vim/addons/main.vim
+```
+
+### Windows
+
+```powershell
+# powershell
+
+# for Vim
+iwr -useb https://raw.githubusercontent.com/junegunn/vim-plug/master/plug.vim |`
+    ni $HOME/vimfiles/autoload/plug.vim -Force
+
+# for NeoVim
+iwr -useb https://raw.githubusercontent.com/junegunn/vim-plug/master/plug.vim |`
+    ni "$(@($env:XDG_DATA_HOME, $env:LOCALAPPDATA)[$null -eq $env:XDG_DATA_HOME])/nvim-data/site/autoload/plug.vim" -Force
+
+Move-Item $HOME/vimfiles/addons/main.vim.disabled $HOME/vimfiles/addons/main.vim
 ```
 
 ## Enable features
