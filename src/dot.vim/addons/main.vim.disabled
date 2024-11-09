@@ -84,6 +84,11 @@ call plug#begin()
     Plug 'airblade/vim-gitgutter'
   endif
 
+  if getenv('DOTFILES_VIM_SONICTEMPLATE') == 'y'
+    " Easy and high speed coding method
+    Plug 'mattn/vim-sonictemplate'
+  endif
+
 call plug#end()
 
 " Plug と対応するファイルがあれば読む。

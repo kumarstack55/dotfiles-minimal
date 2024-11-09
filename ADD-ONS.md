@@ -108,3 +108,15 @@ export DOTFILES_VIM_GITGUTTER="y"
 # powershell
 [System.Environment]::SetEnvironmentVariable("DOTFILES_VIM_GITGUTTER", "y", "User")
 ```
+
+### vim-sonictemplate
+
+```bash
+# bash
+export DOTFILES_VIM_SONICTEMPLATE="y"
+```
+
+```powershell
+# powershell
+[System.Environment]::SetEnvironmentVariable("DOTFILES_VIM_SONICTEMPLATE", "y", "User")
+```

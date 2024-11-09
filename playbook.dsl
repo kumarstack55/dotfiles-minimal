@@ -41,6 +41,13 @@ copy "src/dot.vim/addons/main.vim.disabled" "${HOME}/${vimrc_dir}/addons/main.vi
 copy "src/dot.vim/addons/vim-cheatsheet.vim" "${HOME}/${vimrc_dir}/addons/vim-cheatsheet.vim"
 copy "src/dot.vim/addons/vim-markdown.vim" "${HOME}/${vimrc_dir}/addons/vim-markdown.vim"
 copy "src/dot.vim/addons/vim-lsp.vim" "${HOME}/${vimrc_dir}/addons/vim-lsp.vim"
+copy "src/dot.vim/addons/vim-sonictemplate.vim" "${HOME}/${vimrc_dir}/addons/vim-sonictemplate.vim"
+
+# dir: $HOME/.vim/templates
+mkdir "${HOME}/${vimrc_dir}/templates"
+mkdir "${HOME}/${vimrc_dir}/templates/markdown"
+copy "src/dot.vim/templates/markdown/pattern.stpl" "${HOME}/${vimrc_dir}/templates/markdown/pattern.stpl"
+copy "src/dot.vim/templates/markdown/snip-code.md" "${HOME}/${vimrc_dir}/templates/markdown/snip-code.stpl"
 
 # file: $PROFILE
 copy_crlf_win "src\\Documents\\WindowsPowerShell\\Microsoft.PowerShell_profile.ps1" "${PROFILE}"

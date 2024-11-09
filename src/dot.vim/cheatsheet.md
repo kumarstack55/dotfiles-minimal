@@ -68,3 +68,27 @@ Markdown 内のテキストの文法をハイライトする他に、目次を�
 ```vim
 colorscheme iceberg
 ```
+
+## vim-sonictemplate
+
+プラグインに付属するテンプレートを使う。
+
+```vim
+:set ft=python
+:Template main
+```
+
+追加したテンプレートを使う。
+
+```vim
+:set ft=markdown
+:Template code
+language: plaintext
+```
+
+Postfix Completion する。
+
+```vim
+:set ft=markdown
+ipython.pre<c-y><c-b>
+```
