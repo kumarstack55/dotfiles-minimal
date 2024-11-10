@@ -1,10 +1,21 @@
+" vim:foldmethod=marker:
+
 " スクリプトのエンコードが UTF-8 であることを示す。
 scriptencoding utf-8
 
+" {{{ 変数を定義する。
+
+" EditorConfig の種類がなんであるか。
 let g:my_addons_editorconfig_type = 0
+
+" キーワードにハイフンを含めるかどうか。
 let g:my_vimrc_iskeyword_contains_hyphen = 0
 
-" ハイフンをキーワードに含めるかどうかを切り替える。
+" }}}
+
+" {{{ 関数を定義する。
+
+" {{{ ハイフンをキーワードに含めるかどうかを切り替える。
 function! VimrcToggleIsKeyword()
   if g:my_vimrc_iskeyword_contains_hyphen
     echo 'Hyphen is used as delimiter.'
@@ -15,16 +26,18 @@ function! VimrcToggleIsKeyword()
   endif
   let g:my_vimrc_iskeyword_contains_hyphen = (g:my_vimrc_iskeyword_contains_hyphen + 1) % 2
 endfunction
+" }}}
 
-" タブ幅を設定する。
+" {{{ タブ幅を設定する。
 function! VimrcTabstopSet(ts)
   let &l:tabstop = a:ts
   let &l:shiftwidth = a:ts
   let &l:softtabstop = a:ts
   setlocal expandtab
 endfunction
+" }}}
 
-" 構文ハイライトを、ファイルの先頭から解析する。
+" {{{ 構文ハイライトを、ファイルの先頭から解析する。
 "
 " 構文ハイライトで行数が多い Markdown などを編集すると解析に失敗する。
 " 例えば、コードブロック内の # で始まる行を見出しとして解析してしまう。
@@ -32,26 +45,32 @@ endfunction
 function! VimrcSyntaxSyncFromstart()
   syntax sync fromstart
 endfunction
+" }}}
 
-" ファイルタイプが Markdown の設定をする。
+" {{{ ファイルタイプが Markdown の設定をする。
 function! VimrcFiletypeMarkdown()
   setlocal filetype=markdown
-  call VimrcTabstopSet(4)
+  if ! g:my_addons_editorconfig_type
+    call VimrcTabstopSet(4)
+  end
   call VimrcSyntaxSyncFromstart()
 endfunction
+" }}}
 
-" ファイルタイプが PowerShell の設定をする。
+" {{{ ファイルタイプが PowerShell の設定をする。
 function! VimrcFiletypePowerShell()
   setlocal filetype=ps1
   call VimrcTabstopSet(4)
 endfunction
+" }}}
 
-" カラースキームが存在するかどうかを返す。
+" {{{ カラースキームが存在するかどうかを返す。
 function! VimrcTestColorschemeExists(name)
   return !empty(globpath(&rtp, 'colors/' . a:name . '.vim'))
 endfunction
+" }}}
 
-" カラースキームを設定する。
+" {{{ カラースキームを設定する。
 function VimrcConfigureColorscheme(colorscheme_list)
   for c in a:colorscheme_list
     if VimrcTestColorschemeExists(c)
@@ -63,6 +82,13 @@ function VimrcConfigureColorscheme(colorscheme_list)
     endif
   endfor
 endfunction
+" }}}
+
+" }}}
+
+" {{{ 設定する。
+
+" {{{ 標準機能を設定する。
 
 " 記号などをASCII文字の2倍幅として扱う。
 set ambiwidth=double
@@ -136,6 +162,10 @@ command! MyFiletypePs1 call VimrcFiletypePowerShell()
 " キーワードにハイフンを含めるかどうかを切り替えるコマンドを定義する。
 command! MyIsKeywordToggle call VimrcToggleIsKeyword
 
+" }}}
+
+" {{{ 環境固有の設定あれば読み込む。
+
 " local.vim ファイルがあれば読む。
 " このファイルは環境固有の設定が必要な場合のみ、存在させる。
 let script_path = expand('<sfile>')
@@ -145,15 +175,24 @@ if filereadable(local_vim_path)
   exec "source " . fnameescape(local_vim_path)
 endif
 
-" addons/main.vim ファイルがあれば読む。
+" }}}
+
+" {{{ addons 有効なら読み込む。
+
+" addons/main.vim ファイルがあれば有効と判定する。
 let addons_dir = script_dir . '/addons'
 let addons_main_vim_path = addons_dir . '/main.vim'
 if filereadable(addons_main_vim_path)
   exec "source " . fnameescape(addons_main_vim_path)
 endif
 
-" カラースキームを設定する。
-" カラースキームのいくつかはプラグインに依存するため main.vim のあとに実行する。
+" }}}
+
+" {{{ プラグイン設定後に必要な設定をする。
+
+" {{{ カラースキームを設定する。
+" カラースキームのいくつかはプラグインに依存するため、
+" addons/main.vim のあとに実行する。
 let g:my_colorscheme_list = ["iceberg", "habamax", "pablo"]
 if has('win32') && !has('gui_running')
   " Windows の PowerShell で vim 実行時、 iceberg を選択後に default になった。
@@ -161,11 +200,18 @@ if has('win32') && !has('gui_running')
   let g:my_colorscheme_list = ["habamax", "pablo"]
 endif
 call VimrcConfigureColorscheme(g:my_colorscheme_list)
+" }}}
 
-" ファイル タイプごとにインデントを設定する。
+" {{{ ファイル タイプごとに設定する。
 " EditrConfig プラグインが読まれていない場合のみ実施するため、
-" main.vim のあとに実行する。
-if ! g:my_addons_editorconfig_type
+" addons/main.vim のあとに実行する。
+if g:my_addons_editorconfig_type
+  " ファイル タイプごとに syntax sync を設定する。
+  augroup fileTypeSyntaxSync
+    autocmd BufNewFile,BufRead *.md call VimrcSyntaxSyncFromstart()
+  augroup END
+else
+  " ファイル タイプごとにインデントを設定する。
   augroup fileTypeIndent
     autocmd!
     autocmd BufNewFile,BufRead *.c,*.cpp,*.h call VimrcTabstopSet(4)
@@ -179,3 +225,8 @@ if ! g:my_addons_editorconfig_type
     autocmd BufNewFile,BufRead *.yaml,*.yml call VimrcTabstopSet(2)
   augroup END
 endif
+" }}}
+
+" }}}
+
+" }}}
