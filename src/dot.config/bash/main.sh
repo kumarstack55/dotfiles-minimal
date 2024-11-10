@@ -28,28 +28,37 @@ dotfiles::configure_editor() {
   done
 }
 
-# Add $HOME/bin to $PATH if it is not already there
-dotfiles::configure_path() {
+# Check if a path is in $PATH
+dotfiles::test_path_in_env_path() {
+  local target="$1"
   local -a path_array
-  local home_bin_dir="$HOME/bin"
-  local found=
   local p
-
-  if [[ ! -d "${home_bin_dir}" ]]; then
-    return
-  fi
 
   IFS=":" read -r -a path_array <<<"$PATH"
   for p in "${path_array[@]}"; do
-    if [[ "${p}" == "${home_bin_dir}" ]]; then
-      found=y
-      break
+    if [[ "${p}" == "${target}" ]]; then
+      return 0
     fi
   done
+  return 1
+}
 
-  if [[ ! "${found}" ]]; then
-    PATH="${home_bin_dir}:${PATH}"
-  fi
+# Configure the PATH
+dotfiles::configure_path() {
+  local -a path_list=("$HOME/bin" "$HOME/.local/bin")
+  local p
+
+  for p in "${path_list[@]}"; do
+    if [[ ! -d "${p}" ]]; then
+      continue
+    fi
+
+    if ! dotfiles::test_path_in_env_path "${p}"; then
+      # WSL など、Windows の PATH が含まれている場合がある。
+      # より優先すべきパスであることが支配的であるため、先頭に追加する。
+      PATH="${p}:${PATH}"
+    fi
+  done
 }
 
 # Configure local settings
