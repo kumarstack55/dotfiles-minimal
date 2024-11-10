@@ -61,6 +61,23 @@ dotfiles::configure_path() {
   done
 }
 
+# Configure completion
+dotfiles::configure_completion() {
+  if type kubectl >/dev/null 2>&1; then
+    # shellcheck disable=SC1090
+    source <(kubectl completion bash)
+  fi
+
+  if type oc >/dev/null 2>&1; then
+    # shellcheck disable=SC1090
+    source <(oc completion bash)
+  fi
+
+  if type aws_completer 2>&1; then
+    complete -C '/usr/local/bin/aws_completer' aws
+  fi
+}
+
 # Configure local settings
 dotfiles::configure_local() {
   local script_dir local_dir sh_path
@@ -88,6 +105,7 @@ dotfiles::configure_local() {
 dotfiles::main() {
   dotfiles::configure_editor
   dotfiles::configure_path
+  dotfiles::configure_completion
   dotfiles::configure_local
 }
 
