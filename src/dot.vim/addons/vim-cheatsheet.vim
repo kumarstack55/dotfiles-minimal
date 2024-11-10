@@ -1,3 +1,5 @@
+scriptencoding utf-8
+
 " vim-cheatsheet のファイルを指定する。
 if has('win32')
   let g:cheatsheet#cheat_file = $HOME . '\vimfiles\cheatsheet.md'

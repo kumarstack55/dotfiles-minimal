@@ -1,4 +1,5 @@
 " vim:set ft=vim sw=2 ts=2 et:
+scriptencoding utf-8
 
 call plug#begin()
 

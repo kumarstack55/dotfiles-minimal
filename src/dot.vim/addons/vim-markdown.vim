@@ -1,3 +1,5 @@
+scriptencoding utf-8
+
 " vim-markdown の折り畳みは使わない。
 " ハイライトのために使うため。
 let g:vim_markdown_folding_disabled = 1
