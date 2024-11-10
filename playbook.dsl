@@ -13,7 +13,10 @@ mkdir "${HOME}/.config"
 # dir: $HOME/.config/bash
 mkdir "${HOME}/.config/bash"
 copy "src/dot.config/bash/main.sh" "${HOME}/.config/bash/main.sh"
-copy "src/dot.config/bash/env.sh" "${HOME}/.config/bash/env.sh"
+
+# dir: $HOME/.config/bash
+mkdir "${HOME}/.config/bash/local"
+copy "src/dot.config/bash/local/env-vim.sh.sample" "${HOME}/.config/bash/local/env-vim.sh.sample"
 
 # dir: $HOME/.config/nvim
 mkdir_linux "${HOME}/.config/nvim"
@@ -48,6 +51,10 @@ mkdir "${HOME}/${vimrc_dir}/templates"
 mkdir "${HOME}/${vimrc_dir}/templates/markdown"
 copy "src/dot.vim/templates/markdown/pattern.stpl" "${HOME}/${vimrc_dir}/templates/markdown/pattern.stpl"
 copy "src/dot.vim/templates/markdown/snip-code.md" "${HOME}/${vimrc_dir}/templates/markdown/snip-code.stpl"
+
+# dir: $HOME/.vim/local/templates
+mkdir "${HOME}/${vimrc_dir}/local"
+mkdir "${HOME}/${vimrc_dir}/local/templates"
 
 # file: $PROFILE
 copy_crlf_win "src\\Documents\\WindowsPowerShell\\Microsoft.PowerShell_profile.ps1" "${PROFILE}"
