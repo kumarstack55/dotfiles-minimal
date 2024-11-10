@@ -46,11 +46,11 @@ copy "src/dot.vim/addons/vim-markdown.vim" "${HOME}/${vimrc_dir}/addons/vim-mark
 copy "src/dot.vim/addons/vim-lsp.vim" "${HOME}/${vimrc_dir}/addons/vim-lsp.vim"
 copy "src/dot.vim/addons/vim-sonictemplate.vim" "${HOME}/${vimrc_dir}/addons/vim-sonictemplate.vim"
 
-# dir: $HOME/.vim/templates
-mkdir "${HOME}/${vimrc_dir}/templates"
-mkdir "${HOME}/${vimrc_dir}/templates/markdown"
-copy "src/dot.vim/templates/markdown/pattern.stpl" "${HOME}/${vimrc_dir}/templates/markdown/pattern.stpl"
-copy "src/dot.vim/templates/markdown/snip-code.md" "${HOME}/${vimrc_dir}/templates/markdown/snip-code.stpl"
+# dir: $HOME/.vim/template
+mkdir "${HOME}/${vimrc_dir}/template"
+mkdir "${HOME}/${vimrc_dir}/template/markdown"
+copy "src/dot.vim/template/markdown/pattern.stpl" "${HOME}/${vimrc_dir}/template/markdown/pattern.stpl"
+copy "src/dot.vim/template/markdown/snip-code.md" "${HOME}/${vimrc_dir}/template/markdown/snip-code.md"
 
 # dir: $HOME/.vim/local/templates
 mkdir "${HOME}/${vimrc_dir}/local"
