@@ -51,6 +51,10 @@ mkdir "${HOME}/${vimrc_dir}/template"
 mkdir "${HOME}/${vimrc_dir}/template/markdown"
 copy "src/dot.vim/template/markdown/pattern.stpl" "${HOME}/${vimrc_dir}/template/markdown/pattern.stpl"
 copy "src/dot.vim/template/markdown/snip-code.md" "${HOME}/${vimrc_dir}/template/markdown/snip-code.md"
+copy "src/dot.vim/template/markdown/snip-code-bash.md" "${HOME}/${vimrc_dir}/template/markdown/snip-code-bash.md"
+copy "src/dot.vim/template/markdown/snip-code-markdown.md" "${HOME}/${vimrc_dir}/template/markdown/snip-code-markdown.md"
+copy "src/dot.vim/template/markdown/snip-code-plaintext.md" "${HOME}/${vimrc_dir}/template/markdown/snip-code-plaintext.md"
+copy "src/dot.vim/template/markdown/snip-code-posh.md" "${HOME}/${vimrc_dir}/template/markdown/snip-code-posh.md"
 
 # dir: $HOME/.vim/local/templates
 mkdir "${HOME}/${vimrc_dir}/local"
