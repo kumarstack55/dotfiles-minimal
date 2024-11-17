@@ -112,6 +112,13 @@ call plug#begin()
   Plug 'preservim/vim-markdown', { 'for': ['md', 'text'] }
   " }}}
 
+  " vim-fugitive {{{
+  if getenv('DOTFILES_VIM_FUGITIVE') == 'y'
+    " fugitive.vim: A Git wrapper so awesome, it should be illegal
+    Plug 'tpope/vim-fugitive'
+  endif
+  " }}}
+
   " vim-sonictemplate {{{
   if getenv('DOTFILES_VIM_SONICTEMPLATE') == 'y'
     " Easy and high speed coding method

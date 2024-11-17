@@ -66,6 +66,7 @@ For more information:
 ```bash
 # bash
 export DOTFILES_VIM_BUFEXPLORER=y
+export DOTFILES_VIM_FUGITIVE=y
 export DOTFILES_VIM_GITGUTTER=y
 export DOTFILES_VIM_LSP=y
 export DOTFILES_VIM_NERDTREE=y
@@ -75,6 +76,7 @@ export DOTFILES_VIM_SONICTEMPLATE=y
 ```powershell
 # powershell
 [System.Environment]::SetEnvironmentVariable("DOTFILES_VIM_BUFEXPLORER", "y", "User")
+[System.Environment]::SetEnvironmentVariable("DOTFILES_VIM_FUGITIVE", "y", "User")
 [System.Environment]::SetEnvironmentVariable("DOTFILES_VIM_GITGUTTER", "y", "User")
 [System.Environment]::SetEnvironmentVariable("DOTFILES_VIM_LSP", "y", "User")
 [System.Environment]::SetEnvironmentVariable("DOTFILES_VIM_NERDTREE", "y", "User")
