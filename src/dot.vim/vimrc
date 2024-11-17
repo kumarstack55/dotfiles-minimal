@@ -85,6 +85,15 @@ function MyVimrcConfigureColorscheme(colorscheme_list)
 endfunction
 " }}}
 
+" {{{ ファイルの情報を表示する。
+function! MyVimrcFileShowInfo()
+  echo 'bomb: ' . &bomb
+  echo 'fileencoding: ' . &fileencoding
+  echo 'fileformat: ' . &fileformat
+  echo 'absPath: ' . expand('%:p')
+endfunction
+" }}}
+
 " }}}
 
 " {{{ 設定する。
@@ -167,6 +176,9 @@ command! MyFiletypePs1 call MyVimrcFiletypePowerShell()
 
 " キーワードにハイフンを含めるかどうかを切り替えるコマンドを定義する。
 command! MyIsKeywordToggle call MyVimrcToggleIsKeyword()
+
+" ファイルの情報を表示するコマンドを定義する。
+command! MyFileShowInfo call MyVimrcFileShowInfo()
 
 " }}}
 
