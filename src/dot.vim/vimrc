@@ -48,12 +48,11 @@ endfunction
 " }}}
 
 " {{{ ファイルタイプが Markdown の設定をする。
-function! MyVimrcFiletypeMarkdown()
+function! MyVimrcFiletypeMarkdown(ts)
   setlocal filetype=markdown
   if ! g:my_addons_editorconfig_type
-    call MyVimrcTabstopSet(4)
+    call MyVimrcTabstopSet(ts)
   end
-  let &l:tabstop = a:ts
   let &l:breakindentopt = 'shift:2'
   call MyVimrcSyntaxSyncFromstart()
 endfunction
@@ -158,7 +157,7 @@ set breakindent
 set expandtab
 
 " 新しいバッファから編集したときに、ファイルタイプの設定を適用するコマンドを定義する。
-command! MyFiletypeMarkdown call MyVimrcFiletypeMarkdown()
+command! MyFiletypeMarkdown call MyVimrcFiletypeMarkdown(4)
 command! MyFiletypePs1 call MyVimrcFiletypePowerShell()
 
 " キーワードにハイフンを含めるかどうかを切り替えるコマンドを定義する。
@@ -217,7 +216,7 @@ else
   augroup fileTypeIndent
     autocmd!
     autocmd BufNewFile,BufRead *.c,*.cpp,*.h call MyVimrcTabstopSet(4)
-    autocmd BufNewFile,BufRead *.md call MyVimrcFiletypeMarkdown()
+    autocmd BufNewFile,BufRead *.md call MyVimrcFiletypeMarkdown(4)
     autocmd BufNewFile,BufRead *.ps1 call MyVimrcFiletypePowerShell()
     autocmd BufNewFile,BufRead *.py call MyVimrcTabstopSet(4)
     autocmd BufNewFile,BufRead *.rst call MyVimrcTabstopSet(2)
