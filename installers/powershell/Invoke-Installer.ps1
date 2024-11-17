@@ -39,20 +39,35 @@ class Command {
     WriteSkipReasonPlatformIsDifferent() {
         Write-Host "skip. (reason: platform is different)"
     }
-    WriteDiffContent([string]$FilePath1, [string[]]$Content1, [string]$FilePath2, [string[]]$Content2) {
-        $Difference = Compare-Object -ReferenceObject $Content1 -DifferenceObject $Content2
+    WriteDiffContent([string]$SourceFilePath, [string[]]$SourceContent, [string]$DestinationFilePath, [string[]]$DestinationContent) {
+        $Difference = Compare-Object -ReferenceObject $SourceContent -DifferenceObject $DestinationContent
+        if ($Difference.Count -eq 0) {
+            return
+        }
+
         foreach ($Diff in $Difference) {
             if ($Diff.SideIndicator -eq "<=") {
-                Write-Host "$($Diff.InputObject) is only in ${FilePath1}" -ForegroundColor Green
+                Write-Host "$($Diff.InputObject) is only in ${SourceFilePath}" -ForegroundColor Green
             } elseif ($Diff.SideIndicator -eq "=>") {
-                Write-Host "$($Diff.InputObject) is only in ${FilePath2}" -ForegroundColor Red
+                Write-Host "$($Diff.InputObject) is only in ${DestinationFilePath}" -ForegroundColor Red
             }
         }
+
+        $Messages = @(
+            ""
+            "If you want to keep the source file, you may need to run the following command:"
+            "  Remove-Item -LiteralPath `"${DestinationFilePath}`""
+            ""
+            "If you want to keep the file you are copying to, you may need to run the following command:"
+            "  Copy-Item -LiteralPath `"${DestinationFilePath}`" -Destination `"${SourceFilePath}`" -Force"
+            ""
+        )
+        $Messages | Write-Host  -ForegroundColor Yellow
     }
-    WriteDiff([string]$FilePath1, [string]$FilePath2) {
-        $Content1 = @(Get-Content $FilePath1)
-        $Content2 = @(Get-Content $FilePath2)
-        $this.WriteDiffContent($FilePath1, $Content1, $FilePath2, $Content2)
+    WriteDiff([string]$SourceFilePath, [string]$DestinationFilePath) {
+        $SourceContent = @(Get-Content $SourceFilePath)
+        $DestinationContent = @(Get-Content $DestinationFilePath)
+        $this.WriteDiffContent($SourceFilePath, $SourceContent, $DestinationFilePath, $DestinationContent)
     }
     Run([System.Collections.Generic.List[string]]$Stack) {
         throw
