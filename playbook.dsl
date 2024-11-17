@@ -4,6 +4,7 @@ set_win "src_init_vim_filename" "init_windows.vim"
 # dir: $HOME
 copy "src/dot.editorconfig" "${HOME}/.editorconfig"
 copy "src/dot.gitconfig" "${HOME}/.gitconfig"
+copy "src/dot.gitconfig_generic.inc" "${HOME}/.gitconfig_generic.inc"
 copy_linux "src/dot.ansible.cfg" "${HOME}/.ansible.cfg"
 copy_win "src/dot.vsvimrc" "${HOME}/.vsvimrc"
 
