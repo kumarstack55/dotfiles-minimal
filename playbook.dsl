@@ -23,9 +23,9 @@ copy "src/dot.config/bash/local/env-vim.sh.sample" "${HOME}/.config/bash/local/e
 mkdir_linux "${HOME}/.config/nvim"
 copy_linux "src/dot.config/nvim/${src_init_vim_filename}" "${HOME}/.config/nvim/init.vim"
 
-# dir: $HOME/.config/powershell
+# dir: $HOME/.config/powershell/local
 mkdir_win "${HOME}/.config/powershell"
-copy_win "src/dot.config/powershell/env.ps1" "${HOME}/.config/powershell/env.ps1"
+mkdir_win "${HOME}/.config/powershell/local"
 
 # dir: $HOME/AppData/Local/nvim
 mkdir_win "${HOME}\\AppData\\Local\\nvim"

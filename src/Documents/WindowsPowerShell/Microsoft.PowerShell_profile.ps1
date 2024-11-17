@@ -1,4 +1,4 @@
-$script:DotfilesPrompt = 0
+﻿$script:DotfilesPrompt = 0
 
 function Invoke-DotfilesSwitchPrompt {
     <#
@@ -27,10 +27,23 @@ function Set-MyPromptSwitch {
     Invoke-DotfilesSwitchPrompt
 }
 
-if (Test-Path "${HOME}\.config\powershell\env.ps1") {
-    . "${HOME}\.config\powershell\env.ps1"
+function Invoke-DotfilesMain {
+    # "${HOME}\.config\powershell\local\*.ps1 があれば、読み込む。
+    if (Test-Path -Type Container "${HOME}\.config\powershell\local") {
+        $LocalScriptItems = Get-ChildItem -Path "${HOME}\.config\powershell\local\*.ps1"
+        foreach ($LocalScriptItem in $LocalScriptItems) {
+            . $LocalScriptItem.FullName
+        }
+    }
+
+    # "${HOME}\.config\powershell\env.ps1 があれば、移動するよう警告する。
+    if (Test-Path "${HOME}\.config\powershell\env.ps1") {
+        Write-Warning "Deprecated. Please move ${HOME}\.config\powershell\env.ps1 to ${HOME}\.config\powershell\local\env.ps1"
+    }
+
+    # 既定では、タブキーでの補完は完全なコマンドを出力する。
+    # bash のように、タブキーでの補完をコマンド候補内の共通文字列の最大長の文字列にする。
+    Set-PSReadlineKeyHandler -Key Tab -Function Complete
 }
 
-# 既定では、タブキーでの補完は完全なコマンドを出力する。
-# bash のように、タブキーでの補完をコマンド候補内の共通文字列の最大長の文字列にする。
-Set-PSReadlineKeyHandler -Key Tab -Function Complete
+Invoke-DotfilesMain
