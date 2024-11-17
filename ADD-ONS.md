@@ -42,7 +42,7 @@ Move-Item $HOME/vimfiles/addons/main.vim.disabled $HOME/vimfiles/addons/main.vim
 
 ```bash
 # bash
-export DOTFILES_VIM_GITHUB_COPILOT="y"
+export DOTFILES_VIM_GITHUB_COPILOT=y
 ```
 
 ```powershell
@@ -61,62 +61,22 @@ For more information:
     - https://nodejs.org/en
     - https://nodejs.org/en/download/package-manager
 
-### vim-lsp
+### Other than GitHub Copilot
 
 ```bash
 # bash
-export DOTFILES_VIM_LSP="y"
-```
-
-```powershell
-# powershell
-[System.Environment]::SetEnvironmentVariable("DOTFILES_VIM_LSP", "y", "User")
-```
-
-### NERDTree
-
-```bash
-# bash
-export DOTFILES_VIM_NERDTREE="y"
-```
-
-```powershell
-# powershell
-[System.Environment]::SetEnvironmentVariable("DOTFILES_VIM_NERDTREE", "y", "User")
-```
-
-### BufExplorer
-
-```bash
-# bash
-export DOTFILES_VIM_BUFEXPLORER="y"
+export DOTFILES_VIM_BUFEXPLORER=y
+export DOTFILES_VIM_GITGUTTER=y
+export DOTFILES_VIM_LSP=y
+export DOTFILES_VIM_NERDTREE=y
+export DOTFILES_VIM_SONICTEMPLATE=y
 ```
 
 ```powershell
 # powershell
 [System.Environment]::SetEnvironmentVariable("DOTFILES_VIM_BUFEXPLORER", "y", "User")
-```
-
-### vim-gitgutter
-
-```bash
-# bash
-export DOTFILES_VIM_GITGUTTER="y"
-```
-
-```powershell
-# powershell
 [System.Environment]::SetEnvironmentVariable("DOTFILES_VIM_GITGUTTER", "y", "User")
-```
-
-### vim-sonictemplate
-
-```bash
-# bash
-export DOTFILES_VIM_SONICTEMPLATE="y"
-```
-
-```powershell
-# powershell
+[System.Environment]::SetEnvironmentVariable("DOTFILES_VIM_LSP", "y", "User")
+[System.Environment]::SetEnvironmentVariable("DOTFILES_VIM_NERDTREE", "y", "User")
 [System.Environment]::SetEnvironmentVariable("DOTFILES_VIM_SONICTEMPLATE", "y", "User")
 ```
