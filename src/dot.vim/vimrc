@@ -214,6 +214,7 @@ call MyVimrcConfigureColorscheme(g:my_colorscheme_list)
 if g:my_addons_editorconfig_type
   " ファイル タイプごとに syntax sync を設定する。
   augroup fileTypeSyntaxSync
+    autocmd!
     autocmd BufNewFile,BufRead *.md call MyVimrcSyntaxSyncFromstart()
   augroup END
 else
