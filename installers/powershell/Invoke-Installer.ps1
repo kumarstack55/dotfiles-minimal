@@ -113,7 +113,8 @@ class CommandCopyCrlf : Command {
         $Command, $Source, $Destination, $_ = $Stack
         if (Test-ShouldProcess("${Command} ${Source} ${Destination}")) {
             $NormalizedSource = [Path]::NormalizePath($Source)
-            $SourceContent = Get-Content -Raw -Encoding UTF8 -Path $NormalizedSource
+            $SourceContentCrlfOrLf = Get-Content -Raw -Encoding UTF8 -Path $NormalizedSource
+            $SourceContent = $SourceContentCrlfOrLf -replace "`r`n", "`n"
             $SourceContentCrlf = $SourceContent -replace "`n", "`r`n"
             if (Test-Path -LiteralPath $Destination) {
                 $this.WriteSkipReasonPathAlreadyExists()
