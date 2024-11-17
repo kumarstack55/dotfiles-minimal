@@ -59,7 +59,7 @@ class Command {
             "  Remove-Item -LiteralPath `"${DestinationFilePath}`""
             ""
             "If you want to keep the file you are copying to, you may need to run the following command:"
-            "  Copy-Item -LiteralPath `"${DestinationFilePath}`" -Destination `"${SourceFilePath}`" -Force"
+            "  Copy-Item -LiteralPath `"${DestinationFilePath}`" -Destination `"${SourceFilePath}`""
             ""
         )
         $Messages | Write-Host  -ForegroundColor Yellow
