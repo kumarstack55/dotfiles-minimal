@@ -1,6 +1,6 @@
 scriptencoding utf-8
 
-function! GvimrcTestFontAvailability(fontname)
+function! MyGvimrcTestFontAvailability(fontname)
   if !has('win32')
     return
   endif
@@ -38,7 +38,7 @@ set guioptions-=T
 
 " フォント、サイズを設定する。
 let g:gui_font_name="ＭＳ_ゴシック"
-if GvimrcTestFontAvailability("Cica")
+if MyGvimrcTestFontAvailability("Cica")
   let g:gui_font_name="Cica"
 endif
 

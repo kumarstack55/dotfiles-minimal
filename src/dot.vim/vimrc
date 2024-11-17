@@ -16,7 +16,7 @@ let g:my_vimrc_iskeyword_contains_hyphen = 0
 " {{{ 関数を定義する。
 
 " {{{ ハイフンをキーワードに含めるかどうかを切り替える。
-function! VimrcToggleIsKeyword()
+function! MyVimrcToggleIsKeyword()
   if g:my_vimrc_iskeyword_contains_hyphen
     echo 'Hyphen is used as delimiter.'
     set iskeyword-=-
@@ -29,7 +29,7 @@ endfunction
 " }}}
 
 " {{{ タブ幅を設定する。
-function! VimrcTabstopSet(ts)
+function! MyVimrcTabstopSet(ts)
   let &l:tabstop = a:ts
   let &l:shiftwidth = a:ts
   let &l:softtabstop = a:ts
@@ -42,38 +42,38 @@ endfunction
 " 構文ハイライトで行数が多い Markdown などを編集すると解析に失敗する。
 " 例えば、コードブロック内の # で始まる行を見出しとして解析してしまう。
 " これを回避するため、ファイルの先頭から解析するようにする。
-function! VimrcSyntaxSyncFromstart()
+function! MyVimrcSyntaxSyncFromstart()
   syntax sync fromstart
 endfunction
 " }}}
 
 " {{{ ファイルタイプが Markdown の設定をする。
-function! VimrcFiletypeMarkdown()
+function! MyVimrcFiletypeMarkdown()
   setlocal filetype=markdown
   if ! g:my_addons_editorconfig_type
-    call VimrcTabstopSet(4)
+    call MyVimrcTabstopSet(4)
   end
-  call VimrcSyntaxSyncFromstart()
+  call MyVimrcSyntaxSyncFromstart()
 endfunction
 " }}}
 
 " {{{ ファイルタイプが PowerShell の設定をする。
-function! VimrcFiletypePowerShell()
+function! MyVimrcFiletypePowerShell()
   setlocal filetype=ps1
-  call VimrcTabstopSet(4)
+  call MyVimrcTabstopSet(4)
 endfunction
 " }}}
 
 " {{{ カラースキームが存在するかどうかを返す。
-function! VimrcTestColorschemeExists(name)
+function! MyVimrcTestColorschemeExists(name)
   return !empty(globpath(&rtp, 'colors/' . a:name . '.vim'))
 endfunction
 " }}}
 
 " {{{ カラースキームを設定する。
-function VimrcConfigureColorscheme(colorscheme_list)
+function MyVimrcConfigureColorscheme(colorscheme_list)
   for c in a:colorscheme_list
-    if VimrcTestColorschemeExists(c)
+    if MyVimrcTestColorschemeExists(c)
       if c == 'iceberg'
         set background=dark
       endif
@@ -156,11 +156,11 @@ set breakindent
 set expandtab
 
 " 新しいバッファから編集したときに、ファイルタイプの設定を適用するコマンドを定義する。
-command! MyFiletypeMarkdown call VimrcFiletypeMarkdown()
-command! MyFiletypePs1 call VimrcFiletypePowerShell()
+command! MyFiletypeMarkdown call MyVimrcFiletypeMarkdown()
+command! MyFiletypePs1 call MyVimrcFiletypePowerShell()
 
 " キーワードにハイフンを含めるかどうかを切り替えるコマンドを定義する。
-command! MyIsKeywordToggle call VimrcToggleIsKeyword
+command! MyIsKeywordToggle call MyVimrcToggleIsKeyword
 
 " }}}
 
@@ -199,7 +199,7 @@ if has('win32') && !has('gui_running')
   " そのため、 iceberg を除外する。
   let g:my_colorscheme_list = ["habamax", "pablo"]
 endif
-call VimrcConfigureColorscheme(g:my_colorscheme_list)
+call MyVimrcConfigureColorscheme(g:my_colorscheme_list)
 " }}}
 
 " {{{ ファイル タイプごとに設定する。
@@ -208,21 +208,21 @@ call VimrcConfigureColorscheme(g:my_colorscheme_list)
 if g:my_addons_editorconfig_type
   " ファイル タイプごとに syntax sync を設定する。
   augroup fileTypeSyntaxSync
-    autocmd BufNewFile,BufRead *.md call VimrcSyntaxSyncFromstart()
+    autocmd BufNewFile,BufRead *.md call MyVimrcSyntaxSyncFromstart()
   augroup END
 else
   " ファイル タイプごとにインデントを設定する。
   augroup fileTypeIndent
     autocmd!
-    autocmd BufNewFile,BufRead *.c,*.cpp,*.h call VimrcTabstopSet(4)
-    autocmd BufNewFile,BufRead *.md call VimrcFiletypeMarkdown()
-    autocmd BufNewFile,BufRead *.ps1 call VimrcFiletypePowerShell()
-    autocmd BufNewFile,BufRead *.py call VimrcTabstopSet(4)
-    autocmd BufNewFile,BufRead *.rst call VimrcTabstopSet(2)
-    autocmd BufNewFile,BufRead *.sh,*.bash call VimrcTabstopSet(2)
-    autocmd BufNewFile,BufRead *.txt call VimrcTabstopSet(4)
-    autocmd BufNewFile,BufRead vimrc,_gvimrc,gvimrc,*.vim call VimrcTabstopSet(2)
-    autocmd BufNewFile,BufRead *.yaml,*.yml call VimrcTabstopSet(2)
+    autocmd BufNewFile,BufRead *.c,*.cpp,*.h call MyVimrcTabstopSet(4)
+    autocmd BufNewFile,BufRead *.md call MyVimrcFiletypeMarkdown()
+    autocmd BufNewFile,BufRead *.ps1 call MyVimrcFiletypePowerShell()
+    autocmd BufNewFile,BufRead *.py call MyVimrcTabstopSet(4)
+    autocmd BufNewFile,BufRead *.rst call MyVimrcTabstopSet(2)
+    autocmd BufNewFile,BufRead *.sh,*.bash call MyVimrcTabstopSet(2)
+    autocmd BufNewFile,BufRead *.txt call MyVimrcTabstopSet(4)
+    autocmd BufNewFile,BufRead vimrc,_gvimrc,gvimrc,*.vim call MyVimrcTabstopSet(2)
+    autocmd BufNewFile,BufRead *.yaml,*.yml call MyVimrcTabstopSet(2)
   augroup END
 endif
 " }}}
