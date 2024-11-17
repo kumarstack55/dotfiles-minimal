@@ -166,7 +166,7 @@ command! MyFiletypeMarkdown call MyVimrcFiletypeMarkdown(4)
 command! MyFiletypePs1 call MyVimrcFiletypePowerShell()
 
 " キーワードにハイフンを含めるかどうかを切り替えるコマンドを定義する。
-command! MyIsKeywordToggle call MyVimrcToggleIsKeyword
+command! MyIsKeywordToggle call MyVimrcToggleIsKeyword()
 
 " }}}
 
