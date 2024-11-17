@@ -53,6 +53,8 @@ function! MyVimrcFiletypeMarkdown()
   if ! g:my_addons_editorconfig_type
     call MyVimrcTabstopSet(4)
   end
+  let &l:tabstop = a:ts
+  let &l:breakindentopt = 'shift:2'
   call MyVimrcSyntaxSyncFromstart()
 endfunction
 " }}}

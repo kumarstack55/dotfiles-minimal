@@ -1,24 +1,33 @@
-" vim:set ft=vim sw=2 ts=2 et:
+" vim:set ft=vim sw=2 ts=2 et foldmethod=marker:
 scriptencoding utf-8
 
 call plug#begin()
 
+  " vim-cheatsheet {{{
   " vim-cheatsheet opens your cheat sheet file.
   Plug 'reireias/vim-cheatsheet', { 'on': 'Cheat' }
+  " }}}
 
+  " iceberg.vim {{{
   " Iceberg is well-designed, bluish color scheme for Vim and Neovim.
   Plug 'cocopon/iceberg.vim'
+  " }}}
 
+  " nerdtree {{{
   if getenv('DOTFILES_VIM_NERDTREE') == 'y'
     " The NERDTree is a file system explorer for the Vim editor.
     Plug 'preservim/nerdtree', {'on': 'NERDTreeToggle'}
   endif
+  " }}}
 
+  " bufexplorer {{{
   if getenv('DOTFILES_VIM_BUFEXPLORER') == 'y'
     " BufExplorer Plugin for Vim
     Plug 'jlanzarotta/bufexplorer'
   endif
+  " }}}
 
+  " tagbar {{{
   " Tagbar is a Vim plugin that provides an easy way to browse the tags of the
   " current file and get an overview of its structure.
   Plug 'preservim/tagbar', {
@@ -37,19 +46,25 @@ call plug#begin()
       \ 'vim',
     \ ]
   \ }
+  " }}}
 
+  " vim-gitgutter {{{
   if getenv('DOTFILES_VIM_GITGUTTER') == 'y'
     " A Vim plugin which shows a git diff in the sign column.
     Plug 'airblade/vim-gitgutter'
   endif
+  " }}}
 
+  " vim-copilot {{{
   if (v:version >= 900 && has('patch0185')) || has('nvim-0.7')
     if getenv('DOTFILES_VIM_GITHUB_COPILOT') == 'y'
       " Copilot.vim is a Vim/Neovim plugin for GitHub Copilot.
       Plug 'github/copilot.vim'
     endif
   endif
+  " }}}
 
+  " vim-editorconfig {{{
   if has('nvim')
     if has('nvim-0.9')
       " https://neovim.io/doc/user/editorconfig.html
@@ -73,31 +88,41 @@ call plug#begin()
     " EditorConfig plugin for Vim
     Plug 'editorconfig/editorconfig-vim'
   endif
+  " }}}
 
+  " vim-lsp, vim-lsp-settings {{{
   if getenv('DOTFILES_VIM_LSP') == 'y'
     " Async Language Server Protocol plugin for vim8 and neovim.
+    " vim-lsp-settings はこのプラグインに依存します。
     Plug 'prabirshrestha/vim-lsp'
 
     " Auto configurations for Language Servers for vim-lsp.
     Plug 'mattn/vim-lsp-settings'
   endif
+  " }}}
 
+  " tabular, vim-markdown {{{
   " Vim script for text filtering and alignment
-  " このプラグインは vim-markdown の動作のために必要です。
+  " vim-markdown はこのプラグインに依存します。
   Plug 'godlygeek/tabular', { 'for': ['md', 'text'] }
 
   " Syntax highlighting, matching rules and mappings for the original Markdown
   " and extensions.
   " Markdown の中の diff などをハイライトするために使う。
   Plug 'preservim/vim-markdown', { 'for': ['md', 'text'] }
+  " }}}
 
+  " vim-sonictemplate {{{
   if getenv('DOTFILES_VIM_SONICTEMPLATE') == 'y'
     " Easy and high speed coding method
     Plug 'mattn/vim-sonictemplate'
   endif
+  " }}}
 
+  " vim-surround {{{
   " Delete/change/add parentheses/quotes/XML-tags/much more with ease
   Plug 'tpope/vim-surround'
+  " }}}
 
 call plug#end()
 
