@@ -1,5 +1,16 @@
 ﻿$script:DotfilesPrompt = 0
 
+# "${HOME}\.config\powershell\local\*.ps1 があれば、読み込む。
+if (Test-Path -Type Container "${HOME}\.config\powershell\local") {
+    $LocalScriptItems = Get-ChildItem -Path "${HOME}\.config\powershell\local\*.ps1"
+    foreach ($LocalScriptItem in $LocalScriptItems) {
+        # この処理は、グローバル・スコープで実行する必要がある。
+        # 理由は、関数 f1 内で dot-source で関数群を定義したのち、
+        # f1 から return すると、関数群の定義が無効になるため。
+        . $LocalScriptItem.FullName
+    }
+}
+
 function Invoke-DotfilesSwitchPrompt {
     <#
         .SYNOPSIS
@@ -28,14 +39,6 @@ function Set-MyPromptSwitch {
 }
 
 function Invoke-DotfilesMain {
-    # "${HOME}\.config\powershell\local\*.ps1 があれば、読み込む。
-    if (Test-Path -Type Container "${HOME}\.config\powershell\local") {
-        $LocalScriptItems = Get-ChildItem -Path "${HOME}\.config\powershell\local\*.ps1"
-        foreach ($LocalScriptItem in $LocalScriptItems) {
-            . $LocalScriptItem.FullName
-        }
-    }
-
     # "${HOME}\.config\powershell\env.ps1 があれば、移動するよう警告する。
     if (Test-Path "${HOME}\.config\powershell\env.ps1") {
         Write-Warning "Deprecated. Please move ${HOME}\.config\powershell\env.ps1 to ${HOME}\.config\powershell\local\env.ps1"
