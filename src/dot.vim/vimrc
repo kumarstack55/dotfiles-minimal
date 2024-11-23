@@ -175,6 +175,9 @@ set expandtab
 command! MyFiletypeMarkdown call MyVimrcFiletypeMarkdown(4)
 command! MyFiletypePs1 call MyVimrcFiletypePowerShell()
 
+command! MyFtMarkdown MyFiletypeMarkdown
+command! MyFtPs1 MyFiletypePs1
+
 " キーワードにハイフンを含めるかどうかを切り替えるコマンドを定義する。
 command! MyIsKeywordToggle call MyVimrcToggleIsKeyword()
 
