@@ -46,6 +46,7 @@ copy "src/dot.vim/addons/vim-cheatsheet.vim" "${HOME}/${vimrc_dir}/addons/vim-ch
 copy "src/dot.vim/addons/vim-markdown.vim" "${HOME}/${vimrc_dir}/addons/vim-markdown.vim"
 copy "src/dot.vim/addons/vim-lsp.vim" "${HOME}/${vimrc_dir}/addons/vim-lsp.vim"
 copy "src/dot.vim/addons/vim-sonictemplate.vim" "${HOME}/${vimrc_dir}/addons/vim-sonictemplate.vim"
+copy "src/dot.vim/addons/nerdtree.vim" "${HOME}/${vimrc_dir}/addons/nerdtree.vim"
 
 mkdir "${HOME}/${vimrc_dir}/template"
 

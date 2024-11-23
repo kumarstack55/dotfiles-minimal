@@ -20,6 +20,13 @@ call plug#begin()
   endif
   " }}}
 
+  " vaffle.vim {{{
+  if getenv('DOTFILES_VIM_VAFFLE') == 'y'
+    " Lightweight, window-based file manager for Vim
+    Plug 'cocopon/vaffle.vim'
+  endif
+  " }}}
+
   " bufexplorer {{{
   if getenv('DOTFILES_VIM_BUFEXPLORER') == 'y'
     " BufExplorer Plugin for Vim
