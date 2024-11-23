@@ -59,8 +59,8 @@ Set-ExecutionPolicy -Scope CurrentUser -ExecutionPolicy RemoteSigned
 
 ## TODO
 
-- [ ] test lsp on windows
-- [ ] simplify installer playbook
+- [x] test lsp on windows
+- [x] simplify installer playbook
 - [ ] enable python in windows
 
 ## LICENSE
