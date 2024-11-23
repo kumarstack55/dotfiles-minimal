@@ -55,7 +55,7 @@ call plug#begin()
   endif
   " }}}
 
-  " vim-copilot {{{
+  " copilot.vim {{{
   if (v:version >= 900 && has('patch0185')) || has('nvim-0.7')
     if getenv('DOTFILES_VIM_GITHUB_COPILOT') == 'y'
       " Copilot.vim is a Vim/Neovim plugin for GitHub Copilot.
