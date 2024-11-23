@@ -51,7 +51,7 @@ endfunction
 function! MyVimrcFiletypeMarkdown(ts)
   setlocal filetype=markdown
   if ! g:my_addons_editorconfig_type
-    call MyVimrcTabstopSet(ts)
+    call MyVimrcTabstopSet(a:ts)
   end
   let &l:breakindentopt = 'shift:2'
   call MyVimrcSyntaxSyncFromstart()
