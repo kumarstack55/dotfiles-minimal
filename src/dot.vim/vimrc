@@ -215,13 +215,13 @@ endif
 " {{{ カラースキームを設定する。
 " カラースキームのいくつかはプラグインに依存するため、
 " addons/main.vim のあとに実行する。
-let g:my_colorscheme_list = ["iceberg", "habamax", "pablo"]
+let g:my_vimrc_colorscheme_list = ["iceberg", "habamax", "pablo"]
 if has('win32') && !has('gui_running')
   " Windows の PowerShell で vim 実行時、 iceberg を選択後に default になった。
   " そのため、 iceberg を除外する。
-  let g:my_colorscheme_list = ["habamax", "pablo"]
+  let g:my_vimrc_colorscheme_list = ["habamax", "pablo"]
 endif
-call MyVimrcConfigureColorscheme(g:my_colorscheme_list)
+call MyVimrcConfigureColorscheme(g:my_vimrc_colorscheme_list)
 " }}}
 
 " {{{ ファイル タイプごとに設定する。
