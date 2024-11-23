@@ -31,6 +31,14 @@ mkdir "${HOME}/${vimrc_dir}"
 copy "src/dot.vim/cheatsheet.md" "${HOME}/${vimrc_dir}/cheatsheet.md"
 copy "src/dot.vim/vimrc" "${HOME}/${vimrc_dir}/vimrc"
 copy_win "src\\dot.vim\\gvimrc" "${HOME}\\${vimrc_dir}\\gvimrc"
+copy "src/dot.vim/vader.vader" "${HOME}/${vimrc_dir}/vader.vader"
+
+mkdir "${HOME}/${vimrc_dir}/test"
+copy "src/dot.vim/test/test_markdown.vader" "${HOME}/${vimrc_dir}/test/test_markdown.vader"
+
+mkdir "${HOME}/${vimrc_dir}/test/include"
+copy "src/dot.vim/test/include/setup.vader" "${HOME}/${vimrc_dir}/test/include/setup.vader"
+copy "src/dot.vim/test/include/teardown.vader" "${HOME}/${vimrc_dir}/test/include/teardown.vader"
 
 mkdir "${HOME}/${vimrc_dir}/addons"
 copy "src/dot.vim/addons/main.vim.disabled" "${HOME}/${vimrc_dir}/addons/main.vim.disabled"

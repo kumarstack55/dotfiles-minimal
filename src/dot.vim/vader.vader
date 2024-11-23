@@ -1,0 +1,8 @@
+# Usage:
+#   $ vim -c 'Vader! *'
+
+Include: test/include/setup.vader
+
+Include (markdown): test/test_markdown.vader
+
+Include: test/include/teardown.vader

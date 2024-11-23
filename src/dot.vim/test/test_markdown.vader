@@ -1,0 +1,20 @@
+Given markdown (You can edit Markdown by executing MyFtMarkdown):
+  text
+
+Do:
+  :MyFtMarkdown\<CR>
+
+Then:
+  AssertEqual "markdown", &filetype
+
+Expect markdown:
+  text
+
+Given markdown (When editing markdown, the tabstop is 4):
+  text
+
+Do:
+  :MyFtMarkdown\<CR>
+
+Execute:
+  AssertEqual &tabstop, 4

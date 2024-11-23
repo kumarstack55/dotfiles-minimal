@@ -72,6 +72,7 @@ export DOTFILES_VIM_GITGUTTER=y
 export DOTFILES_VIM_LSP=y
 export DOTFILES_VIM_NERDTREE=y
 export DOTFILES_VIM_SONICTEMPLATE=y
+export DOTFILES_VIM_VADER=y
 ```
 
 ```powershell
@@ -82,4 +83,5 @@ export DOTFILES_VIM_SONICTEMPLATE=y
 [System.Environment]::SetEnvironmentVariable("DOTFILES_VIM_LSP", "y", "User")
 [System.Environment]::SetEnvironmentVariable("DOTFILES_VIM_NERDTREE", "y", "User")
 [System.Environment]::SetEnvironmentVariable("DOTFILES_VIM_SONICTEMPLATE", "y", "User")
+[System.Environment]::SetEnvironmentVariable("DOTFILES_VIM_VADER", "y", "User")
 ```

@@ -131,6 +131,12 @@ call plug#begin()
   Plug 'tpope/vim-surround'
   " }}}
 
+  " vader.vim {{{
+  if getenv('DOTFILES_VIM_VADER') == 'y'
+    " A simple Vimscript test framework
+    Plug 'junegunn/vader.vim'
+  endif
+  " }}}
 call plug#end()
 
 " Plug と対応するファイルがあれば読む。
