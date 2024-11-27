@@ -1,6 +1,6 @@
 # dotfiles-minimal
 
-## Principle
+## Concept
 
 - Only configuration is performed.
     - Do not install add-ons  from the Internet without user intervention.
