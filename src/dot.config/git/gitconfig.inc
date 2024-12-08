@@ -13,9 +13,5 @@
 	# https://git-scm.com/docs/git-init/en
 	defaultBranch = main
 
-[user]
-	#email = user@example.com
-	#name = Your Name
-
 [include]
 	path = ~/.config/git/local/config.inc
