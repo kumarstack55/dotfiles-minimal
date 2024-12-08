@@ -1,3 +1,4 @@
+# vim:ft=config ts=8:
 [core]
 	# コミット時に crlf を lf にする。
 	# https://git-scm.com/docs/gitattributes#_end_of_line_conversion
@@ -11,3 +12,10 @@
 	# リポジトリが作られたとき、ブランチ名を main にする。
 	# https://git-scm.com/docs/git-init/en
 	defaultBranch = main
+
+[user]
+	#email = user@example.com
+	#name = Your Name
+
+[include]
+	path = ~/.config/git/local/config.inc

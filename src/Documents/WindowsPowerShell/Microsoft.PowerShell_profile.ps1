@@ -39,9 +39,12 @@ function Set-MyPromptSwitch {
 }
 
 function Invoke-DotfilesMain {
-    # "${HOME}\.config\powershell\env.ps1 があれば、移動するよう警告する。
+    # 古い設定ファイルがあれば対処するよう警告する。
     if (Test-Path "${HOME}\.config\powershell\env.ps1") {
         Write-Warning "Deprecated. Please move ${HOME}\.config\powershell\env.ps1 to ${HOME}\.config\powershell\local\env.ps1"
+    }
+    if (Test-Path "${HOME}\.gitconfig_generic.inc") {
+        Write-Warning "Deprecated. Please move ${HOME}\.gitconfig_generic.inc to ${HOME}\.config\git\config.inc"
     }
 
     # 既定では、タブキーでの補完は完全なコマンドを出力する。

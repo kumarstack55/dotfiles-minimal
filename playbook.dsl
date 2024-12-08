@@ -3,7 +3,6 @@ set_win "src_init_vim_filename" "init_windows.vim"
 
 copy "src/dot.editorconfig" "${HOME}/.editorconfig"
 copy "src/dot.gitconfig" "${HOME}/.gitconfig"
-copy "src/dot.gitconfig_generic.inc" "${HOME}/.gitconfig_generic.inc"
 copy_linux "src/dot.ansible.cfg" "${HOME}/.ansible.cfg"
 copy_win "src/dot.vsvimrc" "${HOME}/.vsvimrc"
 
@@ -14,6 +13,12 @@ copy "src/dot.config/bash/main.sh" "${HOME}/.config/bash/main.sh"
 
 mkdir "${HOME}/.config/bash/local"
 copy "src/dot.config/bash/local/env-vim.sh.sample" "${HOME}/.config/bash/local/env-vim.sh.sample"
+
+mkdir "${HOME}/.config/git"
+copy "src/dot.config/git/gitconfig.inc" "${HOME}/.config/git/gitconfig.inc"
+
+mkdir "${HOME}/.config/git/local"
+copy "src/dot.config/git/local/gitconfig_local.inc.sample" "${HOME}/.config/git/local/gitconfig_local.inc.sample"
 
 mkdir_linux "${HOME}/.config/nvim"
 copy_linux "src/dot.config/nvim/${src_init_vim_filename}" "${HOME}/.config/nvim/init.vim"
