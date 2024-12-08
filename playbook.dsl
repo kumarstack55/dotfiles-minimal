@@ -47,11 +47,12 @@ copy "src/dot.vim/test/include/teardown.vader" "${HOME}/${vimrc_dir}/test/includ
 
 mkdir "${HOME}/${vimrc_dir}/addons"
 copy "src/dot.vim/addons/main.vim.disabled" "${HOME}/${vimrc_dir}/addons/main.vim.disabled"
-copy "src/dot.vim/addons/vim-cheatsheet.vim" "${HOME}/${vimrc_dir}/addons/vim-cheatsheet.vim"
-copy "src/dot.vim/addons/vim-markdown.vim" "${HOME}/${vimrc_dir}/addons/vim-markdown.vim"
-copy "src/dot.vim/addons/vim-lsp.vim" "${HOME}/${vimrc_dir}/addons/vim-lsp.vim"
-copy "src/dot.vim/addons/vim-sonictemplate.vim" "${HOME}/${vimrc_dir}/addons/vim-sonictemplate.vim"
+copy "src/dot.vim/addons/copilot-vim.vim" "${HOME}/${vimrc_dir}/addons/copilot-vim.vim"
 copy "src/dot.vim/addons/nerdtree.vim" "${HOME}/${vimrc_dir}/addons/nerdtree.vim"
+copy "src/dot.vim/addons/vim-cheatsheet.vim" "${HOME}/${vimrc_dir}/addons/vim-cheatsheet.vim"
+copy "src/dot.vim/addons/vim-lsp.vim" "${HOME}/${vimrc_dir}/addons/vim-lsp.vim"
+copy "src/dot.vim/addons/vim-markdown.vim" "${HOME}/${vimrc_dir}/addons/vim-markdown.vim"
+copy "src/dot.vim/addons/vim-sonictemplate.vim" "${HOME}/${vimrc_dir}/addons/vim-sonictemplate.vim"
 
 mkdir "${HOME}/${vimrc_dir}/template"
 
