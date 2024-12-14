@@ -3,7 +3,7 @@
 " スクリプトのエンコードが UTF-8 であることを示す。
 scriptencoding utf-8
 
-" {{{ 変数を定義する。
+" {{{1 変数を定義する。
 
 " EditorConfig の種類がなんであるか。
 let g:my_addons_editorconfig_type = 0
@@ -13,9 +13,9 @@ let g:my_vimrc_iskeyword_contains_hyphen = 0
 
 " }}}
 
-" {{{ 関数を定義する。
+" {{{1 関数を定義する。
 
-" {{{ ハイフンをキーワードに含めるかどうかを切り替える。
+" {{{2 ハイフンをキーワードに含めるかどうかを切り替える。
 function! MyVimrcToggleIsKeyword()
   if g:my_vimrc_iskeyword_contains_hyphen
     echo 'Hyphen is used as delimiter.'
@@ -28,7 +28,7 @@ function! MyVimrcToggleIsKeyword()
 endfunction
 " }}}
 
-" {{{ タブ幅を設定する。
+" {{{2 タブ幅を設定する。
 function! MyVimrcTabstopSet(ts)
   let &l:tabstop = a:ts
   let &l:shiftwidth = a:ts
@@ -37,7 +37,7 @@ function! MyVimrcTabstopSet(ts)
 endfunction
 " }}}
 
-" {{{ 構文ハイライトを、ファイルの先頭から解析する。
+" {{{2 構文ハイライトを、ファイルの先頭から解析する。
 "
 " 構文ハイライトで行数が多い Markdown などを編集すると解析に失敗する。
 " 例えば、コードブロック内の # で始まる行を見出しとして解析してしまう。
@@ -47,7 +47,7 @@ function! MyVimrcSyntaxSyncFromstart()
 endfunction
 " }}}
 
-" {{{ ファイルタイプが Markdown の設定をする。
+" {{{2 ファイルタイプが Markdown の設定をする。
 function! MyVimrcFiletypeMarkdown(ts)
   setlocal filetype=markdown
   if ! g:my_addons_editorconfig_type
@@ -59,20 +59,20 @@ function! MyVimrcFiletypeMarkdown(ts)
 endfunction
 " }}}
 
-" {{{ ファイルタイプが PowerShell の設定をする。
+" {{{2 ファイルタイプが PowerShell の設定をする。
 function! MyVimrcFiletypePowerShell()
   setlocal filetype=ps1
   call MyVimrcTabstopSet(4)
 endfunction
 " }}}
 
-" {{{ カラースキームが存在するかどうかを返す。
+" {{{2 カラースキームが存在するかどうかを返す。
 function! MyVimrcTestColorschemeExists(name)
   return !empty(globpath(&rtp, 'colors/' . a:name . '.vim'))
 endfunction
 " }}}
 
-" {{{ カラースキームを設定する。
+" {{{2 カラースキームを設定する。
 function MyVimrcConfigureColorscheme(colorscheme_list)
   for c in a:colorscheme_list
     if MyVimrcTestColorschemeExists(c)
@@ -86,7 +86,7 @@ function MyVimrcConfigureColorscheme(colorscheme_list)
 endfunction
 " }}}
 
-" {{{ ファイルの情報を表示する。
+" {{{2 ファイルの情報を表示する。
 function! MyVimrcFileShowInfo()
   echo 'bomb: ' . &bomb
   echo 'fileencoding: ' . &fileencoding
@@ -97,9 +97,9 @@ endfunction
 
 " }}}
 
-" {{{ 設定する。
+" {{{1 設定する。
 
-" {{{ 標準機能を設定する。
+" {{{2 標準機能を設定する。
 
 " 記号などをASCII文字の2倍幅として扱う。
 set ambiwidth=double
@@ -186,7 +186,7 @@ command! MyFileShowInfo call MyVimrcFileShowInfo()
 
 " }}}
 
-" {{{ 環境固有の設定あれば読み込む。
+" {{{2 環境固有の設定あれば読み込む。
 
 " local.vim ファイルがあれば読む。
 " このファイルは環境固有の設定が必要な場合のみ、存在させる。
@@ -206,7 +206,7 @@ endif
 
 " }}}
 
-" {{{ addons 有効なら読み込む。
+" {{{2 addons 有効なら読み込む。
 
 " addons/main.vim ファイルがあれば有効と判定する。
 let script_path = expand('<sfile>')
@@ -219,9 +219,9 @@ endif
 
 " }}}
 
-" {{{ プラグイン設定後に必要な設定をする。
+" {{{2 プラグイン設定後に必要な設定をする。
 
-" {{{ カラースキームを設定する。
+" {{{3 カラースキームを設定する。
 " カラースキームのいくつかはプラグインに依存するため、
 " addons/main.vim のあとに実行する。
 let g:my_vimrc_colorscheme_list = ["iceberg", "habamax", "pablo"]
@@ -233,7 +233,7 @@ endif
 call MyVimrcConfigureColorscheme(g:my_vimrc_colorscheme_list)
 " }}}
 
-" {{{ ファイル タイプごとに設定する。
+" {{{3 ファイル タイプごとに設定する。
 " EditrConfig プラグインが読まれていない場合のみ実施するため、
 " addons/main.vim のあとに実行する。
 if g:my_addons_editorconfig_type
@@ -261,7 +261,7 @@ endif
 
 " }}}
 
-" {{{ 環境固有の設定あれば読み込む。
+" {{{2 環境固有の設定あれば読み込む。
 
 " $HOME/.config/vim/local/post-addons.vim ファイルがあれば読む。
 " このファイルは環境固有の設定が必要な場合のみ、存在させる。
