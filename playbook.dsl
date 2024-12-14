@@ -31,6 +31,8 @@ mkdir "${HOME}/.config/vim"
 
 mkdir "${HOME}/.config/vim/local"
 
+mkdir "${HOME}/.config/vim/local/templates"
+
 mkdir_win "${HOME}\\AppData\\Local\\nvim"
 copy_win "src/dot.config/nvim/${src_init_vim_filename}" "${HOME}\\AppData\\Local\\nvim\\init.vim"
 
@@ -67,9 +69,5 @@ copy "src/dot.vim/template/markdown/snip-code-bash.md" "${HOME}/${vimrc_dir}/tem
 copy "src/dot.vim/template/markdown/snip-code-markdown.md" "${HOME}/${vimrc_dir}/template/markdown/snip-code-markdown.md"
 copy "src/dot.vim/template/markdown/snip-code-plaintext.md" "${HOME}/${vimrc_dir}/template/markdown/snip-code-plaintext.md"
 copy "src/dot.vim/template/markdown/snip-code-posh.md" "${HOME}/${vimrc_dir}/template/markdown/snip-code-posh.md"
-
-mkdir "${HOME}/${vimrc_dir}/local"
-
-mkdir "${HOME}/${vimrc_dir}/local/templates"
 
 copy_crlf_win "src\\Documents\\WindowsPowerShell\\Microsoft.PowerShell_profile.ps1" "${PROFILE}"

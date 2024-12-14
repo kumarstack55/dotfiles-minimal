@@ -39,15 +39,29 @@ function Set-MyPromptSwitch {
 }
 
 function Invoke-DotfilesMain {
-    # 古い設定ファイルがあれば対処するよう警告する。
-    if (Test-Path "${HOME}\.config\powershell\env.ps1") {
-        Write-Warning "Deprecated. Please move ${HOME}\.config\powershell\env.ps1 to ${HOME}\.config\powershell\local\env.ps1"
-    }
-    if (Test-Path "${HOME}\.gitconfig_generic.inc") {
-        Write-Warning "Deprecated. Please move ${HOME}\.gitconfig_generic.inc to ${HOME}\.config\git\config.inc"
-    }
-    if (Test-Path "${HOME}\vimfiles\local.vim") {
-        Write-Warning "Deprecated. Please move ${HOME}\vimfiles\local.vim to ${HOME}\.config\vim\local\pre-addons.vim"
+    # 古い設定ファイルがあれば新しいパスに移動するよう促す。
+    $DeprecatedPathRecords = @(
+        @{
+            OldPath = "${HOME}\.config\powershell\env.ps1"
+            NewPath = "${HOME}\.config\powershell\local\env.ps1"
+        },
+        @{
+            OldPath = "${HOME}\.gitconfig_generic.inc"
+            NewPath = "${HOME}\.config\git\config.inc"
+        },
+        @{
+            OldPath = "${HOME}\vimfiles\local.vim"
+            NewPath = "${HOME}\.config\vim\local\pre-addons.vim"
+        },
+        @{
+            OldPath = "${HOME}\vimfiles\local"
+            NewPath = "${HOME}\.config\vim\local"
+        }
+    )
+    foreach ($DeprecatedPathRecord in $DeprecatedPathRecords) {
+        if (Test-Path $DeprecatedPathRecord.OldPath) {
+            Write-Warning "Deprecated. Please move $($DeprecatedPathRecord.OldPath) to $($DeprecatedPathRecord.NewPath)"
+        }
     }
 
     # 既定では、タブキーでの補完は完全なコマンドを出力する。

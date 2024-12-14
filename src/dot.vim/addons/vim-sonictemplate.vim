@@ -6,7 +6,9 @@ else
   let my_vimrc_dir = '$HOME/.vim'
 endif
 
+let my_config_local_dir = expand('$HOME/.config/vim/local')
+
 let g:sonictemplate_vim_template_dir = [
   \ my_vimrc_dir . '/template',
-  \ my_vimrc_dir . '/local/templates/*',
+  \ my_config_local_dir . '/templates/*',
 \ ]
