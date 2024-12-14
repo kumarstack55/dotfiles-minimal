@@ -197,11 +197,20 @@ if filereadable(local_vim_path)
   exec "source " . fnameescape(local_vim_path)
 endif
 
+" $HOME/.config/vim/local/pre-addons.vim ファイルがあれば読む。
+" このファイルは環境固有の設定が必要な場合のみ、存在させる。
+let pre_addons_vim_path = expand('$HOME/.config/vim/local/pre-addons.vim')
+if filereadable(pre_addons_vim_path)
+  exec "source " . fnameescape(pre_addons_vim_path)
+endif
+
 " }}}
 
 " {{{ addons 有効なら読み込む。
 
 " addons/main.vim ファイルがあれば有効と判定する。
+let script_path = expand('<sfile>')
+let script_dir = fnamemodify(script_path, ':p:h')
 let addons_dir = script_dir . '/addons'
 let addons_main_vim_path = addons_dir . '/main.vim'
 if filereadable(addons_main_vim_path)
@@ -249,6 +258,17 @@ else
   augroup END
 endif
 " }}}
+
+" }}}
+
+" {{{ 環境固有の設定あれば読み込む。
+
+" $HOME/.config/vim/local/post-addons.vim ファイルがあれば読む。
+" このファイルは環境固有の設定が必要な場合のみ、存在させる。
+let post_addons_vim_path = expand('$HOME/.config/vim/local/post-addons.vim')
+if filereadable(post_addons_vim_path)
+  exec "source " . fnameescape(post_addons_vim_path)
+endif
 
 " }}}
 

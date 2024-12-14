@@ -27,6 +27,10 @@ mkdir_win "${HOME}/.config/powershell"
 
 mkdir_win "${HOME}/.config/powershell/local"
 
+mkdir "${HOME}/.config/vim"
+
+mkdir "${HOME}/.config/vim/local"
+
 mkdir_win "${HOME}\\AppData\\Local\\nvim"
 copy_win "src/dot.config/nvim/${src_init_vim_filename}" "${HOME}\\AppData\\Local\\nvim\\init.vim"
 

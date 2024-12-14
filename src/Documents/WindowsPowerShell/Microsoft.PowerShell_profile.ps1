@@ -46,6 +46,9 @@ function Invoke-DotfilesMain {
     if (Test-Path "${HOME}\.gitconfig_generic.inc") {
         Write-Warning "Deprecated. Please move ${HOME}\.gitconfig_generic.inc to ${HOME}\.config\git\config.inc"
     }
+    if (Test-Path "${HOME}\vimfiles\local.vim") {
+        Write-Warning "Deprecated. Please move ${HOME}\vimfiles\local.vim to ${HOME}\.config\vim\local\pre-addons.vim"
+    }
 
     # 既定では、タブキーでの補完は完全なコマンドを出力する。
     # bash のように、タブキーでの補完をコマンド候補内の共通文字列の最大長の文字列にする。
