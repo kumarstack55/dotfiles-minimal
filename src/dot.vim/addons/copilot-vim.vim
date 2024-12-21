@@ -14,6 +14,7 @@ let g:copilot_filetypes = {
 let g:copilot_filetypes["bash"] = v:true
 let g:copilot_filetypes["make"] = v:true
 let g:copilot_filetypes["ps1"] = v:true
+let g:copilot_filetypes["python"] = v:true
 let g:copilot_filetypes["vim"] = v:true
 
 " g:copilot_filetypes を上書きして有効・無効にするコマンドを定義する。
