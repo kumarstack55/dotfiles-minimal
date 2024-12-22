@@ -52,8 +52,3 @@ MyFontSize18
 if has('win32')
   set guioptions+=a
 endif
-
-" スワップ・ファイルは $TEMP に作る。
-if has('win32')
-  set directory=$TEMP
-endif

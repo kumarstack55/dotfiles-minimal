@@ -33,6 +33,8 @@ mkdir "${HOME}/.config/vim/local"
 
 mkdir "${HOME}/.config/vim/local/templates"
 
+mkdir "${HOME}/.config/vim/swap"
+
 mkdir_win "${HOME}\\AppData\\Local\\nvim"
 copy_win "src/dot.config/nvim/${src_init_vim_filename}" "${HOME}\\AppData\\Local\\nvim\\init.vim"
 
