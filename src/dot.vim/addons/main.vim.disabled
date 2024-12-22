@@ -105,6 +105,17 @@ call plug#begin()
 
     " Auto configurations for Language Servers for vim-lsp.
     Plug 'mattn/vim-lsp-settings'
+
+    " Python の編集などで、自動補完のポップアップを表示して補完したい場合、
+    " 以下のプラグインを有効にします。
+    if getenv('DOTFILES_VIM_LSP_AUTO_COMPLETE') == 'y'
+      " Async autocompletion for Vim 8 and Neovim with |timers|.
+      Plug 'prabirshrestha/asyncomplete.vim'
+
+      " Provide Language Server Protocol autocompletion source for
+      " asyncomplete.vim and vim-lsp.
+      Plug 'prabirshrestha/asyncomplete-lsp.vim'
+    endif
   endif
   " }}}
 

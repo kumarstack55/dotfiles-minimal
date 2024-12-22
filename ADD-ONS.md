@@ -39,7 +39,7 @@ Move-Item $HOME/vimfiles/addons/main.vim.disabled $HOME/vimfiles/addons/main.vim
 
 ## Enable features
 
-### GitHub Copilot
+### Feature: GitHub Copilot
 
 ```bash
 # bash
@@ -62,14 +62,35 @@ For more information:
     - https://nodejs.org/en
     - https://nodejs.org/en/download/package-manager
 
-### Other than GitHub Copilot
+### Feature: LSP
+
+```bash
+# bash
+export DOTFILES_VIM_LSP=y
+export DOTFILES_VIM_LSP_AUTO_COMPLETE=y
+```
+
+```powershell
+# powershell
+[System.Environment]::SetEnvironmentVariable("DOTFILES_VIM_LSP", "y", "User")
+[System.Environment]::SetEnvironmentVariable("DOTFILES_VIM_LSP_AUTO_COMPLETE", "y", "User")
+```
+
+For more information:
+
+- https://github.com/prabirshrestha/vim-lsp
+- https://github.com/mattn/vim-lsp-settings
+- https://github.com/mattn/vim-lsp-settings?tab=readme-ov-file#auto-complete
+- https://github.com/prabirshrestha/asyncomplete.vim 
+- https://github.com/prabirshrestha/asyncomplete-lsp.vim
+
+### Others
 
 ```bash
 # bash
 export DOTFILES_VIM_BUFEXPLORER=y
 export DOTFILES_VIM_FUGITIVE=y
 export DOTFILES_VIM_GITGUTTER=y
-export DOTFILES_VIM_LSP=y
 export DOTFILES_VIM_NERDTREE=y
 export DOTFILES_VIM_SONICTEMPLATE=y
 export DOTFILES_VIM_VADER=y
