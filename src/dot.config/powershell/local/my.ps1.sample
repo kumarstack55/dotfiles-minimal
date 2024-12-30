@@ -1,4 +1,6 @@
-﻿class MyException : Exception {
+# vim:ft=ps1:
+
+class MyException : Exception {
     MyException([string]$Message) : base($Message) {}
 }
 
@@ -53,8 +55,8 @@ function Get-MyDestinationPath {
     return $FolderPath
 }
 
-function Move-MyOneItemToDatePrefixedFolder {
-    [CmdletBinding()]
+function Move-MyOneFileItemToDatePrefixedFolder {
+    [CmdletBinding(SupportsShouldProcess=$true)]
     param (
         [Parameter(Mandatory=$true)]
         [string]$LiteralSourcePath
@@ -79,24 +81,10 @@ function Move-MyOneItemToDatePrefixedFolder {
     Move-Item -LiteralPath $LiteralSourcePath -Destination $FolderPath
 }
 
-function Move-MyItemToDatePrefixedFolder {
+function Move-MyFileItemToDatePrefixedFolder {
 <#
 .SYNOPSIS
-
-Moves the specified file to a folder with the current date prefixed.
-
-.DESCRIPTION
-
-Moves the specified file to a folder with the current date prefixed.
-
-.PARAMETER LiteralSourcePath
-
-Specifies the path of the file to move.
-
-.EXAMPLE
-
-PS> Move-MyItemToDatePrefixedFolder -LiteralSourcePath "C:\path\to\file.txt"
-
+指定ファイルを日付を接頭に持つフォルダを作って、そのフォルダに移動する
 #>
     [CmdletBinding()]
     param (
@@ -112,7 +100,111 @@ PS> Move-MyItemToDatePrefixedFolder -LiteralSourcePath "C:\path\to\file.txt"
             $LiteralSourcePathList = @($LiteralSourcePath)
         }
         foreach ($p in $LiteralSourcePathList) {
-            Move-MyOneItemToDatePrefixedFolder -LiteralSourcePath $p
+            Move-MyOneFileItemToDatePrefixedFolder -LiteralSourcePath $p
+        }
+    }
+}
+
+function Get-MyArchiveRootDirectoryPath {
+    param(
+        [parameter(Mandatory=$true)]
+        [string]$DirectoryPath
+    )
+
+    $ArchiveRootName = ".archive_root"
+
+    $ArchiveRootPath = $null
+
+    $DirectoryItem = Get-Item -LiteralPath $DirectoryPath
+    $Current = $DirectoryItem
+    while ($null -ne $Current) {
+        $DotArchiveRootPath = Join-Path $Current.FullName $ArchiveRootName
+        if (Test-Path -Path $DotArchiveRootPath) {
+            $ArchiveRootPath = $Current.FullName
+            return $ArchiveRootPath
+        }
+        $Current = $Current.Parent
+    }
+
+    if ($null -eq $ArchiveRootPath) {
+        $Message = "ArchiveRootName {0} not found. (DirectoryPath: {1})" -f $ArchiveRootName, $DirectoryPath
+        throw [MyException]::new($Message)
+    }
+}
+
+function Move-MyOneDatePrefixedFolderItemToArchiveFolder {
+    param (
+        [Parameter(Mandatory=$true)]
+        [string]$LiteralSourcePath
+    )
+
+    # パスが存在するか？
+    if (-not (Test-Path -Path $LiteralSourcePath)) {
+        $Message = "SourcePath does not exist. (LiteralSourcePath: {0})" -f $LiteralSourcePath
+        throw [MyException]::new($Message)
+    }
+
+    # パスはディレクトリか？
+    if (-not (Test-Path -Path $LiteralSourcePath -PathType Container)) {
+        $Message = "SourcePath is not a folder. (LiteralSourcePath: {0})" -f $LiteralSourcePath
+        throw [MyException]::new($Message)
+    }
+
+    # アーカイブ・ルートのパスを得る。
+    $SourceItem = Get-Item -LiteralPath $LiteralSourcePath
+    $ArchiveRootPath = Get-MyArchiveRootDirectoryPath -DirectoryPath $SourceItem.FullName
+
+    # パスは無視すべきディレクトリか？
+    # アーカイブ・ディレクトリの構造を破壊しないために、一部のディレクトリは無視する。
+    $IgnorePatterns = @(
+        @{"Pattern"="^\d{4}$"; "Reason"="Maybe a year folder?"}
+    )
+    foreach ($p in $IgnorePatterns) {
+        if ($SourceItem.Name -match $p.Pattern) {
+            $Message = "Ignored. Reason: {0} (LiteralSourcePath: {1})" -f $p.Reason, $LiteralSourcePath
+            Write-Host $Message
+            return
+        }
+    }
+
+    # 西暦のフォルダがなければ作る。
+    $FolderName = Split-Path -Path $LiteralSourcePath -Leaf
+    $DatePrefix = $FolderName.Substring(0, 8)
+    $Year = $DatePrefix.Substring(0, 4)
+    $YearFolderPath = Join-Path $ArchiveRootPath $Year
+    if (-not (Test-Path -Path $YearFolderPath)) {
+        New-Item -ItemType Directory -Path $YearFolderPath -ErrorAction Stop | Out-Null
+    }
+
+    # 移動する。
+    $DestinationPath = Join-Path $YearFolderPath $FolderName
+    Move-Item -LiteralPath $LiteralSourcePath -Destination $DestinationPath
+}
+
+function Move-MyDatePrefixedFolderItemToArchiveFolder {
+<#
+.SYNOPSIS
+指定フォルダをアーカイブ・フォルダに移動する
+
+.DESCRIPTION
+指定フォルダの上位ディレクトリをたどって最も近い `.archive_root` を探し、
+その下に、西暦のフォルダを作って、その中に指定フォルダを移動する。
+#>
+    [CmdletBinding(SupportsShouldProcess=$true)]
+    param (
+        [Parameter(Position=0, ValueFromPipeline=$true)]
+        [string[]]$LiteralSourcePathList,
+
+        [Parameter(Position=1)]
+        [string]$LiteralSourcePath
+    )
+
+    process {
+        if ($LiteralSourcePathList.Count -eq 0) {
+            $LiteralSourcePathList = @($LiteralSourcePath)
+        }
+        foreach ($p in $LiteralSourcePathList) {
+            Move-MyOneDatePrefixedFolderItemToArchiveFolder -LiteralSourcePath $p
         }
     }
 }
