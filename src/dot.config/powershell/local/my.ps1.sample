@@ -1,0 +1,118 @@
+﻿class MyException : Exception {
+    MyException([string]$Message) : base($Message) {}
+}
+
+function Test-MyDatePrefixedString {
+    param([parameter(Mandatory=$true)][string]$Path)
+
+    $DatePatterns = @(
+        "^\d{4}\d{2}\d{2}"
+    )
+
+    $Found = $false
+    foreach ($DatePattern in $DatePatterns) {
+        if ($Path -match $DatePattern) {
+            $Found = $true
+            break
+        }
+    }
+    if (-not $Found) {
+        return $false
+    }
+
+    $ParsedDate = [DateTime]::MinValue;
+    $String = $Matches[0]
+    $Format = "yyyyMMdd"
+    $Provider = $null
+    $Style = [System.Globalization.DateTimeStyles]::None
+    return [DateTime]::TryParseExact($String, $Format, $Provider, $Style, [ref]$ParsedDate)
+}
+
+function Get-MyDestinationPath {
+    param (
+        [parameter(Mandatory=$true)]
+        [string]$SourcePath
+    )
+
+    $SourceItem = Get-Item -LiteralPath $SourcePath
+    if ($SourceItem.PSIsContainer) {
+        $Message = "SourcePath is not a file. (SourcePath: {0})" -f $SourcePath
+        throw [MyException]::new($Message)
+    }
+
+    if (Test-MyDatePrefixedString -Path $SourceItem.BaseName) {
+        $BaseName = $SourceItem.BaseName
+        $Message = "SourcePath is already DatePrefixed. (BaseName: {0})" -f $BaseName
+        Write-Host $Message
+    } else {
+        $Prefix = Get-Date -Format "yyyyMMdd"
+        $BaseName = "{0}_{1}" -f $Prefix, $SourceItem.BaseName
+    }
+    $FolderPath = Join-Path $SourceItem.DirectoryName $BaseName
+
+    return $FolderPath
+}
+
+function Move-MyOneItemToDatePrefixedFolder {
+    [CmdletBinding()]
+    param (
+        [Parameter(Mandatory=$true)]
+        [string]$LiteralSourcePath
+    )
+
+    if (-not (Test-Path -Path $LiteralSourcePath)) {
+        $Message = "SourcePath does not exist. (LiteralSourcePath: {0})" -f $LiteralSourcePath
+        Write-Error $Message
+        return
+    }
+
+    # ファイル名からフォルダを作る
+    $FolderPath = Get-MyDestinationPath -SourcePath $LiteralSourcePath
+    if (Test-Path -Path $FolderPath) {
+        $Message = "DestinationPath already exists. FolderPath: {0}" -f $FolderPath
+        Write-Error $Message
+        return
+    }
+    New-Item -ItemType Directory -Path $FolderPath -ErrorAction Stop | Out-Null
+
+    # ファイルをフォルダに移動する
+    Move-Item -LiteralPath $LiteralSourcePath -Destination $FolderPath
+}
+
+function Move-MyItemToDatePrefixedFolder {
+<#
+.SYNOPSIS
+
+Moves the specified file to a folder with the current date prefixed.
+
+.DESCRIPTION
+
+Moves the specified file to a folder with the current date prefixed.
+
+.PARAMETER LiteralSourcePath
+
+Specifies the path of the file to move.
+
+.EXAMPLE
+
+PS> Move-MyItemToDatePrefixedFolder -LiteralSourcePath "C:\path\to\file.txt"
+
+#>
+    [CmdletBinding()]
+    param (
+        [Parameter(Position=0, ValueFromPipeline=$true)]
+        [string[]]$LiteralSourcePathList,
+
+        [Parameter(Position=1)]
+        [string]$LiteralSourcePath
+
+    )
+    process {
+        if ($LiteralSourcePathList.Count -eq 0) {
+            $LiteralSourcePathList = @($LiteralSourcePath)
+        }
+        foreach ($p in $LiteralSourcePathList) {
+            Move-MyOneItemToDatePrefixedFolder -LiteralSourcePath $p
+        }
+    }
+}

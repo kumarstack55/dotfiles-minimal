@@ -26,6 +26,7 @@ copy_linux "src/dot.config/nvim/${src_init_vim_filename}" "${HOME}/.config/nvim/
 mkdir_win "${HOME}/.config/powershell"
 
 mkdir_win "${HOME}/.config/powershell/local"
+copy "src/dot.config/powershell/local/my.ps1.sample" "${HOME}/.config/powershell/local/my.ps1.sample"
 
 mkdir "${HOME}/.config/vim"
 
