@@ -6,6 +6,7 @@ let g:copilot_filetypes = {
   \ 'json': v:false,
   \ 'markdown': v:false,
   \ 'rst': v:false,
+  \ 'sh': v:false,
   \ 'text': v:false,
   \ 'yaml': v:false,
 \ }
