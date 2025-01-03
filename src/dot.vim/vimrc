@@ -189,6 +189,11 @@ command! MyIsKeywordToggle call MyVimrcToggleIsKeyword()
 " ファイルの情報を表示するコマンドを定義する。
 command! MyFileShowInfo call MyVimrcFileShowInfo()
 
+" 設定を再読み込むコマンドを定義する。
+"
+" 関数内で、その関数を再定義しようとすると E127 が発生する。
+" これを回避するためにこのコマンドは関数を定義しない。
+command! MyReload exec "source " . fnameescape($MYVIMRC)
 " }}}
 
 " {{{2 環境固有の設定あれば読み込む。
