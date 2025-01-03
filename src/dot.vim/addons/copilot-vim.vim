@@ -11,6 +11,8 @@ let g:copilot_filetypes = {
 \ }
 
 " コードとデータが分離されてそうなものは個別に有効にする。
+let g:copilot_filetypes["css"] = v:true
+let g:copilot_filetypes["javascript"] = v:true
 let g:copilot_filetypes["make"] = v:true
 let g:copilot_filetypes["ps1"] = v:true
 let g:copilot_filetypes["python"] = v:true
