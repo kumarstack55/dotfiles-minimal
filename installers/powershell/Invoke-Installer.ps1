@@ -47,9 +47,11 @@ class Command {
 
         foreach ($Diff in $Difference) {
             if ($Diff.SideIndicator -eq "<=") {
-                Write-Host "$($Diff.InputObject) is only in ${SourceFilePath}" -ForegroundColor Green
+                Write-Host "$($Diff.InputObject)" -NoNewline -ForegroundColor Green
+                Write-Host " ... is only in ${SourceFilePath}" -ForegroundColor DarkGray
             } elseif ($Diff.SideIndicator -eq "=>") {
-                Write-Host "$($Diff.InputObject) is only in ${DestinationFilePath}" -ForegroundColor Red
+                Write-Host "$($Diff.InputObject)" -NoNewline -ForegroundColor Red
+                Write-Host " ... is only in ${DestinationFilePath}" -ForegroundColor DarkGray
             }
         }
 
@@ -64,10 +66,13 @@ class Command {
         )
         $Messages | Write-Host  -ForegroundColor Yellow
     }
-    WriteDiff([string]$SourceFilePath, [string]$DestinationFilePath) {
-        $SourceContent = @(Get-Content $SourceFilePath)
-        $DestinationContent = @(Get-Content $DestinationFilePath)
+    WriteDiff([string]$SourceFilePath, [string]$DestinationFilePath, [string]$Encoding) {
+        $SourceContent = @(Get-Content $SourceFilePath -Encoding $Encoding)
+        $DestinationContent = @(Get-Content $DestinationFilePath -Encoding $Encoding)
         $this.WriteDiffContent($SourceFilePath, $SourceContent, $DestinationFilePath, $DestinationContent)
+    }
+    WriteDiff([string]$SourceFilePath, [string]$DestinationFilePath) {
+        $this.WriteDiff($SourceFilePath, $DestinationFilePath, "UTF8")
     }
     Run([System.Collections.Generic.List[string]]$Stack) {
         throw
