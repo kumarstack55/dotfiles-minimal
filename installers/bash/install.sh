@@ -113,9 +113,29 @@ command::write_skip_reason_platform_is_different() {
   echo "skip. (reason: platform is different)"
 }
 
+command::tput_yellow() {
+  tput setaf 3
+}
+
+command::tput_sgr0() {
+  tput sgr0
+}
+
 command::write_diff() {
-  local file1="$1" file2="$2"
-  diff -u --color=always "${file1}" "${file2}"
+  local src="$1" dest="$2"
+  if ! diff -u --color=always "${src}" "${dest}"; then
+    command::tput_yellow
+    cat <<__MESSAGES__
+
+If you want to keep the source file, you may need to run the following command:
+  rm -v "${dest}"
+
+If you want to keep the file you are copying to, you may need to run the following command:
+  cp -fv "${dest}" "${src}"
+
+__MESSAGES__
+    command::tput_sgr0
+  fi
 }
 
 command::command_copy() {

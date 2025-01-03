@@ -73,7 +73,7 @@ dotfiles::configure_completion() {
     source <(oc completion bash)
   fi
 
-  if type aws_completer 2>&1; then
+  if type aws_completer >/dev/null 2>&1; then
     complete -C '/usr/local/bin/aws_completer' aws
   fi
 }
