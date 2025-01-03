@@ -58,7 +58,7 @@ class MyArchiver {
 class MyArchiverFactory {
     static [string] $ArchiveConfigJsonName = ".archiveconfig.json"
 
-    static hidden [DateTime] GetDateFromPath([string]$Path) {
+    hidden [DateTime] GetDateFromPath([string]$Path) {
         $Name = Split-Path -Leaf $Path
 
         $DatePatterns = @(
@@ -89,7 +89,7 @@ class MyArchiverFactory {
         return $ParsedDate
     }
 
-    static hidden TestItemCanBeArchived([string]$SourcePath) {
+    hidden TestItemCanBeArchived([string]$SourcePath) {
         if (-not (Test-Path -LiteralPath $SourcePath)) {
             $Message = "SourcePath is not exist. (SourcePath: {0})" -f $SourcePath
             throw [MyException]::new($Message)
@@ -116,7 +116,7 @@ class MyArchiverFactory {
 
     }
 
-    static hidden [string]GetArchiveConfigJsonPath([string]$SourcePath) {
+    hidden [string]GetArchiveConfigJsonPath([string]$SourcePath) {
         $Item = Get-Item -LiteralPath $SourcePath
         while ($null -ne $Item) {
             $Name = [MyArchiverFactory]::ArchiveConfigJsonName
@@ -131,14 +131,14 @@ class MyArchiverFactory {
         throw [MyException]::new($Message)
     }
 
-    static hidden [MyArchiveConfig]GetArchiveConfig([string]$ArchiveConfigJsonPath) {
+    hidden [MyArchiveConfig]GetArchiveConfig([string]$ArchiveConfigJsonPath) {
         $ConfigJsonContent = Get-Content -LiteralPath $ArchiveConfigJsonPath -Raw
         $ConfigPso = $ConfigJsonContent | ConvertFrom-Json
         [MyArchiveConfig] $ArchiveConfig = [MyArchiveConfigFactory]::Create($ConfigPso)
         return $ArchiveConfig
     }
 
-    static hidden [string]GetArchiveRootPath([string]$ArchiveConfigJsonDirectoryPath, [MyArchiveConfig]$Config) {
+    hidden [string]GetArchiveRootPath([string]$ArchiveConfigJsonDirectoryPath, [MyArchiveConfig]$Config) {
         if ($Config.RootPath -match '^\.\\') {
             $RootPath = $Config.RootPath.Substring(2)
             $ArchiveRootPath = Join-Path $ArchiveConfigJsonDirectoryPath $RootPath
@@ -148,18 +148,18 @@ class MyArchiverFactory {
         return $ArchiveRootPath
     }
 
-    static [MyArchiver] Create([string]$SourcePath) {
+    [MyArchiver] Create([string]$SourcePath) {
         $Name = Split-Path -Leaf $SourcePath
 
-        $Date = [MyArchiverFactory]::GetDateFromPath($SourcePath)
-        [MyArchiverFactory]::TestItemCanBeArchived($SourcePath)
+        $Date = $this.GetDateFromPath($SourcePath)
+        $this.TestItemCanBeArchived($SourcePath)
 
-        $ArchiveConfigJsonPath = [MyArchiverFactory]::GetArchiveConfigJsonPath($SourcePath)
+        $ArchiveConfigJsonPath = $this.GetArchiveConfigJsonPath($SourcePath)
 
-        $ArchiveConfig = [MyArchiverFactory]::GetArchiveConfig($ArchiveConfigJsonPath)
+        $ArchiveConfig = $this.GetArchiveConfig($ArchiveConfigJsonPath)
 
         $ArchiveConfigJsonDirectoryPath = Split-Path -Parent $ArchiveConfigJsonPath
-        $ArchiveRootPath = [MyArchiverFactory]::GetArchiveRootPath($ArchiveConfigJsonDirectoryPath, $ArchiveConfig)
+        $ArchiveRootPath = $this.GetArchiveRootPath($ArchiveConfigJsonDirectoryPath, $ArchiveConfig)
 
         $YearFolderPath = Join-Path $ArchiveRootPath $Date.ToString("yyyy")
 
@@ -194,7 +194,7 @@ class MyDatePrefixedFolderMaker {
 }
 
 class MyDatePrefixedFolderMakerFactory {
-    static hidden [DateTime] GetDateFromPath([string]$Path) {
+    hidden [DateTime] GetDateFromPath([string]$Path) {
         $DatePatterns = @(
             "^\d{4}\d{2}\d{2}"
         )
@@ -223,12 +223,13 @@ class MyDatePrefixedFolderMakerFactory {
         return $ParsedDate
     }
 
-    static hidden [string] GetDestinationFolder([string]$SourcePath) {
+    hidden [string] GetDestinationFolder([string]$SourcePath) {
         $ParentDirectoryPath = Split-Path -Parent $SourcePath
 
-        $OriginalName = Split-Path -Leaf $SourcePath
+        $OriginalNameWithExtension = Split-Path -Leaf $SourcePath
+        $OriginalName = [System.IO.Path]::GetFileNameWithoutExtension($OriginalNameWithExtension)
         try {
-            [MyDatePrefixedFolderMakerFactory]::GetDateFromPath($SourcePath) | Out-Null
+            $this.GetDateFromPath($SourcePath) | Out-Null
             $Name = $OriginalName
         } catch {
             $Date = Get-Date
@@ -240,8 +241,8 @@ class MyDatePrefixedFolderMakerFactory {
         return $DestinationFolder
     }
 
-    static [MyDatePrefixedFolderMaker] Create([string]$SourcePath) {
-        $DestinationFolder = [MyDatePrefixedFolderMakerFactory]::GetDestinationFolder($SourcePath)
+    [MyDatePrefixedFolderMaker] Create([string]$SourcePath) {
+        $DestinationFolder = $this.GetDestinationFolder($SourcePath)
 
         $Name = Split-Path -Leaf $SourcePath
         $DestinationPath = Join-Path $DestinationFolder $Name
@@ -284,35 +285,39 @@ LiteralSourcePathList
 LiteralSourcePath
 
 .EXAMPLE
-Move-MyItemToArchiveFolder -LiteralSourcePathList @("C:\path1", "C:\path2")
+Move-MyItemToArchiveFolder -LiteralSourcePathList @("C:\path1", "C:\path2") -WhatIf
+
+.EXAMPLE
+Move-MyItemToArchiveFolder -LiteralSourcePath "C:\path1" -WhatIf
 #>
-    [CmdletBinding(SupportsShouldProcess=$true)]
+    [CmdletBinding(
+        DefaultParameterSetName="psPathList",
+        SupportsShouldProcess=$true
+    )]
     param (
-        [Parameter(Position=0, ValueFromPipeline=$true)]
+        [Parameter(ParameterSetName="psPathList", Mandatory, ValueFromPipeline=$true)]
         [string[]]$LiteralSourcePathList,
 
-        [Parameter(Position=1)]
+        [Parameter(ParameterSetName="psPath", Mandatory)]
         [string]$LiteralSourcePath
-
     )
+
     process {
         if ($LiteralSourcePathList.Count -eq 0) {
             $LiteralSourcePathList = @($LiteralSourcePath)
         }
+        $factory = [MyArchiverFactory]::new()
         foreach ($p in $LiteralSourcePathList) {
-            $a = [MyArchiverFactory]::Create($p)
-            if (-not (Test-Path -LiteralPath $a.ArchiveRootPath)) {
-                if ($PSCmdlet.ShouldProcess($a.SourcePath, "Make directory " + $a.ArchiveRootPath)) {
-                    $a.MakeArchiveRootFolder()
-                }
-            }
-            if (-not (Test-Path -LiteralPath $a.YearFolderPath)) {
-                if ($PSCmdlet.ShouldProcess($a.SourcePath, "Make directory " + $a.YearFolderPath)) {
-                    $a.MakeYearFolder()
-                }
-            }
-            if ($PSCmdlet.ShouldProcess($a.SourcePath, "Move to " + $a.DestinationPath)) {
+            # SupportsShouldProcess 有効で、 ShouldProcess() を呼び出さない場合に警告が表示されることを抑止する。
+            $PSCmdlet.ShouldProcess($p, $MyInvocation.MyCommand.Name) | Out-Null
+
+            try {
+                $a = $factory.Create($p)
+                $a.MakeArchiveRootFolder()
+                $a.MakeYearFolder()
                 $a.Archive()
+            } catch {
+                Write-Error $_.Exception.Message
             }
         }
     }
@@ -333,14 +338,20 @@ LiteralSourcePathList
 LiteralSourcePath
 
 .EXAMPLE
-Move-MyFileItemToDatePrefixedFolder -LiteralSourcePathList @("C:\path1", "C:\path2")
+Move-MyFileItemToDatePrefixedFolder -LiteralSourcePathList @("C:\path1", "C:\path2") -WhatIf
+
+.EXAMPLE
+Move-MyFileItemToDatePrefixedFolder -LiteralSourcePath "C:\path1" -WhatIf
 #>
-    [CmdletBinding(SupportsShouldProcess=$true)]
+    [CmdletBinding(
+        DefaultParameterSetName="psPathList",
+        SupportsShouldProcess=$true
+    )]
     param (
-        [Parameter(Position=0, ValueFromPipeline=$true)]
+        [Parameter(ParameterSetName="psPathList", Mandatory, ValueFromPipeline=$true)]
         [string[]]$LiteralSourcePathList,
 
-        [Parameter(Position=1)]
+        [Parameter(ParameterSetName="psPath", Mandatory)]
         [string]$LiteralSourcePath
     )
 
@@ -348,13 +359,17 @@ Move-MyFileItemToDatePrefixedFolder -LiteralSourcePathList @("C:\path1", "C:\pat
         if ($LiteralSourcePathList.Count -eq 0) {
             $LiteralSourcePathList = @($LiteralSourcePath)
         }
+        $factory = [MyDatePrefixedFolderMakerFactory]::new()
         foreach ($p in $LiteralSourcePathList) {
-            $m = [MyDatePrefixedFolderMakerFactory]::Create($p)
-            if ($PSCmdlet.ShouldProcess($m.SourcePath, "Make directory " + $m.DestinationFolder)) {
+            # SupportsShouldProcess 有効で、 ShouldProcess() を呼び出さない場合に警告が表示されることを抑止する。
+            $PSCmdlet.ShouldProcess($p, $MyInvocation.MyCommand.Name) | Out-Null
+
+            try {
+                $m = $factory.Create($p)
                 $m.MakeFolder()
-            }
-            if ($PSCmdlet.ShouldProcess($m.SourcePath, "Move to " + $m.DestinationPath)) {
                 $m.MoveToDestination()
+            } catch {
+                Write-Error $_.Exception.Message
             }
         }
     }
