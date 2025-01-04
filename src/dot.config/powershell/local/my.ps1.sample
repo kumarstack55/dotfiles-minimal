@@ -132,7 +132,7 @@ class MyArchiverFactory {
     }
 
     hidden [MyArchiveConfig]GetArchiveConfig([string]$ArchiveConfigJsonPath) {
-        $ConfigJsonContent = Get-Content -LiteralPath $ArchiveConfigJsonPath -Raw
+        $ConfigJsonContent = Get-Content -LiteralPath $ArchiveConfigJsonPath -Encoding UTF8
         $ConfigPso = $ConfigJsonContent | ConvertFrom-Json
         [MyArchiveConfig] $ArchiveConfig = [MyArchiveConfigFactory]::Create($ConfigPso)
         return $ArchiveConfig
