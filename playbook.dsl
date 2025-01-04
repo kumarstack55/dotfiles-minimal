@@ -27,7 +27,18 @@ copy_linux "src/dot.config/nvim/${src_init_vim_filename}" "${HOME}/.config/nvim/
 mkdir_win "${HOME}/.config/powershell"
 
 mkdir_win "${HOME}/.config/powershell/local"
-copy "src/dot.config/powershell/local/my.ps1.sample" "${HOME}/.config/powershell/local/my.ps1.sample"
+copy_win "src/dot.config/powershell/local/bootstrap.ps1" "${HOME}/.config/powershell/local/bootstrap.ps1"
+
+mkdir_win "${HOME}/.config/powershell/local/my"
+copy_win "src/dot.config/powershell/local/my/Move-MyFileItemToDatePrefixedFolder.ps1" "${HOME}/.config/powershell/local/my/Move-MyFileItemToDatePrefixedFolder.ps1"
+copy_win "src/dot.config/powershell/local/my/Move-MyFileItemToDatePrefixedFolder.Tests.ps1" "${HOME}/.config/powershell/local/my/Move-MyFileItemToDatePrefixedFolder.Tests.ps1"
+copy_win "src/dot.config/powershell/local/my/Move-MyFolderItemToArchiveFolder.ps1" "${HOME}/.config/powershell/local/my/Move-MyFolderItemToArchiveFolder.ps1"
+copy_win "src/dot.config/powershell/local/my/Move-MyFolderItemToArchiveFolder.Tests.ps1" "${HOME}/.config/powershell/local/my/Move-MyFolderItemToArchiveFolder.Tests.ps1"
+copy_win "src/dot.config/powershell/local/my/New-MyArchiveConfigJson.ps1" "${HOME}/.config/powershell/local/my/New-MyArchiveConfigJson.ps1"
+copy_win "src/dot.config/powershell/local/my/New-MyArchiveConfigJson.Tests.ps1" "${HOME}/.config/powershell/local/my/New-MyArchiveConfigJson.Tests.ps1"
+copy_win "src/dot.config/powershell/local/my/New-MyDatePrefixedFolder.ps1" "${HOME}/.config/powershell/local/my/New-MyDatePrefixedFolder.ps1"
+copy_win "src/dot.config/powershell/local/my/New-MyDatePrefixedFolder.Tests.ps1" "${HOME}/.config/powershell/local/my/New-MyDatePrefixedFolder.Tests.ps1"
+copy_win "src/dot.config/powershell/local/my/classes.ps1" "${HOME}/.config/powershell/local/my/classes.ps1"
 
 mkdir "${HOME}/.config/vim"
 
