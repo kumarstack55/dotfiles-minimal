@@ -174,6 +174,11 @@ class MyDatePrefixedFolderMaker {
     [string] $DestinationFolder
     [string] $DestinationPath
 
+    MyDatePrefixedFolderMaker([string]$SourcePath, [string]$DestinationFolder) {
+        $this.SourcePath = $SourcePath
+        $this.DestinationFolder = $DestinationFolder
+        $this.DestinationPath = $null
+    }
     MyDatePrefixedFolderMaker([string]$SourcePath, [string]$DestinationFolder, [string]$DestinationPath) {
         $this.SourcePath = $SourcePath
         $this.DestinationFolder = $DestinationFolder
@@ -185,6 +190,10 @@ class MyDatePrefixedFolderMaker {
         }
     }
     MoveToDestination() {
+        if ($null -eq $this.DestinationPath) {
+            $Message = "DestinationPath is null. (DestinationPath: {0})" -f $this.DestinationPath
+            throw [MyException]::new($Message)
+        }
         if (Test-Path -LiteralPath $this.DestinationPath) {
             $Message = "DestinationPath already exists. (DestinationPath: {0})" -f $this.DestinationPath
             throw [MyException]::new($Message)
@@ -195,13 +204,15 @@ class MyDatePrefixedFolderMaker {
 
 class MyDatePrefixedFolderMakerFactory {
     hidden [DateTime] GetDateFromPath([string]$Path) {
+        $Name = Split-Path -Leaf $Path
+
         $DatePatterns = @(
             "^\d{4}\d{2}\d{2}"
         )
 
         $Found = $false
         foreach ($DatePattern in $DatePatterns) {
-            if ($Path -match $DatePattern) {
+            if ($Name -match $DatePattern) {
                 $Found = $true
                 break
             }
@@ -244,13 +255,23 @@ class MyDatePrefixedFolderMakerFactory {
         return $DestinationFolder
     }
 
-    [MyDatePrefixedFolderMaker] Create([string]$SourcePath) {
+    [MyDatePrefixedFolderMaker] Create([string]$SourcePath, [bool]$SourcePathExists) {
         $DestinationFolder = $this.GetDestinationFolder($SourcePath)
 
         $Name = Split-Path -Leaf $SourcePath
-        $DestinationPath = Join-Path $DestinationFolder $Name
 
-        return [MyDatePrefixedFolderMaker]::new($SourcePath, $DestinationFolder, $DestinationPath)
+        # SourcePathExists が true なら、移動できるようにする。
+        if ($SourcePathExists) {
+            $DestinationPath = Join-Path $DestinationFolder $Name
+            return [MyDatePrefixedFolderMaker]::new($SourcePath, $DestinationFolder, $DestinationPath)
+        }
+
+        # 移動できないようにする。
+        return [MyDatePrefixedFolderMaker]::new($SourcePath, $DestinationFolder)
+    }
+
+    [MyDatePrefixedFolderMaker] Create([string]$SourcePath) {
+        return $this.Create($SourcePath, $true)
     }
 }
 
@@ -298,10 +319,10 @@ Move-MyItemToArchiveFolder -LiteralSourcePath "C:\path1" -WhatIf
         SupportsShouldProcess=$true
     )]
     param (
-        [Parameter(ParameterSetName="psPathList", Mandatory, ValueFromPipeline=$true)]
+        [Parameter(Position=0, ParameterSetName="psPathList", Mandatory, ValueFromPipeline=$true)]
         [string[]]$LiteralSourcePathList,
 
-        [Parameter(ParameterSetName="psPath", Mandatory)]
+        [Parameter(Position=1, ParameterSetName="psPath", Mandatory)]
         [string]$LiteralSourcePath
     )
 
@@ -351,10 +372,10 @@ Move-MyFileItemToDatePrefixedFolder -LiteralSourcePath "C:\path1" -WhatIf
         SupportsShouldProcess=$true
     )]
     param (
-        [Parameter(ParameterSetName="psPathList", Mandatory, ValueFromPipeline=$true)]
+        [Parameter(Position=0, ParameterSetName="psPathList", Mandatory, ValueFromPipeline=$true)]
         [string[]]$LiteralSourcePathList,
 
-        [Parameter(ParameterSetName="psPath", Mandatory)]
+        [Parameter(Position=1, ParameterSetName="psPath", Mandatory)]
         [string]$LiteralSourcePath
     )
 
@@ -371,6 +392,37 @@ Move-MyFileItemToDatePrefixedFolder -LiteralSourcePath "C:\path1" -WhatIf
                 $m = $factory.Create($p)
                 $m.MakeFolder()
                 $m.MoveToDestination()
+            } catch {
+                Write-Error $_.Exception.Message
+            }
+        }
+    }
+}
+
+function New-MyDatePrefixedFolder {
+    [CmdletBinding(
+        DefaultParameterSetName="psPathList",
+        SupportsShouldProcess=$true
+    )]
+    param (
+        [Parameter(Position=0, ParameterSetName="psPathList", Mandatory, ValueFromPipeline=$true)]
+        [string[]]$LiteralSourcePathList,
+
+        [Parameter(Position=1, ParameterSetName="psPath", Mandatory)]
+        [string]$LiteralSourcePath
+    )
+
+    process {
+        if ($LiteralSourcePathList.Count -eq 0) {
+            $LiteralSourcePathList = @($LiteralSourcePath)
+        }
+        $factory = [MyDatePrefixedFolderMakerFactory]::new()
+        foreach ($p in $LiteralSourcePathList) {
+            # SupportsShouldProcess 有効で、 ShouldProcess() を呼び出さない場合に警告が表示されることを抑止する。
+            $PSCmdlet.ShouldProcess($p, $MyInvocation.MyCommand.Name) | Out-Null
+            try {
+                $m = $factory.Create($p, $false)
+                $m.MakeFolder()
             } catch {
                 Write-Error $_.Exception.Message
             }
