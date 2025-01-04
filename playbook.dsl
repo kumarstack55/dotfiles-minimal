@@ -4,7 +4,7 @@ set_win "src_init_vim_filename" "init_windows.vim"
 copy "src/dot.editorconfig" "${HOME}/.editorconfig"
 copy "src/dot.gitconfig" "${HOME}/.gitconfig"
 copy_linux "src/dot.ansible.cfg" "${HOME}/.ansible.cfg"
-copy_win "src/dot.archiveconfig.json.sample" "${HOME}/dot.archiveconfig.json.sample"
+copy_win "src/dot.archiveconfig.json.sample" "${HOME}/.archiveconfig.json.sample"
 copy_win "src/dot.vsvimrc" "${HOME}/.vsvimrc"
 
 mkdir "${HOME}/.config"
