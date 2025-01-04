@@ -225,6 +225,9 @@ class MyDatePrefixedFolderMakerFactory {
 
     hidden [string] GetDestinationFolder([string]$SourcePath) {
         $ParentDirectoryPath = Split-Path -Parent $SourcePath
+        if ($ParentDirectoryPath -eq "") {
+            $ParentDirectoryPath = "."
+        }
 
         $OriginalNameWithExtension = Split-Path -Leaf $SourcePath
         $OriginalName = [System.IO.Path]::GetFileNameWithoutExtension($OriginalNameWithExtension)
