@@ -87,6 +87,9 @@ copy "src/dot.vim/template/markdown/snip-code-markdown.md" "${HOME}/${vimrc_dir}
 copy "src/dot.vim/template/markdown/snip-code-plaintext.md" "${HOME}/${vimrc_dir}/template/markdown/snip-code-plaintext.md"
 copy "src/dot.vim/template/markdown/snip-code-posh.md" "${HOME}/${vimrc_dir}/template/markdown/snip-code-posh.md"
 
+mkdir_win "${APPDATA}\\efm-langserver"
+copy_win "src\\AppData\\efm-langserver\\config.yaml" "${APPDATA}\\efm-langserver\\config.yaml"
+
 # PowerShell によって PROFILE の場所が異なる点に注意が必要です。
 # 少なくとも OneDrive なしの Windows PowerShell と PowerShell 7 で異なることがわかっています。
 # Windows PowerShell 5.1:

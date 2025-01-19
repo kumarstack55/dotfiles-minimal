@@ -424,6 +424,7 @@ function Main {
 function Initialize-EnvironmentVariables {
     $script:Env["HOME"] = $HOME
     $script:Env["PROFILE"] = $PROFILE
+    $script:Env["APPDATA"] = $env:APPDATA
 }
 
 class LineReader {

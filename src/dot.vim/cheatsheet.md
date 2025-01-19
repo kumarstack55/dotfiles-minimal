@@ -178,3 +178,8 @@ ipython.pre<c-y><c-b>
 ```vim
 :GcLog
 ```
+
+## vim-lsp
+
+- `[g` 直前の diagnostic に移動する。
+- `]g` 直後の diagnostic に移動する。

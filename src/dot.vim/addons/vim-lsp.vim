@@ -10,3 +10,15 @@ let g:asyncomplete_auto_popup = 0
 
 " Ctrl + Space でポップアップを表示します。
 imap <c-space> <Plug>(asyncomplete_force_refresh)
+
+" Markdown 編集時に efm-langserver を有効にします。
+" この設定は Markdown ファイルに対する textlint の実行で必要です。
+let g:lsp_settings = {
+  \ 'efm-langserver': {
+  \   'disabled': 0,
+  \   'allowlist': ['markdown'],
+  \  }
+  \ }
+
+nmap <buffer> [g <plug>(lsp-previous-diagnostic)
+nmap <buffer> ]g <plug>(lsp-next-diagnostic)
