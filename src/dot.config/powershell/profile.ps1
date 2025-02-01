@@ -11,12 +11,17 @@ if (Test-Path -Type Container "${HOME}\.config\powershell\local") {
     }
 }
 
-function Invoke-DotfilesSwitchPrompt {
+function Invoke-DotfilesPromptSwitch {
     <#
         .SYNOPSIS
         プロンプトを切り替えます。
     #>
     $script:DotfilesPrompt = ($script:DotfilesPrompt + 1) % 2
+}
+
+function Invoke-DotfilesSwitchPrompt {
+    Write-Warning "Deprecated. Use Invoke-DotfilesPromptSwitch instead."
+    Invoke-DotfilesPromptSwitch
 }
 
 function Prompt {
@@ -35,7 +40,7 @@ function Prompt {
 
 function Set-MyPromptSwitch {
     Write-Warning "Deprecated. Use Invoke-DotfilesSwitchPrompt instead."
-    Invoke-DotfilesSwitchPrompt
+    Invoke-DotfilesPromptSwitch
 }
 
 function Invoke-DotfilesMain {
