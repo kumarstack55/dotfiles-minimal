@@ -7,14 +7,14 @@
 (uname -r | grep -qi wsl2) && (echo 'ubuntu ALL = (ALL) NOPASSWD: ALL' | sudo tee /etc/sudoers.d/ubuntu >/dev/null)
 
 # curl, unzip
-sudo apt update -y
-{ c="curl"; type "${c}" || sudo apt install "${c}" -y; }
-{ c="unzip"; type "${c}" || sudo apt install "${c}" -y; }
+sudo apt update
+(c="curl"; type -p "${c}" >/dev/null || sudo apt-get install "${c}" -y)
+(c="unzip"; type -p "${c}" >/dev/null || sudo apt-get install "${c}" -y)
 
 # gh
 # https://github.com/cli/cli/blob/trunk/docs/install_linux.md
 (type -p wget >/dev/null || (sudo apt update && sudo apt-get install wget -y)) \
-	&& sudo mkdir -p -m 755 /etc/apt/keyrings \
+    && sudo mkdir -p -m 755 /etc/apt/keyrings \
         && out=$(mktemp) && wget -nv -O$out https://cli.github.com/packages/githubcli-archive-keyring.gpg \
         && cat $out | sudo tee /etc/apt/keyrings/githubcli-archive-keyring.gpg > /dev/null \
 	&& sudo chmod go+r /etc/apt/keyrings/githubcli-archive-keyring.gpg \
@@ -27,7 +27,6 @@ gh auth login
 git clone https://github.com/kumarstack55/dotfiles-minimal.git
 cd ./dotfiles-minimal
 ./installers/bash/install.sh -f ./playbook.dsl
-
 ./ensure_that_hook_line_exists_in_bashrc.sh
 
 # Neovim
@@ -51,7 +50,10 @@ __BASH__
 fnm install --latest
 
 # Neovim plugins
-grep '^export DOTFILES_' ./ADD-ONS.md | tee ~/.config/bash/local/env-vim.sh >/dev/null
+grep '^export DOTFILES_VIM_' ./ADD-ONS.md \
+| grep -v 'DOTFILES_VIM_VADER' \
+| sort \
+| tee ~/.config/bash/local/env-vim.sh >/dev/null
 . $HOME/.bashrc
 sh -c 'curl -fLo "${XDG_DATA_HOME:-$HOME/.local/share}"/nvim/site/autoload/plug.vim --create-dirs \
     https://raw.githubusercontent.com/junegunn/vim-plug/master/plug.vim'
