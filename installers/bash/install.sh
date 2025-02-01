@@ -85,8 +85,9 @@ string_buffer::get() {
 env::init() {
   g_env[HOME]="${HOME}"
 
-  # The linux installer does not support a PROFILE variable.
+  # The linux installer does not support some variables.
   # Therefore, it evaluates it as an empty string.
+  g_env[APPDATA]=""
   g_env[PROFILE]=""
 }
 
