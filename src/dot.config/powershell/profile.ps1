@@ -1,4 +1,9 @@
-﻿$script:DotfilesPrompt = 0
+﻿& {
+    $DotfilesPromptVariable = Get-Variable -Name DotfilesPrompt -Scope Script -ErrorAction SilentlyContinue
+    if ($null -eq $DotfilesPromptVariable) {
+        $Script:DotfilesPrompt = 1
+    }
+}
 
 # "${HOME}\.config\powershell\local\*.ps1 があれば、読み込む。
 if (Test-Path -Type Container "${HOME}\.config\powershell\local") {
@@ -16,7 +21,12 @@ function Invoke-DotfilesPromptSwitch {
         .SYNOPSIS
         プロンプトを切り替えます。
     #>
-    $script:DotfilesPrompt = ($script:DotfilesPrompt + 1) % 2
+    $DotfilesPromptMax = 2
+
+    $Script:DotfilesPrompt += 1
+    $Script:DotfilesPrompt %= $DotfilesPromptMax + 1
+
+    Write-Host "DotfilesPrompt: $Script:DotfilesPrompt / $DotfilesPromptMax"
 }
 
 function Invoke-DotfilesSwitchPrompt {
@@ -25,15 +35,19 @@ function Invoke-DotfilesSwitchPrompt {
 }
 
 function Prompt {
-    switch ($script:DotfilesPrompt) {
+    switch ($Script:DotfilesPrompt) {
         1 {
+            # パスに関する情報を親ディレクトリのみ出力するプロンプト定義です。
+            "PS $(Split-Path $ExecutionContext.SessionState.Path.CurrentLocation -Leaf)$('>' * ($NestedPromptLevel + 1)) "
+        }
+        2 {
             # パスに関する情報を出力しないプロンプト定義です。
-            "PS $('>' * ($nestedPromptLevel + 1)) "
+            "PS $('>' * ($NestedPromptLevel + 1)) "
         }
         default {
             # 既定のプロンプト定義です。
             # (Get-Command prompt).Definition で得たコードを再定義しています。
-            "PS $($executionContext.SessionState.Path.CurrentLocation)$('>' * ($nestedPromptLevel + 1)) "
+            "PS $($ExecutionContext.SessionState.Path.CurrentLocation)$('>' * ($NestedPromptLevel + 1)) "
         }
     }
 }
