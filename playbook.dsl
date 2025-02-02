@@ -15,6 +15,9 @@ copy "src/dot.config/bash/main.sh" "${HOME}/.config/bash/main.sh"
 mkdir "${HOME}/.config/bash/local"
 copy "src/dot.config/bash/local/env-vim.sh.sample" "${HOME}/.config/bash/local/env-vim.sh.sample"
 
+mkdir_linux "${HOME}/.config/efm-langserver"
+copy_linux "src/dot.config/efm-langserver/config.yaml" "${HOME}/.config/efm-langserver/config.yaml"
+
 mkdir "${HOME}/.config/git"
 copy "src/dot.config/git/gitconfig.inc" "${HOME}/.config/git/gitconfig.inc"
 
@@ -90,7 +93,7 @@ copy "src/dot.vim/template/markdown/snip-code-plaintext.md" "${HOME}/${vimrc_dir
 copy "src/dot.vim/template/markdown/snip-code-posh.md" "${HOME}/${vimrc_dir}/template/markdown/snip-code-posh.md"
 
 mkdir_win "${APPDATA}\\efm-langserver"
-copy_win "src\\AppData\\efm-langserver\\config.yaml" "${APPDATA}\\efm-langserver\\config.yaml"
+copy_win "src\\dot.config\\efm-langserver\\config.yaml" "${APPDATA}\\efm-langserver\\config.yaml"
 
 # PowerShell によって PROFILE の場所が異なる点に注意が必要です。
 # 少なくとも OneDrive なしの Windows PowerShell と PowerShell 7 で異なることがわかっています。
