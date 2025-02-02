@@ -2,7 +2,7 @@ scriptencoding utf-8
 
 let g:lsp_diagnostics_enabled = 1
 let g:lsp_log_verbose = 1
-let g:lsp_log_file = expand('~/vim-lsp.log')
+let g:lsp_log_file = expand('~/.config/vim/log/vim-lsp.log')
 
 " デフォルトでは、自動でポップアップが表示されます。
 " この機能は、 GitHub Copilot の動作と相性がよくないため、無効にします。

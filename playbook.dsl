@@ -47,6 +47,8 @@ mkdir "${HOME}/.config/vim/local"
 
 mkdir "${HOME}/.config/vim/local/templates"
 
+mkdir "${HOME}/.config/vim/log"
+
 mkdir "${HOME}/.config/vim/swap"
 
 mkdir_win "${HOME}\\AppData\\Local\\nvim"
