@@ -45,7 +45,7 @@ dotfiles::test_path_in_env_path() {
 
 # Configure the PATH
 dotfiles::configure_path() {
-  local -a path_list=("$HOME/bin" "$HOME/.local/bin")
+  local -a path_list=("$HOME/bin" "$HOME/.local/bin" "/opt/nvim-linux-x86_64/bin")
   local p
 
   for p in "${path_list[@]}"; do

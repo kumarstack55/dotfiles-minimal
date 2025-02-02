@@ -148,6 +148,13 @@ endif
 set modeline
 set modelines=2
 
+" Neovimでマウスを無効にする。
+" Windows Terminalでnvimで編集中のバッファから文字列をクリップボードに
+" コピーしたいとき、nvimがマウスを制御してしまうと、コピーできないため。
+if has('nvim')
+  set mouse=
+endif
+
 " 最後の編集位置にカーソルを移動する。
 " より詳細は :help last-position-jump を参照してください。
 autocmd BufReadPost *
