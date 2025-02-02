@@ -100,10 +100,4 @@ copy "src/dot.vim/template/markdown/snip-code-posh.md" "${HOME}/${vimrc_dir}/tem
 mkdir_win "${APPDATA}\\efm-langserver"
 copy_win "src\\dot.config\\efm-langserver\\config.yaml" "${APPDATA}\\efm-langserver\\config.yaml"
 
-# PowerShell によって PROFILE の場所が異なる点に注意が必要です。
-# 少なくとも OneDrive なしの Windows PowerShell と PowerShell 7 で異なることがわかっています。
-# Windows PowerShell 5.1:
-#   $HOME\Documents\WindowsPowerShell\Microsoft.PowerShell_profile.ps1
-# PowerShell 7+:
-#   $HOME\Documents\PowerShell\Microsoft.PowerShell_profile.ps1
 copy_crlf_win "src\\Documents\\WindowsPowerShell\\Microsoft.PowerShell_profile.ps1" "${PROFILE}"
