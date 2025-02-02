@@ -1,0 +1,15 @@
+{
+  "plugins": {},
+  "filters": {},
+  "rules": {
+    "preset-ja-engineering-paper": {
+      "unify-kuten-and-touten": {
+        "kuten": "。",
+        "touten": "、"
+      }
+    },
+    "preset-ja-spacing": true,
+    "preset-ja-technical-writing": true,
+    "preset-jtf-style": true
+  }
+}

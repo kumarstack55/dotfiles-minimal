@@ -7,6 +7,11 @@ copy "src/dot.editorconfig" "${HOME}/.editorconfig"
 copy "src/dot.gitconfig" "${HOME}/.gitconfig"
 copy_win "src/dot.vsvimrc" "${HOME}/.vsvimrc"
 
+copy "src/dot.node-version" "${HOME}/.node-version"
+copy "src/dot.textlintrc.json" "${HOME}/.textlintrc.json"
+copy "src/package-lock.json" "${HOME}/package-lock.json"
+copy "src/package.json" "${HOME}/package.json"
+
 mkdir "${HOME}/.config"
 
 mkdir "${HOME}/.config/bash"
