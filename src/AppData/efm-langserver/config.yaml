@@ -8,7 +8,10 @@ tools:
       - '%f:%l:%c: %m [%trror/%r]'
     root-markers:
       - .textlintrc
+      - .textlintrc.js
       - .textlintrc.json
+      - .textlintrc.yml
+      - .textlintrc.yaml
 languages:
   markdown:
     - <<: *markdown-textlint
