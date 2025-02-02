@@ -1,4 +1,7 @@
 version: 2
+root-markers:
+  - .git/
+  - vimfiles/
 tools:
   markdown-textlint: &markdown-textlint
     lint-command: 'npx --no-install textlint -f unix --stdin --stdin-filename ${INPUT}'
