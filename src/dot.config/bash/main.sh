@@ -103,8 +103,8 @@ dotfiles::configure_local() {
 }
 
 dotfiles::main() {
-  dotfiles::configure_editor
   dotfiles::configure_path
+  dotfiles::configure_editor
   dotfiles::configure_completion
   dotfiles::configure_local
 }
