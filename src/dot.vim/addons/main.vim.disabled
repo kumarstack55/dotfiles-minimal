@@ -149,6 +149,10 @@ call plug#begin()
   Plug 'tpope/vim-surround'
   " }}}
 
+  " vim-termsend {{{
+  Plug 'kumarstack55/vim-termsend'
+  " }}}
+
   " vader.vim {{{
   if getenv('DOTFILES_VIM_VADER') == 'y'
     " A simple Vimscript test framework
