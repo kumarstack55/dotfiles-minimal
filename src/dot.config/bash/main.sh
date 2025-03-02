@@ -2,6 +2,26 @@
 
 _dotfiles__editor_list=("nvim" "vim" "vi")
 
+_dotfiles__ps1_original=
+_dotfiles__prompt_index=0
+
+if [[ -z "${_dotfiles__ps1_original}" ]]; then
+  export _dotfiles__ps1_original="${PS1}"
+fi
+
+prompt_switch() {
+  local index_max=1
+
+  _dotfiles__prompt_index=$(((_dotfiles__prompt_index + 1) % (index_max+1)))
+  echo "Prompt index: $((_dotfiles__prompt_index + 1)) / $((index_max + 1))"
+
+  if [[ "${_dotfiles__prompt_index}" -eq 0 ]]; then
+    export PS1="${_dotfiles__ps1_original}"
+  else
+    export PS1="\[\e]0;\u@\h: \W\a\]${debian_chroot:+($debian_chroot)}\[\033[01;32m\]\u@\h\[\033[00m\]:\[\033[01;34m\]\W\[\033[00m\]\$ "
+  fi
+}
+
 dotfiles::err() {
   echo "$*" >&2
 }
