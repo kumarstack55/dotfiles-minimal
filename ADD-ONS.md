@@ -81,8 +81,20 @@ For more information:
 - https://github.com/prabirshrestha/vim-lsp
 - https://github.com/mattn/vim-lsp-settings
 - https://github.com/mattn/vim-lsp-settings?tab=readme-ov-file#auto-complete
-- https://github.com/prabirshrestha/asyncomplete.vim 
+- https://github.com/prabirshrestha/asyncomplete.vim
 - https://github.com/prabirshrestha/asyncomplete-lsp.vim
+
+### Feature: textlint
+
+```bash
+# bash
+npm install -D \
+  textlint \
+  textlint-rule-preset-ja-engineering-paper \
+  textlint-rule-preset-ja-spacing \
+  textlint-rule-preset-ja-technical-writing \
+  textlint-rule-preset-jtf-style
+```
 
 ### Others
 

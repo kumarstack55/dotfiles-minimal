@@ -5,13 +5,31 @@
     }
 }
 
+# PowerShell で、関数内で関数定義を行うと、関数からreturnしたのち定義が無効になるように見えます。
+# 例えば `function f1 { function f2 {} }` を実行後に `f2` は未定義です。
+# そのため、関数定義を伴う処理はグローバル・スコープで行う必要があります。
+
+# この処理は関数定義を含むため、グローバル・スコープで行います。
+# Gitコマンドのエイリアスを設定します。
+if (Get-Command git.exe -ErrorAction SilentlyContinue) {
+    function Invoke-MyGitStatus { git status }
+    Set-Alias gstatus Invoke-MyGitStatus
+
+    function Invoke-MyGitAddDot { git add . }
+    Set-Alias gadd Invoke-MyGitAddDot
+
+    function Invoke-MyGitCommitFix{ git commit -m fix }
+    Set-Alias gcfix Invoke-MyGitCommitFix
+
+    function Invoke-MyGitPush{ git push }
+    Set-Alias gpush Invoke-MyGitPush
+}
+
+# この処理は関数定義を含むため、グローバル・スコープで行います。
 # "${HOME}\.config\powershell\local\*.ps1 があれば、読み込む。
 if (Test-Path -Type Container "${HOME}\.config\powershell\local") {
     $LocalScriptItems = Get-ChildItem -Path "${HOME}\.config\powershell\local\*.ps1"
     foreach ($LocalScriptItem in $LocalScriptItems) {
-        # この処理は、グローバル・スコープで実行する必要がある。
-        # 理由は、関数 f1 内で dot-source で関数群を定義したのち、
-        # f1 から return すると、関数群の定義が無効になるため。
         . $LocalScriptItem.FullName
     }
 }
@@ -86,21 +104,6 @@ function Invoke-DotfilesMain {
     # 既定では、タブキーでの補完は完全なコマンドを出力する。
     # bash のように、タブキーでの補完をコマンド候補内の共通文字列の最大長の文字列にする。
     Set-PSReadlineKeyHandler -Key Tab -Function Complete
-
-    # Gitコマンドのエイリアスを設定します。
-    if (Get-Command git.exe -ErrorAction SilentlyContinue) {
-        function Invoke-MyGitStatus { git status }
-        Set-Alias gstatus Invoke-MyGitStatus
-
-        function Invoke-MyGitAddDot { git add . }
-        Set-Alias gadd Invoke-MyGitAddDot
-
-        function Invoke-MyGitCommitFix{ git commit -m fix }
-        Set-Alias gcfix Invoke-MyGitCommitFix
-
-        function Invoke-MyGitPush{ git push }
-        Set-Alias gpush Invoke-MyGitPush
-    }
 }
 
 Invoke-DotfilesMain
