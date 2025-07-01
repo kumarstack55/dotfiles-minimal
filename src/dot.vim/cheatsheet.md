@@ -183,3 +183,9 @@ ipython.pre<c-y><c-b>
 
 - `[g` 直前の diagnostic に移動する。
 - `]g` 直後の diagnostic に移動する。
+
+## vim-termsend
+
+### カーソル行をターミナルに貼り付ける。
+
+- `:TermSend`

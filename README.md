@@ -25,6 +25,8 @@
     - Vim 9.1+
     - NeoVim 0.8+
 
+> **Note**: Vim 8.0 is not supported.
+
 ## Installation
 
 ### Linux
