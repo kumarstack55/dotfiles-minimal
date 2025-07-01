@@ -86,6 +86,21 @@ function Invoke-DotfilesMain {
     # 既定では、タブキーでの補完は完全なコマンドを出力する。
     # bash のように、タブキーでの補完をコマンド候補内の共通文字列の最大長の文字列にする。
     Set-PSReadlineKeyHandler -Key Tab -Function Complete
+
+    # Gitコマンドのエイリアスを設定します。
+    if (Get-Command git.exe -ErrorAction SilentlyContinue) {
+        function Invoke-MyGitStatus { git status }
+        Set-Alias gstatus Invoke-MyGitStatus
+
+        function Invoke-MyGitAddDot { git add . }
+        Set-Alias gadd Invoke-MyGitAddDot
+
+        function Invoke-MyGitCommitFix{ git commit -m fix }
+        Set-Alias gcfix Invoke-MyGitCommitFix
+
+        function Invoke-MyGitPush{ git push }
+        Set-Alias gpush Invoke-MyGitPush
+    }
 }
 
 Invoke-DotfilesMain
