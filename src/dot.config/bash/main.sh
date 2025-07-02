@@ -2,23 +2,35 @@
 
 _dotfiles__editor_list=("nvim" "vim" "vi")
 
+_dotfiles__prompt_command_original=
 _dotfiles__ps1_original=
 _dotfiles__prompt_index=0
 
 if [[ -z "${_dotfiles__ps1_original}" ]]; then
   export _dotfiles__ps1_original="${PS1}"
 fi
+if [[ -z "${_dotfiles__prompt_command_original}" ]]; then
+  export _dotfiles__prompt_command_original="${PROMPT_COMMAND}"
+fi
 
 prompt_switch() {
-  local index_max=1
+  local index_max=3
 
   _dotfiles__prompt_index=$(((_dotfiles__prompt_index + 1) % (index_max+1)))
   echo "Prompt index: $((_dotfiles__prompt_index + 1)) / $((index_max + 1))"
 
   if [[ "${_dotfiles__prompt_index}" -eq 0 ]]; then
-    export PS1="${_dotfiles__ps1_original}"
+    PROMPT_COMMAND="${_dotfiles__prompt_command_original}"
+    PS1="${_dotfiles__ps1_original}"
+  elif [[ "${_dotfiles__prompt_index}" -eq 1 ]]; then
+    PROMPT_COMMAND="${_dotfiles__prompt_command_original}"
+    PS1="\[\e]0;\u@\h: \W\a\]${debian_chroot:+($debian_chroot)}\[\033[01;32m\]\u@\h\[\033[00m\]:\[\033[01;34m\]\W\[\033[00m\]\$ "
+  elif [[ "${_dotfiles__prompt_index}" -eq 2 ]]; then
+    PROMPT_COMMAND='PS1_CMD1=$(__git_ps1 " (%s)")'
+    PS1='\n\\$?: $?\n\D{%Y-%m-%d} \t\n\u@\H${PS1_CMD1}\n\W\$ '
   else
-    export PS1="\[\e]0;\u@\h: \W\a\]${debian_chroot:+($debian_chroot)}\[\033[01;32m\]\u@\h\[\033[00m\]:\[\033[01;34m\]\W\[\033[00m\]\$ "
+    PROMPT_COMMAND=''
+    PS1='\$ '
   fi
 }
 
@@ -65,7 +77,7 @@ dotfiles::test_path_in_env_path() {
 
 # Configure the PATH
 dotfiles::configure_path() {
-  local -a path_list=("$HOME/bin" "$HOME/.local/bin" "/opt/nvim-linux-x86_64/bin")
+  local -a path_list=("$HOME/bin" "$HOME/.local/bin" "$HOME/go/bin" "/opt/nvim-linux-x86_64/bin")
   local p
 
   for p in "${path_list[@]}"; do
