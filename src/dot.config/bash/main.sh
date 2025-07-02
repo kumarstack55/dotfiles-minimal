@@ -60,6 +60,18 @@ dotfiles::configure_editor() {
   done
 }
 
+
+# Configure aliases
+dotfiles::configure_alias() {
+  if type git >/dev/null 2>&1; then
+    alias gstatus='git status'
+    alias gpull='git pull'
+    alias gadd='git add .'
+    alias gcfix='git commit -m fix'
+    alias gpush='git push'
+  fi
+}
+
 # Check if a path is in $PATH
 dotfiles::test_path_in_env_path() {
   local target="$1"
@@ -137,6 +149,7 @@ dotfiles::configure_local() {
 dotfiles::main() {
   dotfiles::configure_path
   dotfiles::configure_editor
+  dotfiles::configure_alias
   dotfiles::configure_completion
   dotfiles::configure_local
 }
