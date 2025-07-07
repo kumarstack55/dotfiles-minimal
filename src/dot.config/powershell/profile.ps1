@@ -77,27 +77,46 @@ function Set-MyPromptSwitch {
 
 function Invoke-DotfilesMain {
     # 古い設定ファイルがあれば新しいパスに移動するよう促す。
+    $ActionMove = "actionMove"
+    $ActionEditAndReplace = "actionEditAndReplace"
     $DeprecatedPathRecords = @(
         @{
+            Action = $ActionMove
             OldPath = "${HOME}\.config\powershell\env.ps1"
             NewPath = "${HOME}\.config\powershell\local\env.ps1"
         },
         @{
+            Action = $ActionMove
             OldPath = "${HOME}\.gitconfig_generic.inc"
             NewPath = "${HOME}\.config\git\config.inc"
         },
         @{
+            Action = $ActionMove
             OldPath = "${HOME}\vimfiles\local.vim"
             NewPath = "${HOME}\.config\vim\local\pre-addons.vim"
         },
         @{
+            Action = $ActionMove
             OldPath = "${HOME}\vimfiles\local"
             NewPath = "${HOME}\.config\vim\local"
+        },
+        @{
+            Action = $ActionEditAndReplace
+            OldPath = "${HOME}\.textlintrc.json"
+            NewPath = "${HOME}\.textlintrc.yml"
         }
     )
-    foreach ($DeprecatedPathRecord in $DeprecatedPathRecords) {
-        if (Test-Path $DeprecatedPathRecord.OldPath) {
-            Write-Warning "Deprecated. Please move $($DeprecatedPathRecord.OldPath) to $($DeprecatedPathRecord.NewPath)"
+    foreach ($r in $DeprecatedPathRecords) {
+        if ($r.Action -eq $ActionMove) {
+            if (Test-Path $r.OldPath) {
+                Write-Warning "Deprecated. Please move $($r.OldPath) to $($r.NewPath)"
+            }
+        } elseif ($r.Action -eq $ActionEditAndReplace) {
+            if (Test-Path $r.OldPath) {
+                Write-Warning "Deprecated. Please edit $($r.OldPath) and replace $($r.NewPath)"
+            }
+        } else {
+            Write-Warning "Unknown action."
         }
     }
 

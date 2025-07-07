@@ -8,7 +8,7 @@ copy "src/dot.gitconfig" "${HOME}/.gitconfig"
 copy_win "src/dot.vsvimrc" "${HOME}/.vsvimrc"
 
 copy "src/dot.node-version" "${HOME}/.node-version"
-copy "src/dot.textlintrc.json" "${HOME}/.textlintrc.json"
+copy "src/dot.textlintrc.yml" "${HOME}/.textlintrc.yml"
 
 mkdir "${HOME}/.config"
 

@@ -1,0 +1,27 @@
+---
+plugins: {}
+filters: {}
+rules:
+  # https://github.com/kn1cht/textlint-rule-preset-ja-engineering-paper
+  preset-ja-engineering-paper:
+
+    # https://github.com/kn1cht/textlint-rule-preset-ja-engineering-paper?tab=readme-ov-file#unify-kuten-and-touten
+    # 句点、読点は、デフォルトでは「．」（全角ピリオド）と「，」（全角カンマ）です。
+    # より一般的な表現にします。
+    unify-kuten-and-touten:
+      kuten: "。"
+      touten: "、"
+
+  # https://github.com/textlint-ja/textlint-rule-preset-ja-spacing
+  preset-ja-spacing:
+
+    # Prettierで、Markdownで、日本語に英単語が混在する場合、英単語の周辺にスペースが挿入されます。
+    # Prettierの動作に合わせるために、textlintでも英単語の周辺にスペースを挿入します。
+    jaLetterSpace: true
+    enLetterSpace: true
+
+  # https://github.com/textlint-ja/textlint-rule-preset-ja-technical-writing
+  preset-ja-technical-writing: true
+
+  # https://github.com/textlint-ja/textlint-rule-preset-JTF-style
+  preset-jtf-style: true
