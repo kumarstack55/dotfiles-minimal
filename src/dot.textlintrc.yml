@@ -21,7 +21,18 @@ rules:
     enLetterSpace: true
 
   # https://github.com/textlint-ja/textlint-rule-preset-ja-technical-writing
-  preset-ja-technical-writing: true
+  preset-ja-technical-writing:
+
+    # https://github.com/textlint-rule/textlint-rule-no-exclamation-question-mark
+    no-exclamation-question-mark:
+      allowHalfWidthExclamation: false
+      allowFullWidthExclamation: false
+      allowHalfWidthQuestion: false
+
+      # 意図に反して `Disallow to use "？".` と表示されることがあります。
+      # 次の設定によって表示しないようにします。
+      # 例えば、Markdownの見出しなどで「？」を加えることを許します。
+      allowFullWidthQuestion: true
 
   # https://github.com/textlint-ja/textlint-rule-preset-JTF-style
   preset-jtf-style: true
