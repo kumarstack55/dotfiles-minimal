@@ -35,4 +35,16 @@ rules:
       allowFullWidthQuestion: true
 
   # https://github.com/textlint-ja/textlint-rule-preset-JTF-style
-  preset-jtf-style: true
+  preset-jtf-style:
+
+    # 特定のルールを使いたくない場合、無効にできます。
+    # https://github.com/textlint-ja/textlint-rule-preset-JTF-style?tab=readme-ov-file#faq:~:text=Q.-,%E7%89%B9%E5%AE%9A%E3%81%AE%E3%83%AB%E3%83%BC%E3%83%AB%E3%82%92%E4%BD%BF%E3%81%84%E3%81%9F%E3%81%8F%E3%81%AA%E3%81%84,-A.%20.textlintrc
+
+    # 「かっこの外側、内側ともにスペースを入れません。」のエラーを出力しないようにします。
+    # これにより、MarkdownでTODOアイテムなどで `[x] item` といった表記を許容します。
+    # 2025-07時点で動作確認できていません。
+    "3.3.かっこ類と隣接する文字の間のスペースの有無": false
+
+    # 「コロン(：)を使用する場合は「全角」で表記します。」のエラーを出力しないようにします。
+    # これにより、MarkdownでYAMLのような記法 `key: value` といった表記を許容します。
+    "4.2.7.コロン(：)": false
