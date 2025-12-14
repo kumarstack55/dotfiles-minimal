@@ -40,8 +40,8 @@ indent_style = tab
 [*.json{,.j2}]
 
 [*.md]
-indent_size = 4
-tab_width = 4
+indent_size = 2
+tab_width = 2
 
 [*.py]
 indent_size = 4
