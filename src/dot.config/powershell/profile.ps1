@@ -187,6 +187,8 @@ function Invoke-DotfilesConfigureGitConfigUserByProfile {
         if ($p.name -eq $ProfileName) {
             git config user.email $p.userEmail
             git config user.name $p.userName
+            Write-Host "You may want to run following commands:" -ForegroundColor Yellow
+            Write-Host "  git config credential.https://github.com.username $($p.userName)"
             $found = $true
             break
         }
