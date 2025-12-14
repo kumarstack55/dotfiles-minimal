@@ -125,4 +125,92 @@ function Invoke-DotfilesMain {
     Set-PSReadlineKeyHandler -Key Tab -Function Complete
 }
 
+function Export-DotfilesGitUserProfiles {
+    param(
+        [Parameter(Mandatory)]
+        [string]
+        $Path,
+
+        [Parameter(Mandatory)]
+        [Object[]]
+        $Records
+    )
+    $recordsAsArray = ,$Records
+    $jsonTextNotPretty = $recordsAsArray | ConvertTo-Json -Depth 100
+    $jsonText = $jsonTextNotPretty | jq .
+    $jsonText | Set-Content -LiteralPath $Path -Encoding UTF8
+}
+
+function Import-DotfilesGitUserProfiles {
+    param(
+        [Parameter(Mandatory)]
+        [string]
+        $Path
+    )
+    $jsonText = Get-Content -LiteralPath $Path
+    $recordsAsArray = $jsonText | ConvertFrom-Json
+    $records = $recordsAsArray.value
+    $records
+}
+
+function Invoke-DotfilesConfigureGitConfigUserByProfile {
+    param(
+        [Parameter()]
+        [string]
+        $ProfileName = ""
+    )
+    $path = "$HOME\.config\git\local\user-profiles.json"
+
+    # ファイルを読む。
+    if (-not (Test-Path -LiteralPath $path)) {
+        Write-Host "file not found: $path"
+        return
+    }
+    $userProfiles = @(Import-DotfilesGitUserProfiles -Path $path)
+
+    # プロファイルが指定されてなかったら指定を促す。
+    if ($ProfileName -eq "") {
+        Write-Host "select profile."
+        $userProfiles
+        return
+    }
+
+    # ディレクトリがgit管理下か確認する。
+    git rev-parse --is-inside-work-tree
+    if (-not $?) {
+        return
+    }
+
+    # プロファイルの設定を行う。
+    $found = $false
+    foreach ($p in $userProfiles) {
+        if ($p.name -eq $ProfileName) {
+            git config user.email $p.userEmail
+            git config user.name $p.userName
+            $found = $true
+            break
+        }
+    }
+    if (-not $found) {
+        Write-Host "profile not found: $ProfileName"
+        return
+    }
+}
+
+& {
+    $userProfileSamplePath = "$HOME\.config\git\local\user-profiles.json.sample"
+    $userProfilePath = "$HOME\.config\git\local\user-profiles.json"
+    $records = @(
+        @{
+            "name" = "default"
+            "userEmail" = "you@example.com"
+            "userName" = "Your Name"
+        }
+    )
+    Export-DotfilesGitUserProfiles -Records $records -Path $userProfileSamplePath
+    if (-not (Test-Path $userProfilePath)) {
+        Copy-Item $userProfileSamplePath $userProfilePath
+    }
+}
+
 Invoke-DotfilesMain
