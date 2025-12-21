@@ -150,6 +150,49 @@ dotfiles::configure_local() {
   done
 }
 
+dotfiles_git_config_user_by_profile() {
+  local profile="$1"
+
+  local user_profiles_json_path="${HOME}/.config/git/local/user-profiles.json"
+
+  if ! type jq &>/dev/null; then
+    echo "jq not found." >&2
+  fi
+
+  if test -f "${HOME}/.config/git/local/user-profiles.json.sample"; then
+    if ! test -f "${user_profiles_json_path}"; then
+      echo "conf not exists"
+      cp -v "${HOME}/.config/git/local/user-profiles.json.sample" \
+        "${user_profiles_json_path}"
+    fi
+  fi
+
+  if [[ $profile == "" ]]; then
+    (
+      echo "name,userName,userEmail"
+      jq -r "
+        .value
+        | map([.name, .userName, .userEmail]
+        | join(\",\"))
+        | .[]
+      " "${user_profiles_json_path}" \
+    ) | column --separator "," --table
+    return
+  fi
+
+  local json=$(
+    jq ".value | map(select(.name == \"${profile}\"))" \
+      "${user_profiles_json_path}"
+  )
+  if <<<"${json}" jq "length > 0" | grep -qF true; then
+    local email=$(<<<"${json}" jq -r ".[0].userEmail")
+    local name=$(<<<"${json}" jq -r ".[0].userName")
+    git config user.email "${email}"
+    git config user.name "${name}"
+    git config --local --list
+  fi
+}
+
 dotfiles::main() {
   dotfiles::configure_path
   dotfiles::configure_editor
