@@ -213,7 +213,9 @@ function Invoke-DotfilesConfigureGitConfigUserByProfile {
             "userName" = "Your Name"
         }
     )
-    Export-DotfilesGitUserProfiles -Records $records -Path $userProfileSamplePath
+    if (-not (Test-Path $userProfileSamplePath)) {
+        Export-DotfilesGitUserProfiles -Records $records -Path $userProfileSamplePath
+    }
     if (-not (Test-Path $userProfilePath)) {
         Copy-Item $userProfileSamplePath $userProfilePath
     }
