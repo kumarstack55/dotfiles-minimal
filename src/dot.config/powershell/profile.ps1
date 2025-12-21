@@ -137,7 +137,11 @@ function Export-DotfilesGitUserProfiles {
     )
     $recordsAsArray = ,$Records
     $jsonTextNotPretty = $recordsAsArray | ConvertTo-Json -Depth 100
-    $jsonText = $jsonTextNotPretty | jq .
+    if (Get-Command jq) {
+        $jsonText = $jsonTextNotPretty | jq .
+    } else {
+        $jsonText = $jsonTextNotPretty
+    }
     $jsonText | Set-Content -LiteralPath $Path -Encoding UTF8
 }
 
