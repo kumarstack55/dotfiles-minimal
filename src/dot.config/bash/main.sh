@@ -120,6 +120,10 @@ dotfiles::configure_completion() {
   if type aws_completer >/dev/null 2>&1; then
     complete -C '/usr/local/bin/aws_completer' aws
   fi
+
+  if type mise &>/dev/null; then
+    eval "$(mise activate bash)" 
+  fi
 }
 
 # Configure local settings
