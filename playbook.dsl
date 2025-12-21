@@ -26,6 +26,7 @@ copy "src/dot.config/git/gitconfig.inc" "${HOME}/.config/git/gitconfig.inc"
 
 mkdir "${HOME}/.config/git/local"
 copy "src/dot.config/git/local/gitconfig_local.inc.sample" "${HOME}/.config/git/local/gitconfig_local.inc.sample"
+copy "src/dot.config/git/local/user-profiles.json.sample" "${HOME}/.config/git/local/user-profiles.json.sample"
 
 mkdir_linux "${HOME}/.config/nvim"
 copy_linux "src/dot.config/nvim/${src_init_vim_filename}" "${HOME}/.config/nvim/init.vim"
