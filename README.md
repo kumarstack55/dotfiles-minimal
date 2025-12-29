@@ -59,6 +59,12 @@ Set-ExecutionPolicy -Scope Process -ExecutionPolicy RemoteSigned
 Set-ExecutionPolicy -Scope CurrentUser -ExecutionPolicy RemoteSigned
 ```
 
+> **Note**
+>
+> Be careful when using multiple PowerShell environments.
+>
+> The `$PROFILE` path differs between Windows PowerShell and PowerShell. This repository's installation location depends on the `$PROFILE` variable. If you use both, perform the installation in each respective PowerShell environment. To be more precise, after installing via Windows PowerShell, you must also install via PowerShell.
+
 ## TODO
 
 - [x] test lsp on windows
