@@ -1,0 +1,11 @@
+{
+    "prettier.useEditorConfig": true,
+    "[markdown]": {
+      "editor.codeActionsOnSave": {
+        "source.fixAll.markdownlint": "explicit"
+      }
+    },
+    "markdown.copyFiles.destination": {
+      "/**/*": "images/"
+    }
+}
