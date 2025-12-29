@@ -3,27 +3,27 @@
 ## Concept
 
 - Only configuration is performed.
-    - Do not install add-ons  from the Internet without user intervention.
+  - Do not install add-ons  from the Internet without user intervention.
 
 ## Requirements
 
 - Linux
-    - Debian
-        - bash 5.2+
-        - Vim 9.0+
-        - NeoVim 0.7+
-    - Ubuntu
-        - bash 5.1+
-        - Vim 8.2+
-            - If you use github copilot, you need Vim 9.0+.
-            - If you use wsl, install npm before you install lsp server.
-        - NeoVim 0.6+
-            - If you use github copilot, you need NeoVim 0.7+.
-            - If you use wsl, install npm before you install lsp server.
+  - Debian
+    - bash 5.2+
+    - Vim 9.0+
+    - NeoVim 0.7+
+  - Ubuntu
+    - bash 5.1+
+    - Vim 8.2+
+      - If you use github copilot, you need Vim 9.0+.
+      - If you use wsl, install npm before you install lsp server.
+    - NeoVim 0.6+
+      - If you use github copilot, you need NeoVim 0.7+.
+      - If you use wsl, install npm before you install lsp server.
 - Microsoft Windows
-    - Windows PowerShell 5.1+
-    - Vim 9.1+
-    - NeoVim 0.8+
+  - Windows PowerShell 5.1+
+  - Vim 9.1+
+  - NeoVim 0.8+
 
 > **Note**: Vim 8.0 is not supported.
 
@@ -59,9 +59,7 @@ Set-ExecutionPolicy -Scope Process -ExecutionPolicy RemoteSigned
 Set-ExecutionPolicy -Scope CurrentUser -ExecutionPolicy RemoteSigned
 ```
 
-> **Note**
->
-> Be careful when using multiple PowerShell environments.
+> **Note**: Be careful when using multiple PowerShell environments.
 >
 > The `$PROFILE` path differs between Windows PowerShell and PowerShell. This repository's installation location depends on the `$PROFILE` variable. If you use both, perform the installation in each respective PowerShell environment. To be more precise, after installing via Windows PowerShell, you must also install via PowerShell.
 
