@@ -13,33 +13,17 @@ if [[ -z "${_dotfiles__prompt_command_original}" ]]; then
   export _dotfiles__prompt_command_original="${PROMPT_COMMAND}"
 fi
 
-prompt_switch() {
-  local index_max=3
-
-  _dotfiles__prompt_index=$(((_dotfiles__prompt_index + 1) % (index_max+1)))
-  echo "Prompt index: $((_dotfiles__prompt_index + 1)) / $((index_max + 1))"
-
-  if [[ "${_dotfiles__prompt_index}" -eq 0 ]]; then
-    PROMPT_COMMAND="${_dotfiles__prompt_command_original}"
-    PS1="${_dotfiles__ps1_original}"
-  elif [[ "${_dotfiles__prompt_index}" -eq 1 ]]; then
-    PROMPT_COMMAND="${_dotfiles__prompt_command_original}"
-    PS1="\[\e]0;\u@\h: \W\a\]${debian_chroot:+($debian_chroot)}\[\033[01;32m\]\u@\h\[\033[00m\]:\[\033[01;34m\]\W\[\033[00m\]\$ "
-  elif [[ "${_dotfiles__prompt_index}" -eq 2 ]]; then
-    PROMPT_COMMAND='PS1_CMD1=$(__git_ps1 " (%s)")'
-    PS1='\n\\$?: $?\n\D{%Y-%m-%d} \t\n\u@\H${PS1_CMD1}\n\W\$ '
-  else
-    PROMPT_COMMAND=''
-    PS1='\$ '
-  fi
-}
-
 dotfiles::err() {
   echo "$*" >&2
 }
 
 dotfiles::warn() {
   dotfiles::err "Warning: $*"
+}
+
+prompt_switch() {
+  dotfiles::warn "Deprecated. Use dotfiles_bash_prompt_switch instead."
+  dotfiles_bash_prompt_switch
 }
 
 # Check if a command exists
@@ -125,6 +109,11 @@ dotfiles::configure_completion() {
   if type aws_completer >/dev/null 2>&1; then
     complete -C '/usr/local/bin/aws_completer' aws
   fi
+
+  if type mise &>/dev/null; then
+    eval "$(mise activate bash)" 
+    eval "$(mise completion bash --include-bash-completion-lib)"
+  fi
 }
 
 # Configure local settings
@@ -149,6 +138,73 @@ dotfiles::configure_local() {
       . "${sh_path}"
     fi
   done
+}
+
+dotfiles_git_config_user_by_profile() {
+  local profile="$1"
+
+  local user_profiles_json_path="${HOME}/.config/git/local/user-profiles.json"
+
+  if ! type jq &>/dev/null; then
+    echo "jq not found." >&2
+  fi
+
+  if test -f "${HOME}/.config/git/local/user-profiles.json.sample"; then
+    if ! test -f "${user_profiles_json_path}"; then
+      echo "conf not exists"
+      cp -v "${HOME}/.config/git/local/user-profiles.json.sample" \
+        "${user_profiles_json_path}"
+    fi
+  fi
+
+  if [[ $profile == "" ]]; then
+    (
+      echo "name,userName,userEmail"
+      jq -r "
+        .value
+        | map([.name, .userName, .userEmail]
+        | join(\",\"))
+        | .[]
+      " "${user_profiles_json_path}" \
+    ) | column --separator "," --table
+    return
+  fi
+
+  local json=$(
+    jq ".value | map(select(.name == \"${profile}\"))" \
+      "${user_profiles_json_path}"
+  )
+  if <<<"${json}" jq "length > 0" | grep -qF true; then
+    local email=$(<<<"${json}" jq -r ".[0].userEmail")
+    local name=$(<<<"${json}" jq -r ".[0].userName")
+    git config user.email "${email}"
+    git config user.name "${name}"
+    git config --local --list
+  fi
+}
+
+dotfiles_bash_prompt_switch() {
+  local index_max=4
+
+  _dotfiles__prompt_index=$(((_dotfiles__prompt_index + 1) % (index_max+1)))
+  echo "Prompt index: $((_dotfiles__prompt_index + 1)) / $((index_max + 1))"
+
+  if [[ "${_dotfiles__prompt_index}" -eq 0 ]]; then
+    PROMPT_COMMAND="${_dotfiles__prompt_command_original}"
+    PS1="${_dotfiles__ps1_original}"
+  elif [[ "${_dotfiles__prompt_index}" -eq 1 ]]; then
+    PROMPT_COMMAND="${_dotfiles__prompt_command_original}"
+    PS1="\[\e]0;\u@\h: \W\a\]${debian_chroot:+($debian_chroot)}\[\033[01;32m\]\u@\h\[\033[00m\]:\[\033[01;34m\]\W\[\033[00m\]\$ "
+  elif [[ "${_dotfiles__prompt_index}" -eq 2 ]]; then
+    PROMPT_COMMAND="${_dotfiles__prompt_command_original}"
+    PS1='\W\$ '
+  elif [[ "${_dotfiles__prompt_index}" -eq 3 ]]; then
+    PROMPT_COMMAND='PS1_CMD1=$(__git_ps1 " (%s)")'
+    PS1='\n\\$?: $?\n\D{%Y-%m-%d} \t\n\u@\H${PS1_CMD1}\n\W\$ '
+  else
+    PROMPT_COMMAND=''
+    PS1='\$ '
+  fi
 }
 
 dotfiles::main() {
