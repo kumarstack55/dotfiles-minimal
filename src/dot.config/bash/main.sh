@@ -69,6 +69,11 @@ dotfiles::configure_alias() {
     alias gadd='git add .'
     alias gcfix='git commit -m fix'
     alias gpush='git push'
+
+    # Note that on macOS, ggrep refers to GNU grep.
+    ggrep() {
+      git grep "$@" -- ':(glob,exclude)**/images/**'
+    }
   fi
 }
 

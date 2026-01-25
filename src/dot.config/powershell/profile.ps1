@@ -23,6 +23,38 @@ if (Get-Command git.exe -ErrorAction SilentlyContinue) {
 
     function Invoke-MyGitPush{ git push }
     Set-Alias gpush Invoke-MyGitPush
+
+    function Invoke-MyGitGrep{
+        [CmdletBinding(SupportsShouldProcess = $true)]
+        param(
+            [Parameter(Mandatory=$true, ValueFromRemainingArguments = $true)]
+            [string[]]
+            $ArgumentList
+        )
+
+        $argsList = [System.Collections.Generic.List[string]]::new()
+        $argsList.Add("grep")
+        $separatorIndex = $argsList.IndexOf("--")
+        for ($i = 0; $i -lt $ArgumentList.Length; $i++) {
+            $argsList.Add($ArgumentList[$i])
+        }
+
+        $argsList.Add("--")
+
+        $argsList.Add(":(glob,exclude)**/images/**")
+        if ($separatorIndex -ge 0) {
+            for ($i = $separatorIndex + 1; $i -lt $ArgumentList.Length; $i++) {
+                $argsList.Add($ArgumentList[$i])
+            }
+        }
+
+        $target = "git"
+        $action = "${target} " + ($argsList -join ' ')
+        if ($PSCmdlet.ShouldProcess($target, $action)) {
+            Start-Process git -ArgumentList $argsList -NoNewWindow -Wait
+        }
+    }
+    Set-Alias ggrep Invoke-MyGitGrep
 }
 
 # この処理は関数定義を含むため、グローバル・スコープで行います。
