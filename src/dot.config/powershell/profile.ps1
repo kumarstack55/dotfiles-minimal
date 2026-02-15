@@ -85,16 +85,17 @@ function Invoke-DotfilesSwitchPrompt {
 }
 
 function Get-DotfilesGitBranchName {
-    if (-not (Get-Command git.exe -ErrorAction SilentlyContinue)) {
+    $gitCommand = Get-Command git.exe -ErrorAction SilentlyContinue
+    if (-not $gitCommand) {
         return $null
     }
 
     $branch = git rev-parse --abbrev-ref HEAD 2>$null
-    if ($?) {
-        return $branch
-    } else {
+    if (-not $?) {
         return $null
     }
+
+    $branch
 }
 
 function Prompt {
