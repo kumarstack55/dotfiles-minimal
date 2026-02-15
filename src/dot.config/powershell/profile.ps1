@@ -12,14 +12,18 @@
 # この処理は関数定義を含むため、グローバル・スコープで行います。
 # Gitコマンドのエイリアスを設定します。
 if (Get-Command git.exe -ErrorAction SilentlyContinue) {
-    function Invoke-MyGitStatus { git status }
-    Set-Alias gstatus Invoke-MyGitStatus
-
     function Invoke-MyGitAddDot { git add . }
     Set-Alias gadd Invoke-MyGitAddDot
 
     function Invoke-MyGitCommitFix{ git commit -m fix }
     Set-Alias gcfix Invoke-MyGitCommitFix
+
+    function Invoke-MyGitStatus { git diff }
+    Set-Alias gdiff Invoke-MyGitDiff
+
+    function Invoke-MyGitStatus { git status }
+    Set-Alias gstatus Invoke-MyGitStatus
+    Set-Alias gs Invoke-MyGitStatus
 
     function Invoke-MyGitPush{ git push }
     Set-Alias gpush Invoke-MyGitPush
