@@ -84,11 +84,28 @@ function Invoke-DotfilesSwitchPrompt {
     Invoke-DotfilesPromptSwitch
 }
 
+function Get-DotfilesGitBranchName {
+    if (-not (Get-Command git.exe -ErrorAction SilentlyContinue)) {
+        return $null
+    }
+
+    $branch = git rev-parse --abbrev-ref HEAD 2>$null
+    if ($?) {
+        return $branch
+    } else {
+        return $null
+    }
+}
+
 function Prompt {
     switch ($Script:DotfilesPrompt) {
         1 {
+            $gitBranchName = Get-DotfilesGitBranchName
+            $gitBranch = if ($gitBranchName) { " ($gitBranchName)" } else { "" }
+
             # パスに関する情報を親ディレクトリのみ出力するプロンプト定義です。
-            "PS $(Split-Path $ExecutionContext.SessionState.Path.CurrentLocation -Leaf)$('>' * ($NestedPromptLevel + 1)) "
+            # Gitブランチ名も併せて出力します。
+            "PS $(Split-Path $ExecutionContext.SessionState.Path.CurrentLocation -Leaf)${gitBranch}$('>' * ($NestedPromptLevel + 1)) "
         }
         2 {
             # パスに関する情報を出力しないプロンプト定義です。
