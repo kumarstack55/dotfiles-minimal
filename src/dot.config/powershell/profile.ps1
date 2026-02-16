@@ -12,23 +12,39 @@
 # この処理は関数定義を含むため、グローバル・スコープで行います。
 # Gitコマンドのエイリアスを設定します。
 if (Get-Command git.exe -ErrorAction SilentlyContinue) {
-    function Invoke-MyGitAddDot { git add . }
-    Set-Alias gadd Invoke-MyGitAddDot
+    function Invoke-DotfilesAliasGitAdd {
+        [CmdletBinding(SupportsShouldProcess = $true)]
+        param(
+            [Parameter(Mandatory=$true, ValueFromRemainingArguments = $true)]
+            [string[]]
+            $ArgumentList
+        )
+        $argsList = [System.Collections.Generic.List[string]]::new()
+        $argsList.Add("add")
 
-    function Invoke-MyGitCommitFix{ git commit -m fix }
-    Set-Alias gcfix Invoke-MyGitCommitFix
+        $target = "git"
+        $action = "${target} " + ($argsList -join ' ')
+        if ($PSCmdlet.ShouldProcess($target, $action)) {
+            Start-Process git -ArgumentList $argsList -NoNewWindow -Wait
+        }
+    }
+    Set-Alias gadd Invoke-DotfilesAliasGitAdd
 
-    function Invoke-MyGitStatus { git diff }
-    Set-Alias gdiff Invoke-MyGitDiff
+    function Invoke-DotfilesAliasGitCommitFix{ git commit -m fix }
+    Set-Alias gcfix Invoke-DotfilesAliasGitCommitFix
 
-    function Invoke-MyGitStatus { git status }
-    Set-Alias gstatus Invoke-MyGitStatus
-    Set-Alias gs Invoke-MyGitStatus
+    function Invoke-DotfilesAliasGitDiff { git diff }
+    Set-Alias gdiff Invoke-DotfilesAliasGitDiff
+    Set-Alias gd Invoke-DotfilesAliasGitDiff
 
-    function Invoke-MyGitPush{ git push }
-    Set-Alias gpush Invoke-MyGitPush
+    function Invoke-DotfilesAliasGitStatus { git status }
+    Set-Alias gstatus Invoke-DotfilesAliasGitStatus
+    Set-Alias gs Invoke-DotfilesAliasGitStatus
 
-    function Invoke-MyGitGrep{
+    function Invoke-DotfilesAliasGitPush{ git push }
+    Set-Alias gpush Invoke-DotfilesAliasGitPush
+
+    function Invoke-DotfilesAliasGitGrep{
         [CmdletBinding(SupportsShouldProcess = $true)]
         param(
             [Parameter(Mandatory=$true, ValueFromRemainingArguments = $true)]
@@ -58,7 +74,7 @@ if (Get-Command git.exe -ErrorAction SilentlyContinue) {
             Start-Process git -ArgumentList $argsList -NoNewWindow -Wait
         }
     }
-    Set-Alias ggrep Invoke-MyGitGrep
+    Set-Alias ggrep Invoke-DotfilesAliasGitGrep
 }
 
 # この処理は関数定義を含むため、グローバル・スコープで行います。
