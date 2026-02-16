@@ -43,6 +43,11 @@ indent_style = tab
 indent_size = 2
 tab_width = 2
 
+# 行末尾に空白を2つ加えることで、段落内の改行を表現する場合がある。
+# 空白を意図せず消さないよう、無効にする。
+# https://spec.commonmark.org/0.31.2/#hard-line-breaks
+trim_trailing_whitespace = false
+
 [*.py]
 indent_size = 4
 tab_width = 4
