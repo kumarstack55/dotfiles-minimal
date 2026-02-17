@@ -15,12 +15,15 @@ if (Get-Command git.exe -ErrorAction SilentlyContinue) {
     function Invoke-DotfilesAliasGitAdd {
         [CmdletBinding(SupportsShouldProcess = $true)]
         param(
-            [Parameter(Mandatory=$true, ValueFromRemainingArguments = $true)]
+            [Parameter(ValueFromRemainingArguments = $true)]
             [string[]]
             $ArgumentList
         )
         $argsList = [System.Collections.Generic.List[string]]::new()
         $argsList.Add("add")
+        if ($ArgumentList.Count -gt 0) {
+            $argsList.AddRange($ArgumentList)
+        }
 
         $target = "git"
         $action = "${target} " + ($argsList -join ' ')
@@ -41,28 +44,46 @@ if (Get-Command git.exe -ErrorAction SilentlyContinue) {
     Set-Alias gstatus Invoke-DotfilesAliasGitStatus
     Set-Alias gs Invoke-DotfilesAliasGitStatus
 
-    function Invoke-DotfilesAliasGitPush{ git push }
+    function Invoke-DotfilesAliasGitPush { git push }
     Set-Alias gpush Invoke-DotfilesAliasGitPush
 
-    function Invoke-DotfilesAliasGitGrep{
+    function Invoke-DotfilesAliasGitPull { git pull }
+    Set-Alias gpull Invoke-DotfilesAliasGitPull
+
+    function Invoke-DotfilesAliasGitGrep {
+    <#
+        .EXAMPLE
+        Invoke-DotfilesAliasGitGrep -WhatIf
+
+        .EXAMPLE
+        Invoke-DotfilesAliasGitGrep -WhatIf -- -- pattern
+
+        .EXAMPLE
+        Invoke-DotfilesAliasGitGrep --help -WhatIf
+    #>
         [CmdletBinding(SupportsShouldProcess = $true)]
         param(
-            [Parameter(Mandatory=$true, ValueFromRemainingArguments = $true)]
+            [Parameter(ValueFromRemainingArguments = $true)]
             [string[]]
             $ArgumentList
         )
 
         $argsList = [System.Collections.Generic.List[string]]::new()
         $argsList.Add("grep")
-        $separatorIndex = $argsList.IndexOf("--")
-        for ($i = 0; $i -lt $ArgumentList.Length; $i++) {
-            $argsList.Add($ArgumentList[$i])
-        }
 
-        $argsList.Add("--")
+        if ($ArgumentList.Count -gt 0) {
+            $separatorIndex = $ArgumentList.IndexOf("--")
+            if ($separatorIndex -eq -1) {
+                $separatorIndex = $ArgumentList.Length
+            }
 
-        $argsList.Add(":(glob,exclude)**/images/**")
-        if ($separatorIndex -ge 0) {
+            for ($i = 0; $i -lt $separatorIndex; $i++) {
+                $argsList.Add($ArgumentList[$i])
+            }
+
+            $argsList.Add("--")
+            $argsList.Add(":(glob,exclude)**/images/**")
+
             for ($i = $separatorIndex + 1; $i -lt $ArgumentList.Length; $i++) {
                 $argsList.Add($ArgumentList[$i])
             }
