@@ -41,9 +41,12 @@ dotfiles::configure_editors() {
 # Configure aliases
 dotfiles::configure_aliases() {
   if dotfiles::test_command_exists git; then
-    alias gstatus='git status'
-    alias gpull='git pull'
     alias gadd='git add .'
+    alias gdiff='git diff'
+    alias gd='git diff'
+    alias gpull='git pull'
+    alias gstatus='git status'
+    alias gs='git status'
     alias gcfix='git commit -m fix'
     alias gpush='git push'
 
