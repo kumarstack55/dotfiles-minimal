@@ -29,7 +29,7 @@ prompt_switch() {
 # Check if a command exists
 dotfiles::test_command_exists() {
   local command="$1"
-  type "${command}" >/dev/null 2>&1
+  type "${command}" &>/dev/null
 }
 
 # Configure the editor
