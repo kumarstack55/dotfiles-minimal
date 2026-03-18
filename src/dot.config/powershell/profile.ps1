@@ -12,17 +12,90 @@
 # この処理は関数定義を含むため、グローバル・スコープで行います。
 # Gitコマンドのエイリアスを設定します。
 if (Get-Command git.exe -ErrorAction SilentlyContinue) {
-    function Invoke-MyGitStatus { git status }
-    Set-Alias gstatus Invoke-MyGitStatus
+    function Invoke-DotfilesAliasGitAdd {
+        [CmdletBinding(SupportsShouldProcess = $true)]
+        param(
+            [Parameter(ValueFromRemainingArguments = $true)]
+            [string[]]
+            $ArgumentList
+        )
+        $argsList = [System.Collections.Generic.List[string]]::new()
+        $argsList.Add("add")
+        if ($ArgumentList.Count -gt 0) {
+            $argsList.AddRange($ArgumentList)
+        }
 
-    function Invoke-MyGitAddDot { git add . }
-    Set-Alias gadd Invoke-MyGitAddDot
+        $target = "git"
+        $action = "${target} " + ($argsList -join ' ')
+        if ($PSCmdlet.ShouldProcess($target, $action)) {
+            Start-Process git -ArgumentList $argsList -NoNewWindow -Wait
+        }
+    }
+    Set-Alias gadd Invoke-DotfilesAliasGitAdd
 
-    function Invoke-MyGitCommitFix{ git commit -m fix }
-    Set-Alias gcfix Invoke-MyGitCommitFix
+    function Invoke-DotfilesAliasGitCommitFix{ git commit -m fix }
+    Set-Alias gcfix Invoke-DotfilesAliasGitCommitFix
 
-    function Invoke-MyGitPush{ git push }
-    Set-Alias gpush Invoke-MyGitPush
+    function Invoke-DotfilesAliasGitDiff { git diff }
+    Set-Alias gdiff Invoke-DotfilesAliasGitDiff
+    Set-Alias gd Invoke-DotfilesAliasGitDiff
+
+    function Invoke-DotfilesAliasGitStatus { git status }
+    Set-Alias gstatus Invoke-DotfilesAliasGitStatus
+    Set-Alias gs Invoke-DotfilesAliasGitStatus
+
+    function Invoke-DotfilesAliasGitPush { git push }
+    Set-Alias gpush Invoke-DotfilesAliasGitPush
+
+    function Invoke-DotfilesAliasGitPull { git pull }
+    Set-Alias gpull Invoke-DotfilesAliasGitPull
+
+    function Invoke-DotfilesAliasGitGrep {
+    <#
+        .EXAMPLE
+        Invoke-DotfilesAliasGitGrep -WhatIf
+
+        .EXAMPLE
+        Invoke-DotfilesAliasGitGrep -WhatIf -- -- pattern
+
+        .EXAMPLE
+        Invoke-DotfilesAliasGitGrep --help -WhatIf
+    #>
+        [CmdletBinding(SupportsShouldProcess = $true)]
+        param(
+            [Parameter(ValueFromRemainingArguments = $true)]
+            [string[]]
+            $ArgumentList
+        )
+
+        $argsList = [System.Collections.Generic.List[string]]::new()
+        $argsList.Add("grep")
+
+        if ($ArgumentList.Count -gt 0) {
+            $separatorIndex = $ArgumentList.IndexOf("--")
+            if ($separatorIndex -eq -1) {
+                $separatorIndex = $ArgumentList.Length
+            }
+
+            for ($i = 0; $i -lt $separatorIndex; $i++) {
+                $argsList.Add($ArgumentList[$i])
+            }
+
+            $argsList.Add("--")
+            $argsList.Add(":(glob,exclude)**/images/**")
+
+            for ($i = $separatorIndex + 1; $i -lt $ArgumentList.Length; $i++) {
+                $argsList.Add($ArgumentList[$i])
+            }
+        }
+
+        $target = "git"
+        $action = "${target} " + ($argsList -join ' ')
+        if ($PSCmdlet.ShouldProcess($target, $action)) {
+            Start-Process git -ArgumentList $argsList -NoNewWindow -Wait
+        }
+    }
+    Set-Alias ggrep Invoke-DotfilesAliasGitGrep
 }
 
 # この処理は関数定義を含むため、グローバル・スコープで行います。
@@ -52,11 +125,29 @@ function Invoke-DotfilesSwitchPrompt {
     Invoke-DotfilesPromptSwitch
 }
 
+function Get-DotfilesGitBranchName {
+    $gitCommand = Get-Command git.exe -ErrorAction SilentlyContinue
+    if (-not $gitCommand) {
+        return $null
+    }
+
+    $branch = git rev-parse --abbrev-ref HEAD 2>$null
+    if (-not $?) {
+        return $null
+    }
+
+    $branch
+}
+
 function Prompt {
     switch ($Script:DotfilesPrompt) {
         1 {
+            $gitBranchName = Get-DotfilesGitBranchName
+            $gitBranch = if ($gitBranchName) { " ($gitBranchName)" } else { "" }
+
             # パスに関する情報を親ディレクトリのみ出力するプロンプト定義です。
-            "PS $(Split-Path $ExecutionContext.SessionState.Path.CurrentLocation -Leaf)$('>' * ($NestedPromptLevel + 1)) "
+            # Gitブランチ名も併せて出力します。
+            "PS $(Split-Path $ExecutionContext.SessionState.Path.CurrentLocation -Leaf)${gitBranch}$('>' * ($NestedPromptLevel + 1)) "
         }
         2 {
             # パスに関する情報を出力しないプロンプト定義です。
