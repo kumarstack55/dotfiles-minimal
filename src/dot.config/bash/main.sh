@@ -6,13 +6,6 @@ _dotfiles__prompt_command_original=
 _dotfiles__ps1_original=
 _dotfiles__prompt_index=0
 
-if [[ -z "${_dotfiles__ps1_original}" ]]; then
-  export _dotfiles__ps1_original="${PS1}"
-fi
-if [[ -z "${_dotfiles__prompt_command_original}" ]]; then
-  export _dotfiles__prompt_command_original="${PROMPT_COMMAND}"
-fi
-
 dotfiles::err() {
   echo "$*" >&2
 }
@@ -29,11 +22,11 @@ prompt_switch() {
 # Check if a command exists
 dotfiles::test_command_exists() {
   local command="$1"
-  type "${command}" >/dev/null 2>&1
+  type "${command}" &>/dev/null
 }
 
-# Configure the editor
-dotfiles::configure_editor() {
+# Configure the editors
+dotfiles::configure_editors() {
   local editor
 
   for editor in "${_dotfiles__editor_list[@]}"; do
@@ -46,11 +39,14 @@ dotfiles::configure_editor() {
 
 
 # Configure aliases
-dotfiles::configure_alias() {
-  if type git >/dev/null 2>&1; then
-    alias gstatus='git status'
-    alias gpull='git pull'
+dotfiles::configure_aliases() {
+  if dotfiles::test_command_exists git; then
     alias gadd='git add .'
+    alias gdiff='git diff'
+    alias gd='git diff'
+    alias gpull='git pull'
+    alias gstatus='git status'
+    alias gs='git status'
     alias gcfix='git commit -m fix'
     alias gpush='git push'
 
@@ -95,29 +91,36 @@ dotfiles::configure_path() {
 }
 
 # Configure completion
-dotfiles::configure_completion() {
-  if type kubectl >/dev/null 2>&1; then
+dotfiles::configure_completions() {
+  if dotfiles::test_command_exists kubectl; then
     # shellcheck disable=SC1090
     source <(kubectl completion bash)
   fi
 
-  if type oc >/dev/null 2>&1; then
+  if dotfiles::test_command_exists oc; then
     # shellcheck disable=SC1090
     source <(oc completion bash)
   fi
 
-  if type aws_completer >/dev/null 2>&1; then
+  if dotfiles::test_command_exists aws_completer; then
     complete -C '/usr/local/bin/aws_completer' aws
   fi
 
-  if type mise &>/dev/null; then
+  if which mise &>/dev/null; then
     eval "$(mise activate bash)" 
     eval "$(mise completion bash --include-bash-completion-lib)"
   fi
 }
 
+# Configure hooks
+dotfiles::configure_hooks() {
+  if dotfiles::test_command_exists direnv; then
+    eval "$(direnv hook bash)"
+  fi
+}
+
 # Configure local settings
-dotfiles::configure_local() {
+dotfiles::configure_local_settings() {
   local script_dir local_dir sh_path
 
   script_dir=$(cd -- "$(dirname -- "${BASH_SOURCE[0]}")" &> /dev/null && pwd)
@@ -209,10 +212,18 @@ dotfiles_bash_prompt_switch() {
 
 dotfiles::main() {
   dotfiles::configure_path
-  dotfiles::configure_editor
-  dotfiles::configure_alias
-  dotfiles::configure_completion
-  dotfiles::configure_local
+  dotfiles::configure_editors
+  dotfiles::configure_aliases
+  dotfiles::configure_completions
+  dotfiles::configure_hooks
+  dotfiles::configure_local_settings
+
+  if [[ -z "${_dotfiles__ps1_original}" ]]; then
+    export _dotfiles__ps1_original="${PS1}"
+  fi
+  if [[ -z "${_dotfiles__prompt_command_original}" ]]; then
+    export _dotfiles__prompt_command_original="${PROMPT_COMMAND}"
+  fi
 }
 
 dotfiles::main "$@"

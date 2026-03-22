@@ -18,6 +18,7 @@ copy "src/dot.config/bash/main.sh" "${HOME}/.config/bash/main.sh"
 
 mkdir "${HOME}/.config/bash/local"
 copy "src/dot.config/bash/local/env-vim.sh.sample" "${HOME}/.config/bash/local/env-vim.sh.sample"
+copy "src/dot.config/bash/local/nvm.sh.sample" "${HOME}/.config/bash/local/nvm.sh.sample"
 
 mkdir_linux "${HOME}/.config/efm-langserver"
 copy_linux "src/dot.config/efm-langserver/config.yaml" "${HOME}/.config/efm-langserver/config.yaml"
