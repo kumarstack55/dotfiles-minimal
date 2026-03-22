@@ -6,6 +6,7 @@ copy_win "src/dot.archiveconfig.json.sample" "${HOME}/.archiveconfig.json.sample
 copy "src/dot.editorconfig" "${HOME}/.editorconfig"
 copy "src/dot.gitconfig" "${HOME}/.gitconfig"
 copy_win "src/dot.vsvimrc" "${HOME}/.vsvimrc"
+copy_win "src/dot.wslconfig" "${HOME}/.wslconfig"
 
 copy "src/dot.node-version" "${HOME}/.node-version"
 copy "src/dot.textlintrc.yml" "${HOME}/.textlintrc.yml"
