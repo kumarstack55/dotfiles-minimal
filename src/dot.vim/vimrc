@@ -184,7 +184,7 @@ set breakindent
 set expandtab
 
 " 新しいバッファから編集したときに、ファイルタイプの設定を適用するコマンドを定義する。
-command! MyFiletypeMarkdown call MyVimrcFiletypeMarkdown(4)
+command! MyFiletypeMarkdown call MyVimrcFiletypeMarkdown(2)
 command! MyFiletypePs1 call MyVimrcFiletypePowerShell()
 
 command! MyFtMarkdown MyFiletypeMarkdown
