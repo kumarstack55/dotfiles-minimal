@@ -48,6 +48,7 @@ copy_win "src/dot.config/powershell/local/my/New-MyArchiveConfigJson.Tests.ps1" 
 copy_win "src/dot.config/powershell/local/my/New-MyDatePrefixedFolder.ps1" "${HOME}/.config/powershell/local/my/New-MyDatePrefixedFolder.ps1"
 copy_win "src/dot.config/powershell/local/my/New-MyDatePrefixedFolder.Tests.ps1" "${HOME}/.config/powershell/local/my/New-MyDatePrefixedFolder.Tests.ps1"
 copy_win "src/dot.config/powershell/local/my/classes.ps1" "${HOME}/.config/powershell/local/my/classes.ps1"
+copy_win "src/dot.config/powershell/local/my/chocolatey-profile.ps1" "${HOME}/.config/powershell/local/my/chocolatey-profile.ps1"
 
 mkdir "${HOME}/.config/vim"
 
